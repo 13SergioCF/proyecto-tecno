@@ -327,71 +327,95 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Configuracion de la Cuenta'],
         [
-            'text' => 'usuario',
-            'url' => 'users',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'Gestion de Usuarios',
+            'icon' => 'fas fa-user-cog',
             'submenu' => [
                 [
-                    'text' => 'level_one',
+                    'text' => 'Usuario',
+                    'url' => 'users',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Roles',
                     'url' => '#',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
+                    'text' => 'Permisos',
                     'url' => '#',
                 ],
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Cambiar Contraseña',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Gestion de Preguntas',
+            'icon' => 'fas fa-info-circle',
+            'submenu' => [
+                [
+                    'text' => 'Preguntas',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Tipo de Preguntas',
+                    'url' => '#',
+                ],
+            ],
         ],
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Periodo',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-calendar-alt',
         ],
+        [
+            'text' => 'Gestion de Dieta',
+            'icon' => 'fas fa-utensils',
+            'submenu' => [
+                [
+                    'text' => 'Alimentos',
+                    'icon' => 'fas fa-carrot',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Tipo de Alimentos',
+                    'icon' => 'fas fa-seedling',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Tipo de Nutriente',
+                    'icon' => 'fas fa-apple-alt',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Gestion de Ejercicio',
+            'icon' => 'fas fa-dumbbell',
+            'submenu' => [
+                [
+                    'text' => 'Ejercicios',
+                    'icon' => 'fas fa-heartbeat',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Tipo de Ejercicios',
+                    'icon' => 'fas fa-running',
+
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Rutinas',
+                    'icon' => 'fas fa-list-ul',
+                    'url' => '#',
+                ],
+            ],
+        ],
+
+
     ],
 
     /*
