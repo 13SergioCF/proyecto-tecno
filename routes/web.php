@@ -14,3 +14,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('users', UserController::class);
 
+// para pdf y excel
+
+Route::get('/users/export/pdf', [UserController::class, 'exportPdf'])->name('users.export.pdf');
+Route::get('/users/export/excel', [UserController::class, 'exportExcel'])->name('users.export.excel');
+

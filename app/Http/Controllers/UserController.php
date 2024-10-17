@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use PDF;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -86,6 +89,21 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('usuario.index');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente');
+        return redirect()->route('users.index');
     }
+
+    public function exportPdf()
+    {
+        $users = User::all(); // Obtener los usuarios
+    
+        // Cambia la vista a la ruta correcta
+        $pdf = PDF::loadView('usuario.pdf', compact('users'));
+        return $pdf->download('usuarios.pdf');
+    }
+
+public function exportExcel()
+{
+    return Excel::download(new UsersExport, 'usuarios.xlsx');
+}
 }
