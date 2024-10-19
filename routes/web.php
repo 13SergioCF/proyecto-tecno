@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -13,6 +14,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('users', UserController::class);
+Route::resource('exercises', ExerciseController::class);
+Route::get('type/exercises', [ExerciseController::class, 'typeExercise']);
+
+
 
 // para pdf y excel
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use PDF;
 use App\Exports\UsersExport;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -25,30 +26,28 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
+            'genero' => 'required',
+            'fecha_nacimiento' => 'required|date',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required', // Validar que se envíe un rol
+            'rol' => 'required',
         ]);
-
-        // Crear usuario
         $user = User::create([
-            'name' => $request->name,
-            'apellido_paterno' => $request->apellido_paterno,
-            'apellido_materno' => $request->apellido_materno,
-            'genero' => $request->genero,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'email' => $request->email,
-            'password' => bcrypt($request->password), // Encriptar contraseña
+            'name' => $validatedData['name'],
+            'apellido_paterno' => $validatedData['apellido_paterno'],
+            'apellido_materno' => $validatedData['apellido_materno'],
+            'genero' => $validatedData['genero'],
+            'fecha_nacimiento' => $validatedData['fecha_nacimiento'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
         ]);
-
-        // Asignar rol al usuario
-        $user->assignRole($request->role);
-
-        return redirect()->route('users.index');
+        $user->assignRole($request->input('rol'));
+        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
     }
-
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -90,20 +89,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente');
-        return redirect()->route('users.index');
     }
 
     public function exportPdf()
     {
         $users = User::all(); // Obtener los usuarios
-    
+
         // Cambia la vista a la ruta correcta
         $pdf = PDF::loadView('usuario.pdf', compact('users'));
         return $pdf->download('usuarios.pdf');
     }
 
-public function exportExcel()
-{
-    return Excel::download(new UsersExport, 'usuarios.xlsx');
-}
+    public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'usuarios.xlsx');
+    }
 }

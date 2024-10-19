@@ -399,13 +399,12 @@ return [
                 [
                     'text' => 'Ejercicios',
                     'icon' => 'fas fa-heartbeat',
-                    'url' => '#',
+                    'url' => 'exercises',
                 ],
                 [
                     'text' => 'Tipo de Ejercicios',
                     'icon' => 'fas fa-running',
-
-                    'url' => '#',
+                    'url' => 'type/exercises',
                 ],
                 [
                     'text' => 'Rutinas',

@@ -8,9 +8,15 @@
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
         "axios": "^1.6.4",
-        "bootstrap": "^5.2.3",
+        "bootstrap": "^5.3.3",
         "laravel-vite-plugin": "^1.0",
-        "sass": "^1.56.1",
+        "sass": "^1.80.2",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "datatables.net-bs4": "^2.1.8",
+        "datatables.net-bs5": "^2.1.8",
+        "datatables.net-buttons-bs5": "^3.1.2",
+        "datatables.net-responsive-bs4": "^3.0.3"
     }
 }
