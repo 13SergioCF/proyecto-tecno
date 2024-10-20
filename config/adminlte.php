@@ -383,7 +383,7 @@ return [
                 [
                     'text' => 'Tipo de Alimentos',
                     'icon' => 'fas fa-seedling',
-                    'url' => '#',
+                    'url' => 'food-types',
                 ],
                 [
                     'text' => 'Tipo de Nutriente',
