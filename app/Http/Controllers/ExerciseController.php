@@ -19,6 +19,6 @@ class ExerciseController extends Controller
     }
     public function typeExercise()
     {
-        return view('exercises.typeExercise');
+        return view('exercises.type_exercise');
     }
 }
