@@ -7,6 +7,7 @@ use App\Http\Controllers\TypeExerciseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodTypeController;
+use App\Http\Controllers\NutrientController;
 
 
 
@@ -28,6 +29,11 @@ Route::resource('food-types', FoodTypeController::class);
 Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->name('food-types.export.pdf');
 Route::get('food-types/export/excel', [FoodTypeController::class, 'exportExcel'])->name('food-types.export.excel');
 
+// nutriente
+Route::resource('nutrients', NutrientController::class);
+Route::get('nutrients/export/pdf', [NutrientController::class, 'exportPdf'])->name('nutrients.export.pdf');
+
+//Route::get('nutrients/export/excel', [FoodTypeController::class, 'exportExcel'])->name('nutrients.export.excel');
 
 
 

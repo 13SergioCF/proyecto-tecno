@@ -65,8 +65,8 @@ class FoodTypeController extends Controller
         return $pdf->download('tipos_de_alimento.pdf');
     }
     
-    public function exportExcel()
+    /*public function exportExcel()
     {
         return Excel::download(new FoodTypesExport, 'tipos_de_alimento.xlsx');
-    }
+    }*/
 }

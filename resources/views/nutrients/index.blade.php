@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Gestión de Nutrientes')
 
 @section('content_header')
     <div class="content-header">
@@ -8,8 +8,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">
-                        Gestión de Tipos de Alimento
-                        <small class="ml-3 mr-3">|</small><small>Lista de Tipos de Alimento</small>
+                        Gestión de Nutrientes
+                        <small class="ml-3 mr-3">|</small><small>Lista de Nutrientes</small>
                     </h1>
                 </div>
                 <div class="col-sm-6">
@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{!! url()->current() !!}">Tipos de Alimento</a>
+                            <a href="{!! url()->current() !!}">Nutrientes</a>
                         </li>
                     </ol>
                 </div>
@@ -37,12 +37,12 @@
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
                         <a class="nav-link active" href="{!! url()->current() !!}">
-                            <i class="fa fa-list mr-2"></i> Lista de Tipos de Alimento
+                            <i class="fa fa-list mr-2"></i> Lista de Nutrientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('food-types.create') !!}">
-                            <i class="fa fa-plus mr-2"></i> Crear Tipo de Alimento
+                        <a class="nav-link" href="{!! route('nutrients.create') !!}">
+                            <i class="fa fa-plus mr-2"></i> Crear Nutriente
                         </a>
                     </li>
                 </ul>
@@ -57,16 +57,17 @@
                     </div>
                     <div>
                         <div class="btn-group mb-3" role="group">
-                            <a href="{{ route('food-types.export.pdf') }}" class="btn btn-danger btn-lg">
+                            <a href="{{ route('nutrients.export.pdf') }}" class="btn btn-danger btn-lg">
                                 <i class="fas fa-file-pdf"></i> PDF
                             </a>
+
 
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <table id="tipo_alimentos" class="table table-striped" style="width:100%">
+                <table id="nutrientes" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>N°</th>
@@ -77,24 +78,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($foodTypes as $foodType)
-                            <tr class="status-{{ strtolower($foodType->estado) }}">
+                        @foreach ($nutrients as $nutrient)
+                            <tr class="status-{{ strtolower($nutrient->estado) }}">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $foodType->nombre }}</td>
-                                <td>{{ $foodType->descripcion }}</td>
+                                <td>{{ $nutrient->nombre }}</td>
+                                <td>{{ $nutrient->descripcion }}</td>
                                 <td>
-                                    @if ($foodType->estado == 'inactivo')
-                                        <span class="badge bg-danger">{{ $foodType->estado }}</span>
+                                    @if ($nutrient->estado == 'inactivo')
+                                        <span class="badge bg-danger">{{ $nutrient->estado }}</span>
                                     @else
-                                        <span class="badge bg-success">{{ $foodType->estado }}</span>
+                                        <span class="badge bg-success">{{ $nutrient->estado }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($foodType->estado == 'activo')
-                                        <a href="{{ route('food-types.edit', $foodType->id) }}" class="btn btn-warning btn-sm" title="Editar">
+                                    @if ($nutrient->estado == 'activo')
+                                        <a href="{{ route('nutrients.edit', $nutrient->id) }}" class="btn btn-warning btn-sm" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('food-types.destroy', $foodType->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('nutrients.destroy', $nutrient->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
@@ -102,7 +103,6 @@
                                             </button>
                                         </form>
                                     @else
-                                        <!-- Si está inactivo, no mostramos acciones -->
                                         <span class="text-muted">Sin acciones</span>
                                     @endif
                                 </td>
@@ -129,7 +129,7 @@
 
     <script>
         $(document).ready(function() {
-            var table = $('#tipo_alimentos').DataTable();
+            var table = $('#nutrientes').DataTable();
 
             // Filtrar la tabla por estado
             $('#filter').change(function() {
