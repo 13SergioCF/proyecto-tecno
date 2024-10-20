@@ -33,8 +33,6 @@
     </div>
 
     <div class="content">
-        <div class="clearfix"></div>
-        <div class="clearfix"></div>
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
@@ -60,15 +58,17 @@
                             <input class="form-control" placeholder="Nombre(s)" required name="name" type="text"
                                 id="name">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="apellido_paterno" class="control-label">Apellido Paterno:</label>
-                            <input class="form-control" placeholder="Paterno" required name="apellido_paterno"
-                                type="text" id="apellido_paterno">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="apellido_materno" class="control-label">Apellido Materno:</label>
-                            <input class="form-control" placeholder="Materno" required name="apellido_materno"
-                                type="text" id="apellido_materno">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="apellido_paterno" class="control-label">Apellido Paterno:</label>
+                                <input class="form-control" placeholder="Paterno" required name="apellido_paterno"
+                                    type="text" id="apellido_paterno">
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="apellido_materno" class="control-label">Apellido Materno:</label>
+                                <input class="form-control" placeholder="Materno" required name="apellido_materno"
+                                    type="text" id="apellido_materno">
+                            </div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="genero" class="control-label">Género:</label>
@@ -84,17 +84,19 @@
                             <input class="form-control" placeholder="Fecha de Nacimiento" required name="fecha_nacimiento"
                                 type="date" id="fecha_nacimiento">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="email" class="control-label">Email:</label>
-                            <input class="form-control" placeholder="Correo Electrónico" required name="email"
-                                type="email" id="email">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="email" class="control-label">Email:</label>
+                                <input class="form-control" placeholder="Correo Electrónico" required name="email"
+                                    type="email" id="email">
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="password" class="control-label">Contraseña:</label>
+                                <input class="form-control" placeholder="Contraseña" required name="password"
+                                    type="password" id="password">
+                            </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="password" class="control-label">Contraseña:</label>
-                            <input class="form-control" placeholder="Contraseña" required name="password" type="password"
-                                id="password">
-                        </div>
-                        <div class="form-group mb-3">
+                        <div class="col-md-6 form-group mb-3">
                             <label for="rol" class="control-label">Rol:</label>
                             <select name="rol" id="rol" class="form-control">
                                 @foreach ($roles as $role)

@@ -404,7 +404,7 @@ return [
                 [
                     'text' => 'Tipo de Ejercicios',
                     'icon' => 'fas fa-running',
-                    'url' => 'type/exercises',
+                    'url' => 'types',
                 ],
                 [
                     'text' => 'Rutinas',
