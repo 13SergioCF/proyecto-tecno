@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="nutrientes" class="table table-striped" style="width:100%">
+                <table id="data-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>N°</th>
@@ -92,10 +92,12 @@
                                 </td>
                                 <td>
                                     @if ($nutrient->estado == 'activo')
-                                        <a href="{{ route('nutrients.edit', $nutrient->id) }}" class="btn btn-warning btn-sm" title="Editar">
+                                        <a href="{{ route('nutrients.edit', $nutrient->id) }}"
+                                            class="btn btn-warning btn-sm" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('nutrients.destroy', $nutrient->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('nutrients.destroy', $nutrient->id) }}" method="POST"
+                                            style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
@@ -115,18 +117,8 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-@stop
-
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
-
+    <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
     <script>
         $(document).ready(function() {
             var table = $('#nutrientes').DataTable();
