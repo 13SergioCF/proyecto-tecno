@@ -378,7 +378,7 @@ return [
                 [
                     'text' => 'Alimentos',
                     'icon' => 'fas fa-carrot',
-                    'url' => '#',
+                    'url' => 'aliments',
                 ],
                 [
                     'text' => 'Tipo de Alimentos',

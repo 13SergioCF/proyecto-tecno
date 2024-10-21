@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Nutrient;
 use Illuminate\Http\Request;
-use App\Exports\NutrientsExport; // Asegúrate de crear este archivo de exportación si necesitas exportar
-use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\NutrientsExport; 
+
 
 use PDF;
 
@@ -64,12 +64,5 @@ class NutrientController extends Controller
         return $pdf->download('nutrientes.pdf'); // O `stream()` si prefieres abrir en vez de descargar
     }
     
-    
-   /*
-public function exportExcel()
-{
-    return Excel::download(new NutrientsExport, 'nutrientes.xlsx'); // Asegúrate de crear este archivo de exportación
-}
-*/
 
 }

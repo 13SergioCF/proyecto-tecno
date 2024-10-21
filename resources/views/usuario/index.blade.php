@@ -40,9 +40,7 @@
                     <a href="{{ route('users.export.pdf') }}" class="btn btn-danger btn-lg">
                         <i class="fas fa-file-pdf"></i> PDF
                     </a>
-                    <a href="{{ route('users.export.excel') }}" class="btn btn-success btn-lg">
-                        <i class="fas fa-file-excel"></i> Excel
-                    </a>
+
                 </div>
             </div>
         </div>

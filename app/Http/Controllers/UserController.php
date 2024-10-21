@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 use PDF;
 use App\Exports\UsersExport;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
+
 
 class UserController extends Controller
 {
@@ -100,8 +100,4 @@ class UserController extends Controller
         return $pdf->download('usuarios.pdf');
     }
 
-    public function exportExcel()
-    {
-        return Excel::download(new UsersExport, 'usuarios.xlsx');
-    }
 }
