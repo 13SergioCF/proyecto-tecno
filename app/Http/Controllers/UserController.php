@@ -36,18 +36,32 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'rol' => 'required',
         ]);
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'apellido_paterno' => $validatedData['apellido_paterno'],
-            'apellido_materno' => $validatedData['apellido_materno'],
-            'genero' => $validatedData['genero'],
-            'fecha_nacimiento' => $validatedData['fecha_nacimiento'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]);
-        $user->assignRole($request->input('rol'));
-        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
+
+        try {
+            $user = User::create([
+                'name' => $validatedData['name'],
+                'apellido_paterno' => $validatedData['apellido_paterno'],
+                'apellido_materno' => $validatedData['apellido_materno'],
+                'genero' => $validatedData['genero'],
+                'fecha_nacimiento' => $validatedData['fecha_nacimiento'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+            ]);
+
+            $user->assignRole($request->input('rol'));
+
+            return response()->json([
+                'message' => 'Usuario creado exitosamente',
+                'data' => $user
+            ], 201); // Código 201 para indicar que se creó un recurso
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al crear el usuario.',
+                'error' => $e->getMessage() // Opcional para detalles del error
+            ], 500); // Código 500 para errores del servidor
+        }
     }
+
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -86,9 +100,13 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente');
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            return response()->json(['message' => 'Usuario Eliminado Correctamente.']);
+        } else {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
     }
 
     public function exportPdf()

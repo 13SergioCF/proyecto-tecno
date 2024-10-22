@@ -59,7 +59,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('types.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
+                        <a class="nav-link" href="{!! route('exercise-types.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
                             Ejercicio</a>
                     </li>
                 </ul>
@@ -71,6 +71,7 @@
                             <th>N°</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -81,19 +82,22 @@
                                 <td>{{ $ejercicio->nombre }}</td>
                                 <td>{{ $ejercicio->descripcion }}</td>
                                 <td>
-                                    <a href="{{ route('types.edit', $ejercicio->id) }}" class="btn btn-warning btn-sm"
-                                        title="Editar">
+                                    @if ($ejercicio->estado == 'inactivo')
+                                        <span class="badge bg-danger">{{ $ejercicio->estado }}</span>
+                                    @else
+                                        <span class="badge bg-success">{{ $ejercicio->estado }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('exercise-types.edit', $ejercicio->id) }}"
+                                        class="btn btn-warning btn-sm" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <button type="button" class="btn btn-danger btn-sm delete-exercise-types"
+                                        data-id="{{ $ejercicio->id }}" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
 
-                                    <form action="{{ route('exercises.destroy', $ejercicio->id) }}" method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -105,4 +109,5 @@
 @stop
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-@stop
+    <script src="{{ asset('js/sweetAlert2/index_exercise_type.js') }}"></script>
+@endsection

@@ -89,21 +89,14 @@
                                 <td>{{ $user->roles->pluck('name')->join(', ') }}</td>
 
                                 <td>
-                                    <!-- Botón de Editar con ícono -->
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm"
                                         title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-
-                                    <!-- Botón de Eliminar con ícono -->
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-danger btn-sm delete-user"
+                                        data-id="{{ $user->id }}" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -117,34 +110,5 @@
 
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-    <script>
-            @if (session('success'))
-                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-            @endif
-    </script>
+    <script src="{{ asset('js/users/index_user.js') }}"></script>
 @stop
-
-@if (session('success'))
-    <!-- Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-success">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="modalTitle">
-                        <i class="fas fa-check-circle"></i> Operación exitosa
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <i class="fas fa-thumbs-up fa-3x text-success mb-3"></i>
-                    <p>{{ session('success') }}</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif

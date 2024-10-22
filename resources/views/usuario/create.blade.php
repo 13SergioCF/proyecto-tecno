@@ -50,8 +50,7 @@
             </div>
             <div class="card-body">
                 <div class="row my-5 justify-content-center">
-                    <form name="user-form" id="user-form" action="{{ route('users.store') }}" method="POST"
-                        class="col-md-8">
+                    <form name="user-form" id="user-form" class="col-md-8">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="name" class="control-label">Nombre:</label>
@@ -122,5 +121,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/createUser.js') }}"></script>
+    <script src="{{ asset('js/users/create_user.js') }}"></script>
 @stop

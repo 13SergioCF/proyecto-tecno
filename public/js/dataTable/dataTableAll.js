@@ -1,4 +1,3 @@
-console.log("hola mundo")
 $(document).ready(function () {
     $('#data-table').DataTable({
         "paging": true,          // Habilitar paginación
