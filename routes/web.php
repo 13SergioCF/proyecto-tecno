@@ -1,9 +1,8 @@
 <?php
 
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\TypeExerciseController;
+use App\Http\Controllers\ExerciseTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodTypeController;
@@ -21,7 +20,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('users', UserController::class);
 Route::resource('exercises', ExerciseController::class);
-Route::resource('types', TypeExerciseController::class);
+Route::resource('exercise-types', ExerciseTypeController::class);
+
 
 // tipo alimento
 

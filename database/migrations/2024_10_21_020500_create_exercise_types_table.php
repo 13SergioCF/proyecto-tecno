@@ -17,6 +17,7 @@ class CreateExerciseTypesTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('descripcion');
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
             $table->softDeletes(); // Agrega soporte para soft deletes
         });

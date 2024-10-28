@@ -33,7 +33,7 @@
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('types.index') !!}"><i class="fa fa-list mr-2"></i>Lista de Tipos de
+                        <a class="nav-link" href="{!! route('exercise-types.index') !!}"><i class="fa fa-list mr-2"></i>Lista de Tipos de
                             Ejercicio</a>
                     </li>
                     <li class="nav-item">
@@ -44,8 +44,7 @@
             </div>
             <div class="card-body">
                 <div class="row my-5 justify-content-center">
-                    <form name="exercise-type-form" id="exercise-type-form" action="{{ route('types.store') }}"
-                        method="POST" class="col-md-8">
+                    <form name="exercise-type-form" id="exercise-type-form" class="col-md-8">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="exercise-type-name" class="control-label">Nombre del Tipo de Ejercicio:</label>
@@ -61,7 +60,7 @@
                             <div class="col-12 text-right">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Agregar Tipo de
                                     Ejercicio</button>
-                                <a href="{!! route('types.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
+                                <a href="{!! route('exercise-types.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
                                     Cancelar</a>
                             </div>
                         </div>
@@ -74,5 +73,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/createUser.js') }}"></script>
-@stop
+    <script src="{{ asset('js/sweetAlert2/create_exercise_type.js') }}"></script>
+@endsection
