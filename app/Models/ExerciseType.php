@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ExerciseType extends Model
 {
-    use HasFactory, SoftDeletes; 
+    use HasFactory, SoftDeletes;
 
     protected $table = 'exercise_types';
 
@@ -18,4 +18,8 @@ class ExerciseType extends Model
     ];
 
     protected $dates = ['deleted_at'];
+    public function ejercicios()
+    {
+        return $this->hasMany(Exercise::class);
+    }
 }

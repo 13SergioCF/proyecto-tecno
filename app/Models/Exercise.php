@@ -4,19 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Exercise extends Model
 {
+    use HasFactory;
 
-    use HasFactory, SoftDeletes;
-
-       protected $fillable = [
-        'name',
-        'description',
-        'category',
-        'duration',
-        'calories_burned',
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'dificultad',
+        'duracion_estimada',
+        'exercise_type_id',
     ];
+    public function exerciseType()
+    {
+        return $this->belongsTo(ExerciseType::class, 'exercise_type_id');
+    }
 
+    // Definir la relación con el modelo Routine
+    // public function routines()
+    // {
+    //     return $this->belongsToMany(Routine::class, 'routine_exercise');
+    // }
 }

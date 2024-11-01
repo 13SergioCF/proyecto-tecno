@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\NutrientController;
-
-
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\RoutineController;
 
 Route::get('/', function () {
     return view('auth/login');
@@ -19,8 +19,16 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('users', UserController::class);
+
 Route::resource('exercises', ExerciseController::class);
+
 Route::resource('exercise-types', ExerciseTypeController::class);
+
+Route::resource('routines', RoutineController::class);
+
+Route::resource('questions', QuestionController::class);
+
+Route::get('preguntas', [QuestionController::class, 'index']);
 
 
 // tipo alimento

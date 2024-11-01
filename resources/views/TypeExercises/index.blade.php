@@ -28,7 +28,7 @@
         </div>
     </div>
 @stop
-@section('content')
+{{-- @section('content')
 
     <div class="content">
         <div class="clearfix"></div>
@@ -64,10 +64,10 @@
                 </ul>
             </div>
             <div class="container">
-                <h2 class="my-4">Lista de Ejercicios</h2>
+                <br>
                 <div class="row">
                     @foreach ($ejercicios as $ejercicio)
-                        <div class="col-md-15 mb-2"> <!-- Card más ancha ocupando 6 columnas -->
+                        <div class="col-md-12 mb-2"> <!-- Card más ancha ocupando 6 columnas -->
                             <div class="card h-100 shadow-lg"
                                 style="display: flex; flex-direction: row; max-height: 200px;">
                                 <img src="#" class="card-img-left" alt="Imagen del Ejercicio"
@@ -84,18 +84,18 @@
                                     </p>
                                     <p>
 
-                                        <button type="button" class="btn btn-danger btn-sm delete-exercise-types"
+                                        <button type="button" class="btn btn-danger mt-2 delete-exercise-types"
                                             data-id="{{ $ejercicio->id }}" title="Eliminar">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
-
+                                        <a href="{{ route('exercise-types.edit', $ejercicio->id) }}"
+                                            class="btn btn-warning mt-2 " title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-primary mt-2" title="Ver">
+                                            <i class="fa fa-eye"></i></a>
                                     </p>
-                                    <a href="{{ route('exercise-types.edit', $ejercicio->id) }}"
-                                        class="btn btn-warning mt-2" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-primary mt-2">Ver
-                                        Detalles</a>
+
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}
 
 
 @section('content')
@@ -146,7 +146,7 @@
                 <table id="data-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>N°</th>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Estado</th>
@@ -156,7 +156,7 @@
                     <tbody>
                         @foreach ($ejercicios as $ejercicio)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $ejercicio->id }}</td>
                                 <td>{{ $ejercicio->nombre }}</td>
                                 <td>{{ $ejercicio->descripcion }}</td>
                                 <td>
@@ -184,8 +184,8 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-    <script src="{{ asset('js/sweetAlert2/index_exercise_type.js') }}"></script>
+    <script src="{{ asset('js/exerciseTypes/index_exercise_type.js') }}"></script>
 @endsection

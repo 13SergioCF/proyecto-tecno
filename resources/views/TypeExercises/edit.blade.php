@@ -85,5 +85,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/sweetAlert2/edit_exercise_type.js') }}"></script>
+    <script src="{{ asset('js/exerciseTypes/edit_exercise_type.js') }}"></script>
 @stop

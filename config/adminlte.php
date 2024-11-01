@@ -409,7 +409,7 @@ return [
                 [
                     'text' => 'Rutinas',
                     'icon' => 'fas fa-list-ul',
-                    'url' => '#',
+                    'url' => 'routines',
                 ],
             ],
         ],
