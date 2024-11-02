@@ -45,7 +45,7 @@
                 </ul>
             </div>
             <div class="card-body">
-                <div class="row my-5 justify-content-center">
+                <div class="row my-5 justify-conte  nt-center">
                     <form name="food-type-form" id="food-type-form" action="{{ route('food-types.store') }}" method="POST" class="col-md-8">
                         @csrf
                         <div class="form-group mb-3">

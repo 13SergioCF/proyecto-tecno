@@ -15,6 +15,7 @@ class Exercise extends Model
         'dificultad',
         'duracion_estimada',
         'exercise_type_id',
+        'estado'
     ];
     public function exerciseType()
     {

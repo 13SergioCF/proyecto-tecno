@@ -85,16 +85,14 @@
                                 <td>{{ $exercise->nombre }}</td>
                                 <td>{{ $exercise->descripcion }}</td>
                                 <td>{{ $exercise->exerciseType->nombre ?? 'N/A' }}</td>
-                                <!-- Asegúrate de tener el nombre del tipo -->
                                 <td>{{ $exercise->duracion_estimada }}</td>
                                 <td>{{ ucfirst($exercise->dificultad) }}</td>
                                 <td>
-                                    @if ($exercise->estado == 'inactivo')
-                                        <span class="badge bg-danger">{{ $exercise->estado }}</span>
-                                    @else
-                                        <span class="badge bg-success">{{ $exercise->estado }}</span>
-                                    @endif
+                                    <span class="badge {{ $exercise->estado == 'inactivo' ? 'bg-danger' : 'bg-success' }}">
+                                        {{ $exercise->estado }}
+                                    </span>
                                 </td>
+
                                 <td>
                                     <a href="{{ route('exercises.edit', $exercise->id) }}" class="btn btn-warning btn-sm"
                                         title="Editar">

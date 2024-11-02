@@ -77,12 +77,12 @@ class RoutineController extends Controller
 
     public function destroy($id)
     {
-        try {
-            $routines = Routine::findOrFail($id);
+        $routines = Routine::find($id);
+        if ($routines) {
             $routines->delete();
-            return response()->json(['message' => 'Rutina eliminada exitosamente.']);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error al eliminar la rutina.', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Rutina Eliminada Satisfactoriamente.']);
+        } else {
+            return response()->json(['message' => 'routines not found.'], 404);
         }
     }
 }

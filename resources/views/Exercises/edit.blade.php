@@ -87,16 +87,16 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label for="estado">Estado</label>
-                                <select name="estado" id="estado" class="form-control">
-                                    <option value="activo" {{ $exercise->estado == 'activo' ? 'selected' : '' }}>Activo
-                                    </option>
-                                    <option value="inactivo" {{ $exercise->estado == 'inactivo' ? 'selected' : '' }}>
-                                        Inactivo
-                                </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select name="estado" id="estado" class="form-control">
+                                <option value="activo" {{ $exercise->estado == 'activo' ? 'selected' : '' }}>Activo
+                                </option>
+                                <option value="inactivo" {{ $exercise->estado == 'inactivo' ? 'selected' : '' }}>
+                                    Inactivo
+                                </option>
+                            </select>
                         </div>
                         <div class="row mt-3">
                             <div class="col-12 text-right">
