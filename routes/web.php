@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\NutrientController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionTypeController;
 use App\Http\Controllers\RoutineController;
 
 Route::get('/', function () {
@@ -29,7 +30,10 @@ Route::resource('routines', RoutineController::class);
 
 Route::resource('questions', QuestionController::class);
 
-Route::get('preguntas', [QuestionController::class, 'index']);
+Route::resource('question-types', QuestionTypeController::class);
+
+
+Route::get('preguntas', [QuestionController::class, 'questions']);
 
 
 // tipo alimento

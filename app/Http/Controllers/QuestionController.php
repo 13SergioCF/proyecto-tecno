@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\QuestionType;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -12,7 +13,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return view('questions.modal_index');
+        $questions = Question::with('questionType')->get();
+        $questionTypes = QuestionType::all();
+        return view('questions.index', compact('questions', 'questionTypes'));
     }
 
     /**
@@ -20,7 +23,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $questionTypes = QuestionType::where('estado', 'activo')->get();
+        return view('questions.create', compact('questionTypes'));
     }
 
     /**
@@ -28,7 +32,23 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'contenido' => 'required|string|max:255',
+            'question_type_id' => 'required|exists:question_types,id',
+        ]);
+
+        try {
+            Question::create($request->all());
+
+            return response()->json([
+                'message' => 'Pregunta agregada exitosamente.',
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al agregar la pregunta.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -58,8 +78,18 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Question $question)
+    public function destroy($id)
     {
-        //
+        $question = Question::find($id);
+        if ($question) {
+            $question->delete();
+            return response()->json(['message' => 'Question deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'Question not found.'], 404);
+        }
+    }
+    public function questions()
+    {
+        return view('questions.modal_index');
     }
 }

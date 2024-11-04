@@ -33,38 +33,34 @@
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('questions.index') !!}"><i class="fa fa-list mr-2"></i>Lista de
+                        <a class="nav-link" href="{!! route('question-types.index') !!}"><i class="fa fa-list mr-2"></i>Lista de Tipos de
                             Pregunta</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>Crear
-                            Pregunta</a>
+                        <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>Crear Tipo
+                            de Pregunta</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
                 <div class="row my-5 justify-content-center">
-                    <form name="question-form" id="question-form" class="col-md-8">
+                    <form name="question-type-form" id="question-type-form" class="col-md-8">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="question-type" class="control-label">Tipo de Pregunta:</label>
-                            <select name="question_type_id" id="question-type" class="form-control" required>
-                                <option value="" selected disabled>Seleccione el tipo de pregunta</option>
-                                @foreach ($questionTypes as $questionType)
-                                    <option value="{{ $questionType->id }}">{{ $questionType->nombre }}</option>
-                                @endforeach
-                            </select>
+                            <label for="question-type-name" class="control-label">Nombre del Tipo de Pregunta:</label>
+                            <input class="form-control" placeholder="Ej: Dieta, Ejercicio" required name="nombre"
+                                type="text" id="question-type-name">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="contenido" class="control-label">Contenido:</label>
-                            <textarea class="form-control" placeholder="Contenido para la pregunta" required name="contenido" id="contenido"></textarea>
+                            <label for="question-type-description" class="control-label">Descripción:</label>
+                            <textarea class="form-control" placeholder="Breve descripción del tipo de Pregunta" required name="descripcion"
+                                id="question-type-description"></textarea>
                         </div>
-
                         <div class="row mt-3">
                             <div class="col-12 text-right">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Agregar
+                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Agregar Tipo de
                                     Pregunta</button>
-                                <a href="{!! route('questions.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
+                                <a href="{!! route('question-types.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i>
                                     Cancelar</a>
                             </div>
                         </div>
@@ -77,5 +73,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/questions/create_question.js') }}"></script>
+    <script src="{{ asset('js/questionTypes/create_question_type.js') }}"></script>
 @endsection

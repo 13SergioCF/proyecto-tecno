@@ -353,20 +353,6 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'Gestion de Preguntas',
-            'icon' => 'fas fa-info-circle',
-            'submenu' => [
-                [
-                    'text' => 'Preguntas',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Tipo de Preguntas',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        [
             'text' => 'Periodo',
             'url' => 'admin/settings',
             'icon' => 'fas fa-calendar-alt',
@@ -410,6 +396,27 @@ return [
                     'text' => 'Rutinas',
                     'icon' => 'fas fa-list-ul',
                     'url' => 'routines',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Gestion de Preguntas',
+            'icon' => 'fas fa-question-circle',
+            'submenu' => [
+                [
+                    'text' => 'Preguntas',
+                    'icon' => 'fas fa-question',
+                    'url' => 'questions',
+                ],
+                [
+                    'text' => 'Tipo de Preguntas',
+                    'icon' => 'fas fa-comment-dots',
+                    'url' => 'question-types',
+                ],
+                [
+                    'text' => 'Formulario de Preguntas',
+                    'icon' => 'fas fa-file-alt',
+                    'url' => 'preguntas',
                 ],
             ],
         ],

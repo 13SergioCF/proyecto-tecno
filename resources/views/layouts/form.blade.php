@@ -78,6 +78,9 @@
                                             </div>
                                         </div>
                                         <div class="button-row d-flex mt-4">
+                                            <a href="{!! route('questions.index') !!}" class="btn btn-default"><i
+                                                    class="fa fa-undo"></i>
+                                                Salir</a>
                                             <button class="btn btn-primary ml-auto js-btn-next" type="button"
                                                 title="Next">Next</button>
                                         </div>

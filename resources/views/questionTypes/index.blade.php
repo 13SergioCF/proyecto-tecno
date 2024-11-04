@@ -8,8 +8,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">
-                        Gestión de Preguntas
-                        <small class="ml-3 mr-3">|</small><small>Lista de preguntas</small>
+                        Gestión de Tipo de Preguntas
+                        <small class="ml-3 mr-3">|</small><small>Lista de Tipo de preguntas</small>
                     </h1>
                 </div>
                 <div class="col-sm-6">
@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="{!! url()->current() !!}">Preguntas</a>
+                            <a href="{!! url()->current() !!}">Tipo de Preguntas</a>
                         </li>
                     </ol>
                 </div>
@@ -51,11 +51,11 @@
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
                         <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-list mr-2"></i>Lista
-                            de Preguntas</a>
+                            de Tipo de Preguntas</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('questions.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
+                        <a class="nav-link" href="{!! route('question-types.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
                             Tipo de Preguntas</a>
                     </li>
                 </ul>
@@ -65,32 +65,32 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Contenido</th>
-                            <th>Tipo de pregunta</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($questions as $question)
+                        @foreach ($questionTypes as $questionType)
                             <tr>
-                                <td>{{ $question->id }}</td>
-                                <td>{{ $question->contenido }}</td>
-                                <td>{{ $question->questionType->nombre }}</td>
+                                <td>{{ $questionType->id }}</td>
+                                <td>{{ $questionType->nombre }}</td>
+                                <td>{{ $questionType->descripcion }}</td>
                                 <td>
-                                    @if ($question->estado == 'inactivo')
-                                        <span class="badge bg-danger">{{ $question->estado }}</span>
+                                    @if ($questionType->estado == 'inactivo')
+                                        <span class="badge bg-danger">{{ $questionType->estado }}</span>
                                     @else
-                                        <span class="badge bg-success">{{ $question->estado }}</span>
+                                        <span class="badge bg-success">{{ $questionType->estado }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-warning btn-sm"
-                                        title="Editar">
+                                    <a href="{{ route('question-types.edit', $questionType->id) }}"
+                                        class="btn btn-warning btn-sm" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-sm delete-question"
-                                        data-id="{{ $question->id }}" title="Eliminar">
+                                    <button type="button" class="btn btn-danger btn-sm delete-question-types"
+                                        data-id="{{ $questionType->id }}" title="Eliminar">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
 
@@ -105,5 +105,5 @@
 @endsection
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-    <script src="{{ asset('js/questions/index_question.js') }}"></script>
+    <script src="{{ asset('js/questionTypes/index_question_type.js') }}"></script>
 @endsection
