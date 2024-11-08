@@ -1,27 +1,50 @@
 /* styles.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif; /* Fuente atractiva */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f4f8;
+    background: linear-gradient(
+        135deg,
+        #e0f7fa,
+        #f3f4f6
+    ); /* Fondo con degradado suave */
+    background-size: cover;
+    color: #333; /* Texto oscuro para buen contraste */
+    overflow: hidden; /* Evita el desplazamiento de la pantalla */
 }
 
+/* Efecto de partículas en el fondo */
+body::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    bottom: -50px;
+    left: -50px;
+    background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png"); /* Patrón de textura sutil */
+    opacity: 0.2; /* Transparencia del patrón */
+    z-index: 1;
+}
+
+/* Contenedor de bienvenida */
 .welcome-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: #fff;
-    padding: 20px;
+    background-color: #ffffff; /* Fondo de la tarjeta */
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     max-width: 400px;
     opacity: 0;
     transform: translateY(-50px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 2; /* Asegura que esté sobre el patrón de fondo */
 }
 
 .welcome-container.show {
@@ -29,36 +52,41 @@ body {
     transform: translateY(0);
 }
 
+/* Imagen del nutricionista */
 .nutritionist img {
-    width: 200px;
-    border-radius: 50%;
-    margin-bottom: 15px;
+    width: 250px; /* Tamaño de la imagen ajustado */
 }
 
+/* Mensaje */
 .message p {
     font-size: 1.1em;
     color: #333;
     margin: 0 0 15px;
 }
 
+/* Botón de inicio */
 #start-button {
-    background-color: #28a745;
+    background-color: #4caf50; /* Color verde amigable */
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 1em;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.7s ease, transform 0.6s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #start-button:hover {
-    background-color: #218838;
+    background-color: #45a049; /* Color de hover */
+    transform: translateY(
+        -2px
+    ); /* Efecto de desplazamiento al pasar el mouse */
 }
 
 /* Burbuja de diálogo */
 .message-bubble {
-    background-color: #f0f4f8;
+    background-color: #ffefc1; /* Fondo claro tipo burbuja */
     border-radius: 15px;
     padding: 15px 20px;
     font-size: 1.1em;
@@ -68,21 +96,35 @@ body {
     margin: 10px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
+    animation: fadeIn 1s ease-out; /* Animación de entrada */
+    z-index: 2;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Triángulo de la burbuja */
 .message-bubble::after {
     content: "";
     position: absolute;
-    bottom: -10px; /* Ajusta la posición según tu diseño */
-    left: 20px; /* Ajusta la posición según tu diseño */
+    bottom: -10px;
+    left: 20px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #f0f4f8;
+    border-top: 10px solid #ffefc1;
 }
 
+/* Pantalla de carga */
 .loading-screen {
     position: fixed;
     top: 0;
@@ -99,8 +141,8 @@ body {
 .spinner {
     width: 50px;
     height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
+    border: 8px solid #f3f3f3; /* Color neutro */
+    border-top: 8px solid #4caf50; /* Verde distintivo */
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }

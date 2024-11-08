@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Preguntas Medicas</title>
+    <title>Preguntas Médicas</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
     <link rel="stylesheet" href="/css/questions/index.css">
@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
                         <div class="multisteps-form__progress">
-                            @foreach (array_chunk($questions->toArray(), 5) as $index => $chunk)
+                            @foreach (array_chunk($questions->all(), 5) as $index => $chunk)
                                 <button class="multisteps-form__progress-btn {{ $index === 0 ? 'js-active' : '' }}"
                                     type="button" title="Paso {{ $index + 1 }}">Paso {{ $index + 1 }}</button>
                             @endforeach
@@ -27,17 +27,34 @@
                 <div class="row">
                     <div class="col-12 col-lg-8 m-auto">
                         <form class="multisteps-form__form">
-                            @foreach (array_chunk($questions->toArray(), 5) as $index => $chunk)
+                            @foreach (array_chunk($questions->all(), 5) as $index => $chunk)
                                 <div class="multisteps-form__panel shadow p-4 rounded bg-white {{ $index === 0 ? 'js-active' : '' }}"
                                     data-animation="slideHorz">
                                     <h3 class="multisteps-form__title">Preguntas del Paso {{ $index + 1 }}</h3>
                                     <div class="multisteps-form__content">
                                         @foreach ($chunk as $question)
-                                            <div class="form-row mt-4">
-                                                <label>{{ $question->contenido }}</label>
-                                                <input class="multisteps-form__input form-control" type="text"
-                                                    name="answers[{{ $question->id }}]"
-                                                    placeholder="Escribe tu respuesta" />
+                                            <div class="form-row mt-1">
+                                                <label class="d-block mb-2">{{ $question->contenido }}</label>
+
+                                                @if ($question->formato === 'eleccion_multiple')
+                                                    <!-- Opciones de tipo elección múltiple con checkboxes -->
+                                                    <div class="ml-3">
+                                                        @foreach ($question->opciones as $opcion)
+                                                            <div class="form-check mb-2">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    name="answers[{{ $question->id }}][]" value="{{ $opcion->id }}" id="option-{{ $opcion->id }}">
+                                                                <label class="form-check-label" for="option-{{ $opcion->id }}">
+                                                                    {{ $opcion->texto }}
+                                                                </label>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <!-- Campo para preguntas de redacción -->
+                                                    <input class="multisteps-form__input form-control" type="text"
+                                                        name="answers[{{ $question->id }}]"
+                                                        placeholder="Escribe tu respuesta" />
+                                                @endif
                                             </div>
                                         @endforeach
                                         <div class="button-row d-flex mt-4">

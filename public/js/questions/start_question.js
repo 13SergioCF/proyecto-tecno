@@ -18,6 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Espera a que termine la animación antes de redirigir
         setTimeout(() => {
             window.location.href = '/preguntas'; // Redirige a la ruta "preguntas"
-        }, 500);
+        }, 600);
     });
 });
