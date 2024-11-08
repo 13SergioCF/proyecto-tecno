@@ -8,8 +8,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">
-                        Gestion de Tipo de Preguntas
-                        <small class="ml-3 mr-3">|</small><small>Crear Tipo de Pregunta</small>
+                        Gestion de Preguntas
+                        <small class="ml-3 mr-3">|</small><small>Crear Pregunta</small>
                     </h1>
                 </div>
                 <div class="col-sm-6">

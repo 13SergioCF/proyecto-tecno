@@ -1,0 +1,115 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f4f8;
+}
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.welcome-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nutritionist img {
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.message p {
+    font-size: 1.1em;
+    color: #333;
+    margin: 0 0 15px;
+}
+
+#start-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#start-button:hover {
+    background-color: #218838;
+}
+
+/* Burbuja de diálogo */
+.message-bubble {
+    background-color: #f0f4f8;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    color: #333;
+    max-width: 300px;
+    position: relative;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Triángulo de la burbuja */
+.message-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; /* Ajusta la posición según tu diseño */
+    left: 20px; /* Ajusta la posición según tu diseño */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f0f4f8;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -56,7 +56,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{!! route('questions.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
-                            Tipo de Preguntas</a>
+                            Pregunta</a>
                     </li>
                 </ul>
             </div>

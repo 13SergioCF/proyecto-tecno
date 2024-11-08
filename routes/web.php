@@ -34,6 +34,7 @@ Route::resource('question-types', QuestionTypeController::class);
 
 
 Route::get('preguntas', [QuestionController::class, 'questions']);
+Route::get('inicio', [QuestionController::class, 'startQuestion']);
 
 
 // tipo alimento

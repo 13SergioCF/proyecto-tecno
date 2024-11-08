@@ -205,3 +205,16 @@ body a {
     -webkit-transform: scale(1);
     transform: scale(1);
 }
+
+.multisteps-form__form,
+.multisteps-form__progress {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.multisteps-form__form.show,
+.multisteps-form__progress.show {
+    opacity: 1;
+    transform: translateY(0);
+}

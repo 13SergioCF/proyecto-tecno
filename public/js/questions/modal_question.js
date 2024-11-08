@@ -1,4 +1,3 @@
-console.log("hola mundo")
 const DOMstrings = {
     stepsBtnClass: 'multisteps-form__progress-btn',
     stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
@@ -11,174 +10,109 @@ const DOMstrings = {
     stepNextBtnClass: 'js-btn-next'
 };
 
+// Mostrar el formulario con efecto de entrada después de un breve retraso
+window.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+        DOMstrings.stepsForm.classList.add('show'); // Muestra el formulario
+        DOMstrings.stepsBar.classList.add('show');   // Muestra el contenedor de progreso
+    }, 500); // 500 ms de retraso para la animación de entrada
+});
 
-//remove class from a set of items
+// Función para eliminar clases de un conjunto de elementos
 const removeClasses = (elemSet, className) => {
-
     elemSet.forEach(elem => {
-
         elem.classList.remove(className);
-
     });
-
 };
 
-//return exect parent node of the element
+// Función para encontrar el nodo padre de un elemento específico
 const findParent = (elem, parentClass) => {
-
     let currentNode = elem;
-
     while (!currentNode.classList.contains(parentClass)) {
         currentNode = currentNode.parentNode;
     }
-
     return currentNode;
-
 };
 
-//get active button step number
+// Obtener el número de paso activo
 const getActiveStep = elem => {
     return Array.from(DOMstrings.stepsBtns).indexOf(elem);
 };
 
-//set all steps before clicked (and clicked too) to active
+// Activar el paso correspondiente en la barra de progreso
 const setActiveStep = activeStepNum => {
-
-    //remove active state from all the state
     removeClasses(DOMstrings.stepsBtns, 'js-active');
-
-    //set picked items to active
     DOMstrings.stepsBtns.forEach((elem, index) => {
-
         if (index <= activeStepNum) {
             elem.classList.add('js-active');
         }
-
     });
 };
 
-//get active panel
+// Obtener el panel activo
 const getActivePanel = () => {
-
     let activePanel;
-
     DOMstrings.stepFormPanels.forEach(elem => {
-
         if (elem.classList.contains('js-active')) {
-
             activePanel = elem;
-
         }
-
     });
-
     return activePanel;
-
 };
 
-//open active panel (and close unactive panels)
+// Activar el panel correspondiente al paso activo
 const setActivePanel = activePanelNum => {
-
-    //remove active class from all the panels
     removeClasses(DOMstrings.stepFormPanels, 'js-active');
-
-    //show active panel
     DOMstrings.stepFormPanels.forEach((elem, index) => {
         if (index === activePanelNum) {
-
             elem.classList.add('js-active');
-
             setFormHeight(elem);
-
         }
     });
-
 };
 
-//set form height equal to current panel height
+// Ajustar la altura del formulario al panel actual
 const formHeight = activePanel => {
-
     const activePanelHeight = activePanel.offsetHeight;
-
     DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
-
 };
 
 const setFormHeight = () => {
     const activePanel = getActivePanel();
-
     formHeight(activePanel);
 };
 
-//STEPS BAR CLICK FUNCTION
+// Evento de clic en la barra de pasos para activar el paso correspondiente
 DOMstrings.stepsBar.addEventListener('click', e => {
-
-    //check if click target is a step button
     const eventTarget = e.target;
+    if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) return;
 
-    if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) {
-        return;
-    }
-
-    //get active button step number
     const activeStep = getActiveStep(eventTarget);
-
-    //set all steps before clicked (and clicked too) to active
     setActiveStep(activeStep);
-
-    //open active panel
     setActivePanel(activeStep);
 });
 
-//PREV/NEXT BTNS CLICK
+// Evento de clic en los botones Prev/Next
 DOMstrings.stepsForm.addEventListener('click', e => {
-
     const eventTarget = e.target;
+    if (!(eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`))) return;
 
-    //check if we clicked on `PREV` or NEXT` buttons
-    if (!(eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`))) {
-        return;
-    }
-
-    //find active panel
     const activePanel = findParent(eventTarget, `${DOMstrings.stepFormPanelClass}`);
-
     let activePanelNum = Array.from(DOMstrings.stepFormPanels).indexOf(activePanel);
 
-    //set active step and active panel onclick
+    // Aumentar o reducir el número del panel dependiendo del botón (Prev o Next)
     if (eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`)) {
         activePanelNum--;
-
     } else {
-
         activePanelNum++;
-
     }
 
     setActiveStep(activePanelNum);
     setActivePanel(activePanelNum);
-
 });
 
-//SETTING PROPER FORM HEIGHT ONLOAD
+// Ajustar la altura del formulario al cargar la página
 window.addEventListener('load', setFormHeight, false);
 
-//SETTING PROPER FORM HEIGHT ONRESIZE
+// Ajustar la altura del formulario al cambiar el tamaño de la ventana
 window.addEventListener('resize', setFormHeight, false);
-
-//changing animation via animation select !!!YOU DON'T NEED THIS CODE (if you want to change animation type, just change form panels data-attr)
-
-const setAnimationType = newType => {
-    DOMstrings.stepFormPanels.forEach(elem => {
-        elem.dataset.animation = newType;
-    });
-};
-
-//selector onchange - changing animation
-const animationSelect = document.querySelector('.pick-animation__select');
-
-animationSelect.addEventListener('change', () => {
-    const newAnimationType = animationSelect.value;
-
-    setAnimationType(newAnimationType);
-});

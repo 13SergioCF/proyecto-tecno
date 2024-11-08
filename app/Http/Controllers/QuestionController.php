@@ -90,6 +90,14 @@ class QuestionController extends Controller
     }
     public function questions()
     {
-        return view('questions.modal_index');
+        $questions = \DB::table('questions')
+            ->where('estado', 'activo')
+            ->whereNull('deleted_at')
+            ->get();
+        return view('questions.modal_index', compact('questions'));
+    }
+    public function startQuestion()
+    {
+        return view('questions.start');
     }
 }
