@@ -21,7 +21,8 @@ class Question extends Model
         'id',
         'contenido',
         'question_type_id',
-        'estado'
+        'estado',
+        'formato'
     ];
 
     /**
@@ -33,6 +34,11 @@ class Question extends Model
     public function questionType()
     {
         return $this->belongsTo(QuestionType::class);
+    }
+
+    public function opciones()
+    {
+        return $this->hasMany(QuestionOption::class, 'question_id');
     }
 
     // /**

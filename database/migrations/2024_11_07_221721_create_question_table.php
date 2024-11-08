@@ -18,6 +18,7 @@ return new class extends Migration
                 ->constrained('question_types')
                 ->onDelete('cascade');
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
+            $table->enum('formato', ['eleccion_multiple', 'redaccion'])->default('redaccion');
             $table->timestamps();
             $table->softDeletes();
         });

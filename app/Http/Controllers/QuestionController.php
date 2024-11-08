@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Models\QuestionType;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::with('questionType')->get();
+        $questions = Question::with('opciones', 'questionType')->get();
         $questionTypes = QuestionType::all();
         return view('questions.index', compact('questions', 'questionTypes'));
     }
@@ -32,13 +33,31 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar los campos básicos sin incluir 'opciones'
         $request->validate([
             'contenido' => 'required|string|max:255',
             'question_type_id' => 'required|exists:question_types,id',
+            'formato' => 'required|in:eleccion_multiple,redaccion',
         ]);
 
+        // Validar el campo 'opciones' solo si el formato es "elección múltiple"
+        if ($request->formato === 'eleccion_multiple') {
+            $request->validate([
+                'opciones' => 'required|array',
+                'opciones.*' => 'string|max:255',
+            ]);
+        }
+
         try {
-            Question::create($request->all());
+            // Crear la pregunta
+            $question = Question::create($request->only(['contenido', 'question_type_id', 'formato']));
+
+            // Guardar las opciones solo si el formato es "elección múltiple"
+            if ($request->formato === 'eleccion_multiple' && isset($request->opciones)) {
+                foreach ($request->opciones as $opcion) {
+                    $question->opciones()->create(['texto' => $opcion]);
+                }
+            }
 
             return response()->json([
                 'message' => 'Pregunta agregada exitosamente.',
@@ -50,6 +69,7 @@ class QuestionController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -90,10 +110,7 @@ class QuestionController extends Controller
     }
     public function questions()
     {
-        $questions = \DB::table('questions')
-            ->where('estado', 'activo')
-            ->whereNull('deleted_at')
-            ->get();
+        $questions = Question::with('opciones')->where('estado', 'activo')->whereNull('deleted_at')->get();
         return view('questions.modal_index', compact('questions'));
     }
     public function startQuestion()

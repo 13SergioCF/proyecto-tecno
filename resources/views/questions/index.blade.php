@@ -67,6 +67,7 @@
                             <th>ID</th>
                             <th>Contenido</th>
                             <th>Tipo de pregunta</th>
+                            <th>Formato</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -77,6 +78,7 @@
                                 <td>{{ $question->id }}</td>
                                 <td>{{ $question->contenido }}</td>
                                 <td>{{ $question->questionType->nombre }}</td>
+                                <th>{{ $question->formato }}</th>
                                 <td>
                                     @if ($question->estado == 'inactivo')
                                         <span class="badge bg-danger">{{ $question->estado }}</span>

@@ -59,7 +59,28 @@
                             <label for="contenido" class="control-label">Contenido:</label>
                             <textarea class="form-control" placeholder="Contenido para la pregunta" required name="contenido" id="contenido"></textarea>
                         </div>
-
+                        <div class="form-group mb-3">
+                            <label for="formato" class="control-label">Formato de Pregunta:</label>
+                            <select name="formato" id="formato" class="form-control" required
+                                onchange="toggleOptionsField()">
+                                <option value="" selected disabled>Seleccione el formato de la pregunta</option>
+                                <option value="eleccion_multiple">Elección Múltiple</option>
+                                <option value="redaccion">Redacción</option>
+                            </select>
+                        </div>
+                        <div id="opciones-container" class="form-group mb-3" style="display: none;">
+                            <label for="opciones" class="control-label">Opciones (para Elección Múltiple):</label>
+                            <div id="opciones-list">
+                                <div class="input-group mb-2">
+                                    <input type="text" name="opciones[]" class="form-control" placeholder="Opción">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            onclick="removeOption(this)">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addOption()">Agregar Opción</button>
+                        </div>
                         <div class="row mt-3">
                             <div class="col-12 text-right">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Agregar
@@ -78,4 +99,5 @@
 
 @section('js')
     <script src="{{ asset('js/questions/create_question.js') }}"></script>
+    <script src="{{ asset('js/questions/question_options.js') }}"></script>
 @endsection
