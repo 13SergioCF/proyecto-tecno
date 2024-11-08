@@ -118,31 +118,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            var table = $('#nutrientes').DataTable();
-
-            // Filtrar la tabla por estado
-            $('#filter').change(function() {
-                var status = $(this).val();
-
-                table.rows().every(function() {
-                    var row = this.node();
-                    // Mostrar todas las filas si se selecciona "Todos"
-                    if (status === 'all') {
-                        $(row).show();
-                    } else {
-                        // Mostrar solo filas con la clase correspondiente
-                        if ($(row).hasClass('status-' + status)) {
-                            $(row).show();
-                        } else {
-                            $(row).hide();
-                        }
-                    }
-                });
-                table.draw(); // Redibujar la tabla para aplicar los cambios
-            });
-        });
-    </script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
+<script src="{{ asset('js/foodTypes/foodTypes.js') }}"></script>
 @stop

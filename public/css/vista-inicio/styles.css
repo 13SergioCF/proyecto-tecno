@@ -1,0 +1,301 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Encabezado */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #4caf50;
+    padding: 1em 2em;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-buttons .btn {
+    color: white;
+    text-decoration: none;
+    margin: 0 0.5em;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Estilos para botones de inicio de sesión y registro */
+.nav-buttons .btn-login {
+    background-color: #4caf50;
+    font-weight: bold;
+    padding: 0.5em 1.2em;
+    border: 2px solid #ffffff;
+    border-radius: 25px;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-buttons .btn-login:hover {
+    background-color: #000000;
+    transform: scale(1.05);
+}
+
+.nav-buttons .btn-register {
+    background-color: #4caf50;
+    font-weight: bold;
+    border: 2px solid #ffffff;
+    padding: 0.5em 1.2em;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-buttons .btn-register:hover {
+    background-color: #050505;
+    transform: scale(1.05);
+}
+
+/* Sección de bienvenida con imagen de fondo */
+.hero {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    color: white;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("/img/dieta.jpg") no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 2s;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+
+.hero p {
+    font-size: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.explorar-button {
+    background-color: #ffffff;
+    color: #4caf50;
+    border: none;
+    padding: 0.8em 2em;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.explorar-button:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Quiénes Somos */
+#quienes-somos {
+    background-color: #f4f4f4;
+    padding: 5em 1em;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em 2em;
+    gap: 2em;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.about-image img {
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    animation: fadeIn 1.5s ease;
+}
+
+.about-content {
+    flex: 2;
+    animation: slideIn 1.5s ease;
+}
+
+.about-content h3 {
+    color: #4caf50;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about-content h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.highlight {
+    color: #4caf50;
+}
+
+.about-content h4 {
+    color: #4caf50;
+    font-weight: 600;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+    text-transform: uppercase;
+}
+
+.about-content p {
+    color: #555;
+    font-size: 1em;
+    margin-bottom: 1em;
+    line-height: 1.6;
+}
+
+.cv-button {
+    display: inline-block;
+    padding: 0.8em 2em;
+    font-size: 1em;
+    color: #4caf50;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.cv-button:hover {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+/* Animación para Quiénes Somos */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; }
+}
+
+/* Servicios */
+.services {
+    padding: 3em 2em;
+    background-color: #ffffff;
+}
+
+.services h2 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: #4caf50;
+}
+
+.service-container {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.service-card {
+    background-color: #f0f0f0;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s;
+    margin: 1em;
+}
+
+.service-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.5em;
+}
+
+/* Pie de página */
+footer {
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+}
+
+.social-icons {
+    margin-top: 0.5em;
+}
+
+.social-icons a {
+    margin: 0 0.5em;
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+    color: #ccc;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .about-content h1 {
+        font-size: 2em;
+    }
+}
