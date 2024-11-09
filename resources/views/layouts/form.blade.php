@@ -37,18 +37,39 @@
                                                 <label class="d-block mb-2">{{ $question->contenido }}</label>
 
                                                 @if ($question->formato === 'eleccion_multiple')
-                                                    <!-- Opciones de tipo elección múltiple con checkboxes -->
-                                                    <div class="ml-3">
-                                                        @foreach ($question->opciones as $opcion)
-                                                            <div class="form-check mb-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    name="answers[{{ $question->id }}][]" value="{{ $opcion->id }}" id="option-{{ $opcion->id }}">
-                                                                <label class="form-check-label" for="option-{{ $opcion->id }}">
-                                                                    {{ $opcion->texto }}
-                                                                </label>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
+                                                    @if ($question->seleccion_multiple === 'si')
+                                                        <!-- Opciones de selección múltiple con checkboxes -->
+                                                        <div class="ml-3">
+                                                            @foreach ($question->opciones as $opcion)
+                                                                <div class="form-check mb-2">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="answers[{{ $question->id }}][]"
+                                                                        value="{{ $opcion->id }}"
+                                                                        id="option-{{ $opcion->id }}">
+                                                                    <label class="form-check-label"
+                                                                        for="option-{{ $opcion->id }}">
+                                                                        {{ $opcion->texto }}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @else
+                                                        <!-- Opciones de selección única con radio buttons -->
+                                                        <div class="ml-3">
+                                                            @foreach ($question->opciones as $opcion)
+                                                                <div class="form-check mb-2">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="answers[{{ $question->id }}]"
+                                                                        value="{{ $opcion->id }}"
+                                                                        id="option-{{ $opcion->id }}">
+                                                                    <label class="form-check-label"
+                                                                        for="option-{{ $opcion->id }}">
+                                                                        {{ $opcion->texto }}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 @else
                                                     <!-- Campo para preguntas de redacción -->
                                                     <input class="multisteps-form__input form-control" type="text"

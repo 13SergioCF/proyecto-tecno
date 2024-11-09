@@ -60,6 +60,13 @@
                             <textarea class="form-control" placeholder="Contenido para la pregunta" required name="contenido" id="contenido"></textarea>
                         </div>
                         <div class="form-group mb-3">
+                            <label for="seleccion_multiple" class="control-label">¿Permite selección múltiple?</label>
+                            <select name="seleccion_multiple" id="seleccion_multiple" class="form-control" required>
+                                <option value="no" selected>Una sola respuesta</option>
+                                <option value="si">Múltiples respuestas</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
                             <label for="formato" class="control-label">Formato de Pregunta:</label>
                             <select name="formato" id="formato" class="form-control" required
                                 onchange="toggleOptionsField()">
