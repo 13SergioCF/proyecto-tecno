@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(
+        135deg,
+        #e0f7fa,
+        #f3f4f6
+    ); /* Fondo con degradado suave en tonos pastel */
+    background-size: cover;
+    color: #333;
+    overflow: hidden;
+    position: relative;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.content {
+    position: relative;
+    z-index: 10; /* Asegura que el formulario esté encima de las bolas */
+}
+
+.ball {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(
+        97,
+        218,
+        251,
+        0.3
+    ); /* Color pastel y más transparente */
+    z-index: 1; /* Coloca las bolas detrás del contenido */
+}
+
+.form-row {
+    animation: fadeInUp 0.3s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.multisteps-form__panel {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.multisteps-form__panel.js-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.multisteps-form__panel:not(.js-active) {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+.multisteps-form__panel {
+    background: linear-gradient(135deg, #ffffff, #f0f4f8);
+}
+
+.multisteps-form__progress-btn {
+    background-color: #d1e7ff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #555;
+    font-weight: bold;
+    border: 2px solid transparent;
+}
+
+.multisteps-form__progress-btn.js-active {
+    background-color: #4da9ff;
+    color: black;
+    border-color: #4da9ff;
+}

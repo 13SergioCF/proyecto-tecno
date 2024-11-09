@@ -35,6 +35,8 @@ Route::resource('routines', RoutineController::class);
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
+Route::post('questions/store-answers', [QuestionController::class, 'storeAnswers']);
+
 
 
 Route::get('preguntas', [QuestionController::class, 'questions']);
@@ -47,11 +49,11 @@ Route::resource('food-types', FoodTypeController::class);
 Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->name('food-types.export.pdf');
 Route::get('food-types/export/excel', [FoodTypeController::class, 'exportExcel'])->name('food-types.export.excel');
 
- // gestion de alimento 
-    
+// gestion de alimento 
+
 Route::resource('aliments', AlimentController::class);
 
- // Ruta para exportar a PDF
+// Ruta para exportar a PDF
 Route::get('aliments/export/pdf', [AlimentController::class, 'exportPdf'])->name('aliments.exportPdf');
 
 
@@ -68,7 +70,3 @@ Route::get('/users/export/excel', [UserController::class, 'exportExcel'])->name(
 
 // period
 Route::resource('periods', PeriodController::class);
-
-
-
-

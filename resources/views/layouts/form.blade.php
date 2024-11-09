@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
     <link rel="stylesheet" href="/css/questions/index.css">
+    <link rel="stylesheet" href="/css/questions/bols.css">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -26,11 +29,13 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-8 m-auto">
-                        <form class="multisteps-form__form">
+                        <form class="multisteps-form__form" name="answer-form" id="answer-form" class="col-md-8">
+                            @csrf
                             @foreach (array_chunk($questions->all(), 5) as $index => $chunk)
                                 <div class="multisteps-form__panel shadow p-4 rounded bg-white {{ $index === 0 ? 'js-active' : '' }}"
                                     data-animation="slideHorz">
-                                    <h3 class="multisteps-form__title">Preguntas del Paso {{ $index + 1 }}</h3>
+                                    <h3 id="typing-effect" class="multisteps-form__title">Preguntas del Paso
+                                        {{ $index + 1 }}</h3>
                                     <div class="multisteps-form__content">
                                         @foreach ($chunk as $question)
                                             <div class="form-row mt-1">
@@ -90,8 +95,8 @@
                                                 <button class="btn btn-primary ml-auto js-btn-next" type="button"
                                                     title="Next">Next</button>
                                             @else
-                                                <button class="btn btn-success ml-auto" type="submit"
-                                                    title="Enviar">Enviar</button>
+                                                <button type="submit" class="btn btn-success ml-auto"><i
+                                                        class="fas fa-paper-plane"></i> Enviar</button>
                                             @endif
                                         </div>
                                     </div>
@@ -103,9 +108,18 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var base_url = "{{ URL::to('/') }}/";
+        var _crf = "{{ csrf_token() }}";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/questions/modal_question.js') }}"></script>
+    <script src="{{ asset('js/questions/bols.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/utils/SwalHandler.js') }}"></script>
+    <script src="{{ asset('js/answers/send_answers.js') }}"></script>
 </body>
 
 </html>
