@@ -22,6 +22,7 @@ class Question extends Model
         'contenido',
         'question_type_id',
         'estado',
+        'seleccion_multiple',
         'formato'
     ];
 

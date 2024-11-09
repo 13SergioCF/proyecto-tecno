@@ -33,14 +33,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los campos básicos sin incluir 'opciones'
         $request->validate([
             'contenido' => 'required|string|max:255',
             'question_type_id' => 'required|exists:question_types,id',
             'formato' => 'required|in:eleccion_multiple,redaccion',
+            'seleccion_multiple' => 'required_if:formato,eleccion_multiple|in:si,no',
         ]);
 
-        // Validar el campo 'opciones' solo si el formato es "elección múltiple"
         if ($request->formato === 'eleccion_multiple') {
             $request->validate([
                 'opciones' => 'required|array',
@@ -49,10 +48,8 @@ class QuestionController extends Controller
         }
 
         try {
-            // Crear la pregunta
-            $question = Question::create($request->only(['contenido', 'question_type_id', 'formato']));
+            $question = Question::create($request->only(['contenido', 'question_type_id', 'formato', 'seleccion_multiple']));
 
-            // Guardar las opciones solo si el formato es "elección múltiple"
             if ($request->formato === 'eleccion_multiple' && isset($request->opciones)) {
                 foreach ($request->opciones as $opcion) {
                     $question->opciones()->create(['texto' => $opcion]);
@@ -69,6 +66,7 @@ class QuestionController extends Controller
             ], 500);
         }
     }
+
 
 
     /**
