@@ -49,31 +49,38 @@ class RoutineController extends Controller
         return view('routines.edit', compact('routine'));
     }
 
-    public function update(Request $request, Routine $routine)
+    public function update(Request $request, Aliment $aliment)
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
-            'nivel' => 'required|in:principiante,intermedio,avanzado',
-            'duracion_estimada' => 'nullable|integer',
-            'objetivo' => 'nullable|string|max:255',
-            'frecuencia_semanal' => 'nullable|integer',
             'estado' => 'required|in:activo,inactivo',
+            'food_type_id' => 'required|exists:food_types,id',
         ]);
-
+    
         try {
-            $routine->update($validated);
-            return response()->json([
-                'message' => 'Rutina actualizada exitosamente.',
-                'data' => $routine
-            ], 200);
+            $aliment->update($validated);
+    
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Alimento actualizado exitosamente.',
+                    'data' => $aliment,
+                ], 200);
+            }
+    
+            return redirect()->route('aliments.index')->with('success', 'Alimento actualizado exitosamente.');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error al actualizar el rutina.',
-                'error' => $e->getMessage()
-            ], 500);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Ocurrió un error al actualizar el alimento.',
+                    'error' => $e->getMessage(),
+                ], 500);
+            }
+    
+            return redirect()->back()->with('error', 'Error al actualizar el alimento.');
         }
     }
+    
 
     public function destroy($id)
     {

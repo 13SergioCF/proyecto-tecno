@@ -352,11 +352,39 @@ return [
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
+
+
+
+
+
+
         [
-            'text' => 'Periodo',
-            'url' => 'periods',
+            'text' => 'Gestion de periodo',
             'icon' => 'fas fa-calendar-alt',
+            'submenu' => [
+                [
+                    'text' => 'Periodo',
+                    'url' => 'periods',
+                    'icon' => 'fas fa-calendar-alt',
+                ],
+                [
+                    'text' => 'Dias',
+                    'icon' => 'fas fa-calendar-day',
+                    'url' => 'days',
+                ],
+                [
+                    'text' => 'Turnos',
+                    'icon' => 'fas fa-clock',
+                    'url' => 'thunders',
+                ],
+                [
+                    'text' => 'Dia-Truno',
+                    'icon' => 'fas fa-calendar-alt',
+                    'url' => 'daythunders',
+                ],
+            ],
         ],
+
         [
             'text' => 'Gestion de Dieta',
             'icon' => 'fas fa-utensils',
@@ -378,6 +406,8 @@ return [
                 ],
             ],
         ],
+
+
         [
             'text' => 'Gestion de Ejercicio',
             'icon' => 'fas fa-dumbbell',

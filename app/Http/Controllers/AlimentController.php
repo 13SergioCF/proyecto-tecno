@@ -12,28 +12,29 @@ class AlimentController extends Controller
 {
     // Mostrar la lista de alimentos
     public function index(Request $request)
-    {
-        // Filtro por estado (activo/inactivo) si se envía en la solicitud
-        $estado = $request->input('estado', null);
-        $foodType = $request->input('food_type', null);
-        
-        $aliments = Aliment::query();
+{
+    $estado = $request->input('estado', 'all'); // Recibir filtro de estado
+    $foodType = $request->input('food_type', null);
 
-        if ($estado) {
-            $aliments = $aliments->where('estado', $estado);
-        }
+    $aliments = Aliment::query();
 
-        if ($foodType) {
-            $aliments = $aliments->where('food_type_id', $foodType);
-        }
-
-        // Cargar relaciones
-        $aliments = $aliments->with('foodType')->get();
-
-        $foodTypes = FoodType::where('estado', 'activo')->get(); // Para los filtros en la vista
-
-        return view('aliments.index', compact('aliments', 'foodTypes', 'estado', 'foodType'));
+    if ($estado !== 'all') {
+        $aliments->where('estado', $estado);
     }
+
+    if ($foodType) {
+        $aliments->where('food_type_id', $foodType);
+    }
+
+    $aliments = $aliments->with('foodType')->get();
+
+    $foodTypes = FoodType::where('estado', 'activo')->get();
+
+    return view('aliments.index', compact('aliments', 'foodTypes', 'estado', 'foodType'));
+}
+
+
+    
 
     // Crear un nuevo alimento
     public function create()
@@ -72,42 +73,69 @@ class AlimentController extends Controller
     
 
     // Editar alimento
-public function edit($id)
-{
-    // Obtener el alimento por su ID
-    $aliment = Aliment::findOrFail($id);
-    
-    // Obtener los tipos de alimentos (suponiendo que tienes un modelo FoodType)
-    $foodTypes = FoodType::pluck('nombre', 'id'); // Ajusta los nombres según tu modelo
-
-    // Retornar la vista de edición pasando el alimento y los tipos de alimento
-    return view('aliments.edit', compact('aliment', 'foodTypes'));
-}
-
-    
-
-    
-
-    // Actualizar alimento
-    public function update(Request $request, Aliment $aliment)
+    public function edit($id)
     {
-        $request->validate([
+        try {
+            // Buscar el alimento por ID o lanzar una excepción si no existe
+            $aliment = Aliment::findOrFail($id);
+    
+            // Obtener los tipos de alimentos
+            $foodTypes = FoodType::pluck('nombre', 'id');
+    
+            return view('aliments.edit', compact('aliment', 'foodTypes'));
+        } catch (\Exception $e) {
+            // Redirigir con un mensaje de error si no se encuentra el alimento
+            return redirect()->route('aliments.index')->with('error', 'El alimento no fue encontrado.');
+        }
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'estado' => 'required|in:activo,inactivo',
             'food_type_id' => 'required|exists:food_types,id',
         ]);
-
-        $aliment->update($request->all());
-        return redirect()->route('aliments.index')->with('success', 'Alimento actualizado con éxito.');
+    
+        try {
+            $aliment = Aliment::findOrFail($id); // Buscar el alimento por ID
+            $aliment->update($validated);
+    
+            return redirect()->route('aliments.index')->with('success', 'Alimento actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al actualizar el alimento: ' . $e->getMessage());
+        }
     }
+    
 
-    // Eliminar alimento (cambiar el estado a inactivo)
-    public function destroy(Aliment $aliment)
+
+
+
+
+
+    public function destroy($id)
     {
-        $aliment->update(['estado' => 'inactivo']);
-        return redirect()->route('aliments.index')->with('success', 'Alimento eliminado correctamente.');
+        $aliment = Aliment::find($id);
+    
+        if (!$aliment) {
+            return response()->json(['message' => 'Alimento no encontrado.'], 404);
+        }
+    
+        try {
+            // Cambiar el estado a "inactivo" en lugar de eliminarlo
+            $aliment->update(['estado' => 'inactivo']);
+            return response()->json(['message' => 'El estado del alimento se actualizó a inactivo.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al actualizar el estado: ' . $e->getMessage()], 500);
+        }
     }
+    
+    
+    
+
+
+
 
     // Exportar a PDF
     public function exportPdf(Request $request)
