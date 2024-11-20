@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Answer extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $fillable = ['user_id', 'question_id', 'question_option_id', 'respuesta_texto'];
+    protected $table = 'user_answers'; 
+    protected $fillable = ['user_id', 'question_id', 'respuesta_json'];
 
     public function user()
     {
@@ -20,10 +20,5 @@ class Answer extends Model
     public function question()
     {
         return $this->belongsTo(Question::class);
-    }
-
-    public function questionOption()
-    {
-        return $this->belongsTo(QuestionOption::class);
     }
 }

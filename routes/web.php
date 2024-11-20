@@ -42,6 +42,8 @@ Route::resource('routines', RoutineController::class);
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
+Route::post('questions/store-answers', [QuestionController::class, 'storeAnswers']);
+
 
 Route::get('preguntas', [QuestionController::class, 'questions']);
 Route::get('inicio', [QuestionController::class, 'startQuestion']);
@@ -49,9 +51,17 @@ Route::get('inicio', [QuestionController::class, 'startQuestion']);
 Route::resource('food-types', FoodTypeController::class);
 Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->name('food-types.export.pdf');
 Route::get('food-types/export/excel', [FoodTypeController::class, 'exportExcel'])->name('food-types.export.excel');
+
  // gestion de alimento 
 Route::resource('aliments', AlimentController::class);
  // Ruta para exportar a PDF
+
+// gestion de alimento 
+
+Route::resource('aliments', AlimentController::class);
+
+
+
 Route::get('aliments/export/pdf', [AlimentController::class, 'exportPdf'])->name('aliments.exportPdf');
 // nutriente
 Route::resource('nutrients', NutrientController::class);
@@ -85,6 +95,4 @@ Route::resource('nutritionals_details', NutritionalsDetailController::class);
 Route::resource('diets_aliments', DietsAlimentController::class);
 // detalle dia turno
 Route::resource('details_days_thunders', DetailsDaysThunderController::class);
-
-
 

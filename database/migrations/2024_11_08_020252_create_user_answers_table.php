@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
-            $table->foreignId('question_option_id')->nullable()->constrained('question_options')->onDelete('cascade');
-            $table->text('respuesta_texto')->nullable();
+            $table->json('respuesta_json')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
