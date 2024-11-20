@@ -11,7 +11,9 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionTypeController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\AlimentController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\PeriodController;
+
 use App\Http\Controllers\DietController;
 use App\Http\Controllers\NutritionalsDetailController;
 use App\Http\Controllers\ThunderController;
@@ -19,6 +21,7 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\DayThunderController;
 use App\Http\Controllers\DietsAlimentController;
 use App\Http\Controllers\DetailsDaysThunderController;
+
 /*Route::get('/', function () {
     return view('auth/login');
 });*/
@@ -27,6 +30,8 @@ Route::get('/', function () {
     return view('vista');
 });
 Auth::routes();
+
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -42,7 +47,7 @@ Route::resource('routines', RoutineController::class);
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
-Route::post('questions/store-answers', [QuestionController::class, 'storeAnswers']);
+Route::post('answers', [AnswerController::class, 'store']);
 
 
 Route::get('preguntas', [QuestionController::class, 'questions']);

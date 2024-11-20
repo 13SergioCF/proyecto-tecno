@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->decimal('peso', 5, 2)->nullable();
+            $table->decimal('talla', 3, 2)->nullable();
+            $table->decimal('imc', 5, 2)->nullable()->comment('Indice de Masa Corporal calculado a partir del peso y la talla');
             $table->rememberToken();
             $table->timestamps();
         });

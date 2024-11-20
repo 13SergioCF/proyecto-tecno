@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Measurement;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\QuestionType;
@@ -116,45 +117,5 @@ class QuestionController extends Controller
     {
         return view('questions.start');
     }
-    public function storeAnswers(Request $request)
-    {
-        $user_id = auth()->user()->id;
-
-        foreach ($request->input('answers') as $question_id => $answer) {
-            $question = Question::find($question_id);
-            $respuesta_json = null;
-
-            if ($question->formato === 'eleccion_multiple') {
-                if ($question->seleccion_multiple === 'si') {
-                    $selectedOptionTexts = QuestionOption::whereIn('id', $answer)->pluck('texto')->toArray();
-                    $respuesta_json = json_encode([
-                        'tipo' => 'seleccion_multiple',
-                        'valor' => $selectedOptionTexts
-                    ]);
-                } else {
-                    $selectedOptionText = QuestionOption::where('id', $answer)->value('texto');
-                    $respuesta_json = json_encode([
-                        'tipo' => 'seleccion_unica',
-                        'valor' => [$selectedOptionText]
-                    ]);
-                }
-            } else {
-                $respuesta_json = json_encode([
-                    'tipo' => 'redaccion',
-                    'valor' => [$answer]
-                ]);
-            }
-
-            Answer::create([
-                'user_id' => $user_id,
-                'question_id' => $question_id,
-                'respuesta_json' => $respuesta_json,
-            ]);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Respuestas guardadas exitosamente.'
-        ]);
-    }
+ 
 }
