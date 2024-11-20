@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Alimento')
+@section('title', 'Alimento')
 
 @section('content_header')
     <div class="content-header">
@@ -50,10 +50,12 @@
                     <div>
                         <label for="filter">Filtrar por Estado:</label>
                         <select id="filter" class="form-control">
-                            <option value="all">Todos</option>
-                            <option value="activo">Activos</option>
-                            <option value="inactivo">Inactivos</option>
+                            <option value="all" {{ $estado === 'all' ? 'selected' : '' }}>Todos</option>
+                            <option value="activo" {{ $estado === 'activo' ? 'selected' : '' }}>Activos</option>
+                            <option value="inactivo" {{ $estado === 'inactivo' ? 'selected' : '' }}>Inactivos</option>
                         </select>
+                        
+                        
                     </div>
                     <div>
                         <div class="btn-group mb-3" role="group">
@@ -71,9 +73,8 @@
                             <th>N°</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
-                            <th>tipo de alimento</th>
+                            <th>Tipo de Alimento</th>
                             <th>Estado</th>
-                            
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -92,22 +93,21 @@
                                         <span class="badge bg-success">{{ $aliment->estado }}</span>
                                     @endif
                                 </td>
+
                                 <td>
                                     @if ($aliment->estado == 'activo')
                                         <a href="{{ route('aliments.edit', $aliment->id) }}" class="btn btn-warning btn-sm" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('aliments.destroy', $aliment->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger btn-sm delete-aliment" data-id="{{ $aliment->id }}" title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     @else
                                         <span class="text-muted">Sin acciones</span>
                                     @endif
                                 </td>
+                                
+                                
                             </tr>
                         @endforeach
                     </tbody>
@@ -117,10 +117,12 @@
     </div>
 @stop
 
-
-
 @section('js')
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+    const base_url = "{{ url('/') }}/";
+    const _crf = '{{ csrf_token() }}';
+</script>
 <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-<script src="{{ asset('js/foodTypes/foodTypes.js') }}"></script>
+<script src="{{ asset('js/aliment/index_aliment.js') }}"></script>
 @stop

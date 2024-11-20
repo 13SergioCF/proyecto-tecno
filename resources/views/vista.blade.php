@@ -23,6 +23,10 @@
 
 <!-- Sección de bienvenida -->
     <section class="hero" id="inicio">
+        <video autoplay muted loop class="background-video">
+            <source src="{{ asset('videos/videos.mp4') }}" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+        </video>
         <div class="hero-content">
             <h1>Bienvenido a Dieta Start</h1>
             <p>Transforma tu vida con una alimentación saludable y ejercicios personalizada.</p>
@@ -33,11 +37,12 @@
 
 
 
+
     <!-- Sección de Quiénes Somos -->
     <section class="about" id="quienes-somos">
         <div class="about-container">
             <div class="about-image">
-                <img src="{{ asset('img/dieta.jpg') }}" alt="Imagen del Nutricionista">
+                <a href="https://imgbb.com/"><img src="https://i.ibb.co/LvPzZ5G/dieta.jpg" alt="dieta" border="0"></a>
             </div>
             <div class="about-content">
                 <h3>Sobre Nosotros</h3>
@@ -56,17 +61,18 @@
         <h2>Nuestros Servicios</h2>
         <div class="service-container">
             <div class="service-card">
-                <img src="{{ asset('img/consulta.jpg') }}" alt="Consulta Nutricional">
+                <a href="https://ibb.co/pdjNsbW"><img src="https://i.ibb.co/4pRCDKs/consulta.webp" alt="Consulta Nutricional" border="0"></a>
                 <h3>Consulta Nutricional</h3>
                 <p>Recibe orientación personalizada de nuestros expertos en nutrición.</p>
             </div>
             <div class="service-card">
-                <img src="{{ asset('img/alimentacion.jpg') }}" alt="Planes de Alimentación">
+                <a href="https://ibb.co/cyTdZpW"><img src="https://i.ibb.co/dfKyV3N/alimentacion.webp" alt="Planes de Alimentacion" border="0"></a>
                 <h3>Planes de Alimentación</h3>
                 <p>Planes de alimentación adaptados a tus objetivos y necesidades.</p>
             </div>
             <div class="service-card">
-                <img src="{{ asset('img/seguimiento.jpg') }}" alt="Seguimiento Personalizado">
+                <a href="https://ibb.co/dcQ9gvZ"><img src="https://i.ibb.co/VNvymG6/seguimiento.webp" alt="seguimiento Personalizado" border="0"></a>
+                {{-- <img src="https://ibb.co/dcQ9gvZ" alt="Seguimiento Personalizado"> --}}
                 <h3>Seguimiento Personalizado</h3>
                 <p>Monitoreamos tu progreso y ajustamos tu plan según tus avances.</p>
             </div>

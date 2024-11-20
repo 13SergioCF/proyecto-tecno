@@ -45,30 +45,37 @@
                     </div>
                 @endif
 
-                <form action="{{ route('aliments.update', $aliment->id) }}" method="POST">
+                <form id="edit-aliment-form" action="{{ route('aliments.update', $aliment->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
+                    <!-- Campo: Nombre -->
                     <div class="form-group">
                         <label for="nombre">Nombre del Alimento</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre', $aliment->nombre) }}" required>
+                        <input type="text" name="nombre" id="nombre" class="form-control"
+                            value="{{ old('nombre', $aliment->nombre) }}" required>
                     </div>
 
+                    <!-- Campo: Descripción -->
                     <div class="form-group">
                         <label for="descripcion">Descripción</label>
                         <textarea name="descripcion" id="descripcion" class="form-control" rows="3" required>{{ old('descripcion', $aliment->descripcion) }}</textarea>
                     </div>
 
+                    <!-- Campo: Tipo de Alimento -->
                     <div class="form-group">
                         <label for="aliment-food-type">Tipo de Alimento:</label>
                         <select class="form-control" name="food_type_id" id="aliment-food-type" required>
                             <option value="">Seleccione un tipo de alimento</option>
                             @foreach ($foodTypes as $id => $nombre)
-                                <option value="{{ $id }}" {{ $aliment->food_type_id == $id ? 'selected' : '' }}>{{ $nombre }}</option>
+                                <option value="{{ $id }}" {{ $aliment->food_type_id == $id ? 'selected' : '' }}>
+                                    {{ $nombre }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
+                    <!-- Campo: Estado -->
                     <div class="form-group">
                         <label for="estado">Estado:</label>
                         <select class="form-control" name="estado" id="estado" required>
@@ -77,9 +84,16 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        <a href="{{ route('aliments.index') }}" class="btn btn-secondary">Cancelar</a>
+                    <!-- Botones -->
+                    <div class="row mt-3">
+                        <div class="col-12 text-right">
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-save"></i> Guardar Cambios
+                            </button>
+                            <a href="{{ route('aliments.index') }}" class="btn btn-default">
+                                <i class="fa fa-undo"></i> Cancelar
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -87,12 +101,6 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-@stop
-
 @section('js')
-    <script>
-        console.log('Editando alimento');
-    </script>
+    <script src="{{ asset('js/aliment/edit_aliment.js') }}"></script>
 @stop
