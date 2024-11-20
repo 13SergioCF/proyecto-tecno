@@ -87,20 +87,3 @@ body {
     background: linear-gradient(135deg, #ffffff, #f0f4f8);
 }
 
-.multisteps-form__progress-btn {
-    background-color: #d1e7ff;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    color: #555;
-    font-weight: bold;
-    border: 2px solid transparent;
-}
-
-.multisteps-form__progress-btn.js-active {
-    background-color: #4da9ff;
-    color: black;
-    border-color: #4da9ff;
-}

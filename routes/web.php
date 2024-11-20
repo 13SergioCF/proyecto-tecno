@@ -11,7 +11,9 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionTypeController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\AlimentController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\PeriodController;
+
 /*Route::get('/', function () {
     return view('auth/login');
 });*/
@@ -20,6 +22,8 @@ Route::get('/', function () {
     return view('vista');
 });
 Auth::routes();
+
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -35,7 +39,7 @@ Route::resource('routines', RoutineController::class);
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
-Route::post('questions/store-answers', [QuestionController::class, 'storeAnswers']);
+Route::post('answers', [AnswerController::class, 'store']);
 
 
 
