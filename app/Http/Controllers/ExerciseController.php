@@ -5,94 +5,204 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Models\ExerciseType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class ExerciseController extends Controller
 {
-    public function index()
+    // Mostrar lista de ejercicios
+    public function index(Request $request)
     {
-        $exercises = Exercise::with('exerciseType')->get();
-        $exerciseTypes = ExerciseType::all();
-        return view('exercises.index', compact('exercises', 'exerciseTypes'));
+        $estado = $request->input('estado', 'all');
+        $exerciseType = $request->input('exercise_type', null);
+
+        $exercises = Exercise::query();
+
+        if ($estado !== 'all') {
+            $exercises->where('estado', $estado);
+        }
+
+        if ($exerciseType) {
+            $exercises->where('exercise_type_id', $exerciseType);
+        }
+
+        $exercises = $exercises->with('exerciseType')->get();
+
+        $exerciseTypes = ExerciseType::where('estado', 'activo')->get();
+
+        return view('exercises.index', compact('exercises', 'exerciseTypes', 'estado', 'exerciseType'));
     }
 
-
+    // Crear un nuevo ejercicio
     public function create()
     {
-        $exerciseTypes = ExerciseType::where('estado', 'activo')->get();
+        $exerciseTypes = ExerciseType::all();
         return view('exercises.create', compact('exerciseTypes'));
     }
 
+    // Mostrar un ejercicio específico
+    public function show($id)
+    {
+        try {
+            $exercise = Exercise::findOrFail($id);
+            return view('exercises.show', compact('exercise'));
+        } catch (\Exception $e) {
+            return redirect()->route('exercises.index')->with('error', 'Ejercicio no encontrado.');
+        }
+    }
+
+    // Almacenar un nuevo ejercicio
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string|max:1000',
-            'dificultad' => 'required|in:fácil,medio,difícil',
-            'duracion_estimada' => 'nullable|integer',
+            'descripcion' => 'required|string',
             'exercise_type_id' => 'required|exists:exercise_types,id',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',
         ]);
 
         try {
-            Exercise::create($request->all());
+            $exercise = new Exercise();
+            $exercise->nombre = $request->nombre;
+            $exercise->descripcion = $request->descripcion;
+            $exercise->exercise_type_id = $request->exercise_type_id;
+            $exercise->estado = 'activo';
 
-            return response()->json([
-                'message' => 'Ejercicio agregado exitosamente.',
-            ], 201);
+            if ($request->hasFile('imagen')) {
+                $imagenPath = $request->file('imagen')->store('public/imagenes');
+                $exercise->imagen_url = Storage::url($imagenPath);
+            }
+
+            if ($request->hasFile('video')) {
+                $videoPath = $request->file('video')->store('public/videos');
+                $exercise->video_url = Storage::url($videoPath);
+            }
+
+            $exercise->save();
+
+            return redirect()->route('exercises.index')->with('success', 'Ejercicio agregado exitosamente.');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error al agregar el Ejercicio.',
-                'error' => $e->getMessage(),
-            ], 500);
+            return redirect()->back()->with('error', 'Error al agregar el ejercicio: ' . $e->getMessage());
         }
     }
 
+    // Editar ejercicio
     public function edit($id)
     {
-        $exercise  = Exercise::findOrFail($id);
-        $exerciseTypes = ExerciseType::where('estado', 'activo')->get();
-        return view('exercises.edit', compact('exercise', 'exerciseTypes'));
+        try {
+            $exercise = Exercise::findOrFail($id);
+            $exerciseTypes = ExerciseType::all(); 
+            return view('exercises.edit', compact('exercise', 'exerciseTypes'));
+        } catch (\Exception $e) {
+            return redirect()->route('exercises.index')->with('error', 'El ejercicio no fue encontrado.');
+        }
     }
 
-    public function update(Request $request, Exercise $exercise)
+    // Actualizar ejercicio
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
-            'dificultad' => 'required|in:fácil,medio,difícil',
-            'duracion_estimada' => 'nullable|integer',
+            'estado' => 'required|in:activo,inactivo',
             'exercise_type_id' => 'required|exists:exercise_types,id',
-            'estado' => 'required|string',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',
         ]);
 
         try {
-            $exercise->update($validated);
-            return response()->json([
-                'message' => 'Ejercicio actualizado exitosamente.',
-                'data' => $exercise
-            ], 200);
+            $exercise = Exercise::findOrFail($id);
+            $exercise->nombre = $request->nombre;
+            $exercise->descripcion = $request->descripcion;
+            $exercise->estado = $request->estado;
+            $exercise->exercise_type_id = $request->exercise_type_id;
+
+            if ($request->hasFile('imagen')) {
+                if ($exercise->imagen_url) {
+                    Storage::delete('public/imagenes/' . basename($exercise->imagen_url));
+                }
+                $imagenPath = $request->file('imagen')->store('public/imagenes');
+                $exercise->imagen_url = Storage::url($imagenPath);
+            }
+
+            if ($request->hasFile('video')) {
+                if ($exercise->video_url) {
+                    Storage::delete('public/videos/' . basename($exercise->video_url));
+                }
+                $videoPath = $request->file('video')->store('public/videos');
+                $exercise->video_url = Storage::url($videoPath);
+            }
+
+            $exercise->save();
+
+            return redirect()->route('exercises.index')->with('success', 'Ejercicio actualizado correctamente.');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error al actualizar el ejercicio.',
-                'error' => $e->getMessage()
-            ], 500);
+            return redirect()->back()->with('error', 'Error al actualizar el ejercicio: ' . $e->getMessage());
         }
     }
 
-
+    // Cambiar estado a "inactivo" en lugar de eliminar
     public function destroy($id)
     {
-
         $exercise = Exercise::find($id);
-        if ($exercise) {
-            $exercise->delete();
-            return response()->json(['message' => 'Ejercicio Eliminado Satisfactoriamente.']);
-        } else {
-            return response()->json(['message' => 'Exercise type found.'], 404);
+
+        if (!$exercise) {
+            return response()->json(['message' => 'Ejercicio no encontrado.'], 404);
+        }
+
+        try {
+            $exercise->update(['estado' => 'inactivo']);
+            return response()->json(['message' => 'El estado del ejercicio se actualizó a inactivo.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al actualizar el estado: ' . $e->getMessage()], 500);
         }
     }
 
-    public function typeExercise()
+    // Exportar a PDF
+    public function exportPdf(Request $request)
     {
-        return view('exercises.type_exercise');
+        $estado = $request->input('estado', null);
+        $exerciseType = $request->input('exercise_type', null);
+
+        $exercises = Exercise::query();
+
+        if ($estado) {
+            $exercises = $exercises->where('estado', $estado);
+        }
+
+        if ($exerciseType) {
+            $exercises = $exercises->where('exercise_type_id', $exerciseType);
+        }
+
+        $exercises = $exercises->with('exerciseType')->get();
+
+        $pdf = PDF::loadView('exercises.pdf', compact('exercises'));
+        return $pdf->download('ejercicios.pdf');
+    }
+
+    // Subir multimedia (imagen y video)
+    public function uploadMedia(Request $request, $id)
+    {
+        $request->validate([
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',
+        ]);
+
+        $exercise = Exercise::findOrFail($id);
+
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('public/imagenes');
+            $exercise->imagen_url = Storage::url($imagenPath);
+        }
+
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('public/videos');
+            $exercise->video_url = Storage::url($videoPath);
+        }
+
+        $exercise->save();
+
+        return response()->json(['message' => 'Archivos cargados exitosamente.']);
     }
 }

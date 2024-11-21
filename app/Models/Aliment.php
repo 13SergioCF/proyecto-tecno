@@ -9,7 +9,7 @@ class Aliment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'descripcion', 'estado', 'food_type_id'];
+    protected $fillable = ['nombre', 'descripcion', 'estado', 'food_type_id', 'imagen_url', 'video_url'];
 
     // Relación: Un alimento pertenece a un tipo de alimento
     public function foodType()

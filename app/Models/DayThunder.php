@@ -14,6 +14,9 @@ class DayThunder extends Model
     // Indica que la tabla no tiene un campo 'id' incremental
     public $incrementing = false;
 
+    // Indica que no hay clave primaria única
+    protected $primaryKey = null;
+
     // Define los campos asignables
     protected $fillable = ['id_dia', 'id_turno'];
 

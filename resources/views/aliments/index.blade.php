@@ -54,8 +54,6 @@
                             <option value="activo" {{ $estado === 'activo' ? 'selected' : '' }}>Activos</option>
                             <option value="inactivo" {{ $estado === 'inactivo' ? 'selected' : '' }}>Inactivos</option>
                         </select>
-                        
-                        
                     </div>
                     <div>
                         <div class="btn-group mb-3" role="group">
@@ -75,6 +73,8 @@
                             <th>Descripción</th>
                             <th>Tipo de Alimento</th>
                             <th>Estado</th>
+                            <th>Imagen</th>
+                            <th>Video</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -84,13 +84,34 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $aliment->nombre }}</td>
                                 <td>{{ $aliment->descripcion }}</td>
-                                <td>{{ $aliment->foodType ? $aliment->foodType->nombre : 'N/A' }}</td> 
+                                <td>{{ $aliment->foodType ? $aliment->foodType->nombre : 'N/A' }}</td>
 
                                 <td>
                                     @if ($aliment->estado == 'inactivo')
                                         <span class="badge bg-danger">{{ $aliment->estado }}</span>
                                     @else
                                         <span class="badge bg-success">{{ $aliment->estado }}</span>
+                                    @endif
+                                </td>
+
+                                <!-- Mostrar Imagen -->
+                                <td>
+                                    @if ($aliment->imagen_url)
+                                        <img src="{{ $aliment->imagen_url }}" alt="Imagen de {{ $aliment->nombre }}" style="max-width: 100px;">
+                                    @else
+                                        No disponible
+                                    @endif
+                                </td>
+
+                                <!-- Mostrar Video -->
+                                <td>
+                                    @if ($aliment->video_url)
+                                        <video width="150" controls>
+                                            <source src="{{ $aliment->video_url }}" type="video/mp4">
+                                            Tu navegador no soporta el formato de video.
+                                        </video>
+                                    @else
+                                        No disponible
                                     @endif
                                 </td>
 
@@ -106,8 +127,6 @@
                                         <span class="text-muted">Sin acciones</span>
                                     @endif
                                 </td>
-                                
-                                
                             </tr>
                         @endforeach
                     </tbody>
@@ -118,11 +137,11 @@
 @stop
 
 @section('js')
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script>
+
+{{-- <script>
     const base_url = "{{ url('/') }}/";
     const _crf = '{{ csrf_token() }}';
-</script>
+</script> --}}
 <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
 <script src="{{ asset('js/aliment/index_aliment.js') }}"></script>
 @stop

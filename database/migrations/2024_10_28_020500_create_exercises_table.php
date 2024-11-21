@@ -23,6 +23,8 @@ class CreateExercisesTable extends Migration
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
             $table->softDeletes(); // Agrega soporte para soft deletes
+            $table->string('imagen_url')->nullable();  // Columna para almacenar la ruta de la imagen
+            $table->string('video_url')->nullable();   // Columna para almacenar la ruta del video
         });
     }
 

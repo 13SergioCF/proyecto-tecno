@@ -46,7 +46,7 @@
             </div>
             <div class="card-body">
                 <div class="row my-5 justify-content-center">
-                    <form name="food-form" id="food-form" action="{{ route('aliments.store') }}" method="POST" class="col-md-8">
+                    <form name="food-form" id="food-form" action="{{ route('aliments.store') }}" method="POST" class="col-md-8" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="food-name" class="control-label">Nombre del Alimento:</label>
@@ -67,6 +67,19 @@
                                 @endforeach
                             </select>
                         </div>
+                    
+                        <!-- Carga de Imagen -->
+                        <div class="form-group mb-3">
+                            <label for="imagen">Imagen:</label>
+                            <input type="file" name="imagen" accept="image/*">
+                        </div>
+                    
+                        <!-- Carga de Video -->
+                        <div class="form-group mb-3">
+                            <label for="video">Video:</label>
+                            <input type="file" name="video" accept="video/*">
+                        </div>
+                    
                         <div class="row mt-3">
                             <div class="col-12 text-right">
                                 <button type="submit" class="btn btn-info">
@@ -78,6 +91,7 @@
                             </div>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>

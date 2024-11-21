@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Gestión de Ejercicios')
 
 @section('content_header')
     <div class="content-header">
@@ -38,29 +38,31 @@
             <div class="card-header">
                 <div class="d-flex justify-content-end">
                     <div class="btn-group mb-3" role="group">
-                        <a href="#" class="btn btn-danger btn-lg">
-                            <i class="fas fa-file-pdf"></i> PDF
+                        <a href="{{ route('exercises.exportPdf') }}" class="btn btn-danger btn-lg">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
                         </a>
                         <a href="#" class="btn btn-success btn-lg">
-                            <i class="fas fa-file-excel"></i> Excel
+                            <i class="fas fa-file-excel"></i> Exportar Excel
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="content">
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-list mr-2"></i>Lista
-                            de Ejercicios</a>
+                        <a class="nav-link active" href="{!! url()->current() !!}">
+                            <i class="fa fa-list mr-2"></i>Lista de Ejercicios
+                        </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="{!! route('exercises.create') !!}"><i class="fa fa-plus mr-2"></i>Crear
-                            Ejercicio</a>
+                        <a class="nav-link" href="{!! route('exercises.create') !!}">
+                            <i class="fa fa-plus mr-2"></i>Crear Ejercicio
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -75,6 +77,8 @@
                             <th>Duración</th>
                             <th>Dificultad</th>
                             <th>Estado</th>
+                            <th>Imagen</th>
+                            <th>Video</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -85,34 +89,48 @@
                                 <td>{{ $exercise->nombre }}</td>
                                 <td>{{ $exercise->descripcion }}</td>
                                 <td>{{ $exercise->exerciseType->nombre ?? 'N/A' }}</td>
-                                <td>{{ $exercise->duracion_estimada }}</td>
+                                <td>{{ $exercise->duracion_estimada }} minutos</td>
                                 <td>{{ ucfirst($exercise->dificultad) }}</td>
                                 <td>
                                     <span class="badge {{ $exercise->estado == 'inactivo' ? 'bg-danger' : 'bg-success' }}">
-                                        {{ $exercise->estado }}
+                                        {{ ucfirst($exercise->estado) }}
                                     </span>
                                 </td>
-
                                 <td>
-                                    <a href="{{ route('exercises.edit', $exercise->id) }}" class="btn btn-warning btn-sm"
-                                        title="Editar">
+                                    @if ($exercise->imagen_url)
+                                        <img src="{{ $exercise->imagen_url }}" alt="Imagen de {{ $exercise->nombre }}" width="100" height="100" style="object-fit: cover;">
+                                    @else
+                                        No disponible
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($exercise->video_url)
+                                        <video width="150" height="100" controls>
+                                            <source src="{{ $exercise->video_url }}" type="video/mp4">
+                                            Tu navegador no soporta reproducción de video.
+                                        </video>
+                                    @else
+                                        No disponible
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('exercises.edit', $exercise->id) }}" class="btn btn-warning btn-sm" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-sm delete-exercise"
-                                        data-id="{{ $exercise->id }}" title="Eliminar">
+                                    <button type="button" class="btn btn-danger btn-sm delete-exercise" data-id="{{ $exercise->id }}" title="Eliminar">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
+                
             </div>
         </div>
     </div>
 @stop
+
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
     <script src="{{ asset('js/exercises/index_exercise.js') }}"></script>

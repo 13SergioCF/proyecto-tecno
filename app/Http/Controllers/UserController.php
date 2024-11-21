@@ -34,10 +34,10 @@ class UserController extends Controller
             'fecha_nacimiento' => 'required|date',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'rol' => 'required',
         ]);
-
+    
         try {
+            // Crear el nuevo usuario
             $user = User::create([
                 'name' => $validatedData['name'],
                 'apellido_paterno' => $validatedData['apellido_paterno'],
@@ -47,9 +47,10 @@ class UserController extends Controller
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
             ]);
-
-            $user->assignRole($request->input('rol'));
-
+    
+            // Asignar automáticamente el rol de "Paciente" al usuario
+            $user->assignRole('Paciente');
+    
             return response()->json([
                 'message' => 'Usuario creado exitosamente',
                 'data' => $user
@@ -61,6 +62,8 @@ class UserController extends Controller
             ], 500); // Código 500 para errores del servidor
         }
     }
+    
+    
 
     public function edit($id)
     {
