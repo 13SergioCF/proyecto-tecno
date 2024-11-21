@@ -19,6 +19,7 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\DayThunderController;
 use App\Http\Controllers\DietsAlimentController;
 use App\Http\Controllers\DetailsDaysThunderController;
+
 /*Route::get('/', function () {
     return view('auth/login');
 });*/
@@ -34,6 +35,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('users', UserController::class);
 
 Route::resource('exercises', ExerciseController::class);
+Route::get('/exercises/export-pdf', [ExerciseController::class, 'exportPdf'])->name('exercises.exportPdf');
 
 Route::resource('exercise-types', ExerciseTypeController::class);
 
@@ -51,6 +53,9 @@ Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->n
 Route::get('food-types/export/excel', [FoodTypeController::class, 'exportExcel'])->name('food-types.export.excel');
  // gestion de alimento 
 Route::resource('aliments', AlimentController::class);
+Route::put('/aliments/{id}', [AlimentController::class, 'update'])->name('aliments.update');
+
+
  // Ruta para exportar a PDF
 Route::get('aliments/export/pdf', [AlimentController::class, 'exportPdf'])->name('aliments.exportPdf');
 // nutriente
@@ -71,8 +76,12 @@ Route::resource('thunders', ThunderController::class);
 // dia
 Route::resource('days', DayController::class);
 //dia turno
+Route::resource('daythunders', DayThunderController::class);
 Route::get('daythunders/{id_dia}/{id_turno}/edit', [DayThunderController::class, 'edit'])->name('daythunders.edit');
-Route::put('daythunders/{id_dia}/{id_turno}', [DayThunderController::class, 'update'])->name('daythunders.update');
+Route::put('/daythunders/{id_dia}/{id_turno}', [DayThunderController::class, 'update'])->name('daythunders.update');
+// Route::delete('/daythunders/{id_dia}/{id_turno}', [DayThunderController::class, 'destroy'])->name('daythunders.destroy');
+
+
 Route::delete('daythunders/{id_dia}/{id_turno}', [DayThunderController::class, 'destroy'])->name('daythunders.destroy');
 
 Route::get('daythunders', [DayThunderController::class, 'index'])->name('daythunders.index');

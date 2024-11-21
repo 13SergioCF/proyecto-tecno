@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aliment;
 use App\Models\FoodType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use PDF;
 
@@ -45,6 +46,20 @@ class AlimentController extends Controller
         return view('aliments.create', compact('foodTypes'));
     }
     
+    public function show($id)
+{
+    try {
+        // Buscar el alimento por su ID
+        $aliment = Aliment::findOrFail($id);
+
+        // Retornar la vista con el alimento encontrado
+        return view('aliments.show', compact('aliment'));
+    } catch (\Exception $e) {
+        // Si no se encuentra el alimento
+        return redirect()->route('aliments.index')->with('error', 'Alimento no encontrado.');
+    }
+}
+
 
     // Almacenar un nuevo alimento
     public function store(Request $request)
@@ -54,6 +69,8 @@ class AlimentController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'food_type_id' => 'required|exists:food_types,id',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',  // Validación de imagen
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',  // Validación de video
         ]);
     
         try {
@@ -61,15 +78,29 @@ class AlimentController extends Controller
             $aliment->nombre = $request->nombre;
             $aliment->descripcion = $request->descripcion;
             $aliment->food_type_id = $request->food_type_id;
-            $aliment->estado = 'activo'; // Puedes establecer un estado por defecto
+            $aliment->estado = 'activo'; // Establecer el estado por defecto
+    
+            // Manejo de la imagen
+            if ($request->hasFile('imagen')) {
+                $imagenPath = $request->file('imagen')->store('public/imagenes');
+                $aliment->imagen_url = Storage::url($imagenPath);
+            }
+    
+            // Manejo del video
+            if ($request->hasFile('video')) {
+                $videoPath = $request->file('video')->store('public/videos');
+                $aliment->video_url = Storage::url($videoPath);
+            }
+    
             $aliment->save();
     
             return redirect()->route('aliments.index')->with('success', 'Alimento agregado exitosamente.');
         } catch (\Exception $e) {
-            // Manejo de errores
             return redirect()->back()->with('error', 'Error al agregar el alimento: ' . $e->getMessage());
         }
     }
+    
+    
     
 
     // Editar alimento
@@ -91,22 +122,68 @@ class AlimentController extends Controller
     
     public function update(Request $request, $id)
     {
+        // Validar los datos
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'estado' => 'required|in:activo,inactivo',
             'food_type_id' => 'required|exists:food_types,id',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',
         ]);
     
         try {
-            $aliment = Aliment::findOrFail($id); // Buscar el alimento por ID
-            $aliment->update($validated);
+            // Buscar el alimento por ID
+            $aliment = Aliment::findOrFail($id);
     
-            return redirect()->route('aliments.index')->with('success', 'Alimento actualizado exitosamente.');
+            // Actualizar los campos
+            $aliment->nombre = $validated['nombre'];
+            $aliment->descripcion = $validated['descripcion'];
+            $aliment->estado = $validated['estado'];
+            $aliment->food_type_id = $validated['food_type_id'];
+    
+            // Manejo de la imagen
+            if ($request->hasFile('imagen')) {
+                if ($aliment->imagen_url) {
+                    Storage::delete('public/imagenes/' . basename($aliment->imagen_url));
+                }
+                $imagenPath = $request->file('imagen')->store('public/imagenes');
+                $aliment->imagen_url = Storage::url($imagenPath);
+            }
+    
+            // Manejo del video
+            if ($request->hasFile('video')) {
+                if ($aliment->video_url) {
+                    Storage::delete('public/videos/' . basename($aliment->video_url));
+                }
+                $videoPath = $request->file('video')->store('public/videos');
+                $aliment->video_url = Storage::url($videoPath);
+            }
+    
+            // Guardar los cambios
+            $aliment->save();
+    
+            // Responder con JSON
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Alimento actualizado correctamente.',
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al actualizar el alimento: ' . $e->getMessage());
+            // Capturar errores
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al actualizar el alimento: ' . $e->getMessage(),
+            ], 500);
         }
     }
+    
+    
+    
+    
+    
+    
+
+
     
 
 
@@ -159,4 +236,33 @@ class AlimentController extends Controller
         $pdf = PDF::loadView('aliments.pdf', compact('aliments'));
         return $pdf->download('alimentos.pdf');
     }
+
+    public function uploadMedia(Request $request, $id)
+    {
+        $request->validate([
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',  // 10MB max para imagen
+            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',  // 50MB max para video
+        ]);
+
+        // Encuentra el alimento por su ID
+        $alimento = Aliment::findOrFail($id);
+
+        // Si se sube una imagen
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('public/imagenes');  // Guarda la imagen en "storage/app/public/imagenes"
+            $alimento->imagen_url = Storage::url($imagenPath);  // Almacena la URL en la base de datos
+        }
+
+        // Si se sube un video
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('public/videos');  // Guarda el video en "storage/app/public/videos"
+            $alimento->video_url = Storage::url($videoPath);  // Almacena la URL en la base de datos
+        }
+
+        // Guarda los cambios
+        $alimento->save();
+
+        return response()->json(['message' => 'Archivos cargados exitosamente']);
+    }
+
 }
