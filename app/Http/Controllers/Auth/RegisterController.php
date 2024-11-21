@@ -13,7 +13,12 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/home';
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/inicio'; // Se utilizó la versión de la rama "main"
 
     public function __construct()
     {

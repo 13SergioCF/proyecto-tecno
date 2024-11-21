@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_answers', function (Blueprint $table) {
+        Schema::create('medical_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
-            $table->json('respuesta_json')->nullable();
+            $table->text('enfermedad_base')->nullable();
+            $table->text('alergia_alimento')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(); // Para manejo de eliminación lógica
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_answers');
+        Schema::dropIfExists('medical_details');
     }
 };

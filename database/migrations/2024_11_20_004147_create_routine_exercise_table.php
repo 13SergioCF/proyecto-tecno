@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_answers', function (Blueprint $table) {
+        Schema::create('routine_exercise', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
-            $table->json('respuesta_json')->nullable();
+            $table->foreignId('routine_id')->constrained('routines')->onDelete('cascade');
+            $table->foreignId('exercise_id')->constrained('exercises')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(); // Para manejo de eliminaciones lógicas
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_answers');
+        Schema::dropIfExists('routine_exercise');
     }
 };
