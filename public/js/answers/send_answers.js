@@ -1,6 +1,6 @@
 $(function () {
     const form = $("#answer-form");
-    const saveButton = $("#saveButton"); // ID del segundo botón
+    const saveButton = $("#saveButton");
     const messageContainer = $("#messageContainer");
     const message = $("#message");
 
@@ -11,6 +11,8 @@ $(function () {
                 if (i < text.length) {
                     message.text(message.text() + text[i]);
                     i++;
+                    // Desplaza el scrollbar hacia el final del contenedor
+                    messageContainer.scrollTop(messageContainer[0].scrollHeight);
                 } else {
                     clearInterval(interval);
                     resolve();
@@ -19,40 +21,68 @@ $(function () {
         });
     };
 
+    const moveToNextStep = () => {
+        const activePanel = $(".multisteps-form__panel.js-active");
+        const activeProgressBtn = $(".multisteps-form__progress-btn.js-active");
+        const nextPanel = activePanel.next(".multisteps-form__panel");
+        const nextProgressBtn = activeProgressBtn.next(".multisteps-form__progress-btn");
+
+        if (nextPanel.length) {
+            activePanel.removeClass("js-active");
+            nextPanel.addClass("js-active");
+        }
+
+        if (nextProgressBtn.length) {
+            activeProgressBtn.removeClass("js-active");
+            nextProgressBtn.addClass("js-active");
+        }
+    };
+
     saveButton.on("click", async function (e) {
         e.preventDefault();
         const data = form.serialize();
 
-        // Cambiar botón a estado "guardando"
-        saveButton.html("").addClass("saving");
-        const spinner = $("<div>").addClass("spinner");
-        saveButton.append(spinner);
+        saveButton.html("").addClass("saving").append($("<div>").addClass("spinner"));
 
-        // Realizar solicitud AJAX
         $.ajax({
             url: `${base_url}answers`,
             headers: { "X-CSRF-TOKEN": _crf },
             type: "POST",
             data,
-            success: async function (response) {
-                // Botón en estado "guardado"
-                saveButton.removeClass("saving").addClass("saved").html("");
-                const checkmark = $("<div>").addClass("checkmark");
-                saveButton.append(checkmark);
+            success: async function () {
+                saveButton.removeClass("saving").addClass("saved").html("").append($("<div>").addClass("checkmark"));
+                moveToNextStep();
 
-                // Mostrar mensaje con efecto de escritura
                 messageContainer.addClass("show");
-                message.text(""); // Vaciar texto previo
-                const userMessage = "¡Tus respuestas han sido guardadas exitosamente! En breve serás redirigido...";
-                await typeMessage(userMessage, 50);
+                message.text("");
+                await typeMessage("¡Respuestas guardadas! Generando tus recomendaciones...", 50);
 
-                // Redirigir después de unos segundos
-                setTimeout(() => {
-                    window.location.href = `${base_url}questions`;
-                }, 3000);
+                $.ajax({
+                    url: `${base_url}recomendations/generate`,
+                    type: "POST",
+                    headers: { "X-CSRF-TOKEN": _crf },
+                    success: async function (recommendationResponse) {
+                        message.text("");
+                        await typeMessage(recommendationResponse.recommendations, 50);
+
+                        // Mostrar el nuevo mensaje de redirección
+                        message.text("");
+                        await typeMessage(
+                            "Enseguida serás redirigido a tu plan nutricional con una dieta y ejercicios recomendados...",
+                            50
+                        );
+
+                        // Redirigir a otra vista después de 3 segundos
+                        setTimeout(() => {
+                            window.location.href = `${base_url}plan-nutricional`;
+                        }, 3000);
+                    },
+                    error: function () {
+                        message.text("Ocurrió un error al generar las recomendaciones. Por favor, intenta nuevamente.");
+                    }
+                });
             },
-            error: function (xhr, status, error) {
-                // Manejar error
+            error: function () {
                 saveButton.removeClass("saving saved").text("Guardar");
                 messageContainer.addClass("show");
                 message.text("Ocurrió un error al guardar tus respuestas. Por favor, intenta nuevamente.");

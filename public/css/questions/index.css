@@ -50,8 +50,8 @@ body a {
 }
 
 .content {
-    width: 95%;
-    margin: 0 auto 50px;
+    width: 100%;
+    margin: 0 auto 20px;
 }
 
 .content__title {
@@ -66,6 +66,8 @@ body a {
 
 .multisteps-form__progress {
     display: grid;
+    position: center;
+    width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
 
@@ -139,7 +141,7 @@ body a {
 }
 
 .multisteps-form__form {
-    position: relative;
+    position: center;
 }
 
 .multisteps-form__panel {
@@ -225,7 +227,7 @@ body a {
 }
 
 .form-check {
-    margin-left: -15px; 
+    margin-left: -15px;
 }
 
 .form-check-label {

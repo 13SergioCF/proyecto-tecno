@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Measurement;
+use App\Models\Muscle;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\QuestionType;
@@ -111,11 +112,11 @@ class QuestionController extends Controller
     public function questions()
     {
         $questions = Question::with('opciones')->where('estado', 'activo')->whereNull('deleted_at')->get();
-        return view('questions.modal_index', compact('questions'));
+        $muscles = Muscle::where('estado', 'activo')->get(); 
+        return view('questions.modal_index', compact('questions', 'muscles'));
     }
     public function startQuestion()
     {
         return view('questions.start');
     }
- 
 }

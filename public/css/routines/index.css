@@ -1,0 +1,198 @@
+/* Tarjeta principal */
+.custom-card {
+    background: linear-gradient(
+        135deg,
+        #f3f4f6,
+        #dbeafe
+    ); /* Fondo claro con gradiente */
+    color: #374151; /* Texto oscuro para mejor contraste */
+    border-radius: 12px; /* Bordes suaves */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra inicial */
+    transition: all 0.3s ease; /* Transición para hover */
+}
+
+/* Hover para la tarjeta */
+.custom-card:hover {
+    background: linear-gradient(135deg, #e0f2fe, #c7d2fe); /* Fondo en hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    transform: translateY(-8px); /* Elevación */
+}
+
+/* Textos */
+.custom-card .card-title {
+    color: #1f2937; /* Títulos oscuros */
+    font-weight: bold;
+}
+
+.custom-card p {
+    color: #4b5563; /* Texto gris oscuro */
+}
+
+/* Detalles como "30 min", "1x / week" */
+.custom-card .text-muted {
+    color: #6b7280; /* Texto gris intermedio */
+}
+
+/* Botones */
+.custom-card .btn {
+    border-radius: 5px; /* Bordes más marcados */
+    font-weight: bold;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+/* Botón Ver */
+.custom-card .btn-outline-secondary {
+    color: #2563eb; /* Azul */
+    border-color: #2563eb;
+}
+
+.custom-card .btn-outline-secondary:hover {
+    color: #ffffff;
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Botón Editar */
+.custom-card .btn-outline-warning {
+    color: #f59e0b; /* Amarillo */
+    border-color: #f59e0b;
+}
+
+.custom-card .btn-outline-warning:hover {
+    color: #ffffff;
+    background-color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+/* Botón Eliminar */
+.custom-card .btn-outline-danger {
+    color: #dc2626; /* Rojo */
+    border-color: #dc2626;
+}
+
+.custom-card .btn-outline-danger:hover {
+    color: #ffffff;
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+/* Estilo para el título de la rutina */
+.custom-card .card-title {
+    font-size: 1.5rem; /* Aumenta el tamaño del texto */
+    font-weight: 700; /* Aumenta el grosor del texto */
+    color: #1f2937; /* Color más oscuro para destacar */
+    margin-bottom: 1rem; /* Espaciado inferior */
+    text-transform: capitalize; /* Capitaliza el texto */
+}
+
+/* Hover en la tarjeta para enfatizar el título */
+.custom-card:hover .card-title {
+    color: #2563eb; /* Cambia el color a azul al pasar el mouse */
+    transition: color 0.3s ease; /* Transición suave */
+}
+/* Contenedor principal de la tarjeta */
+.custom-card {
+    background: linear-gradient(
+        135deg,
+        #f3f4f6,
+        #dbeafe
+    ); /* Fondo con gradiente */
+    color: #374151; /* Texto oscuro */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    padding: 15px;
+}
+
+/* Hover para la tarjeta */
+.custom-card:hover {
+    background: linear-gradient(135deg, #e0f2fe, #c7d2fe);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+/* Nivel y Estado */
+.custom-card .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-card .header .badge {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+/* Título de la rutina */
+.custom-card .title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+}
+
+/* Detalles (duración, frecuencia, objetivo) */
+.custom-card .details {
+    margin-bottom: 15px;
+}
+
+.custom-card .details .detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #4b5563;
+}
+
+.custom-card .details .detail-item i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+    color: #6b7280;
+}
+
+/* Botones */
+.custom-card .actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.custom-card .actions .btn {
+    font-weight: bold;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.custom-card .btn-outline-secondary {
+    color: #2563eb;
+    border-color: #2563eb;
+}
+
+.custom-card .btn-outline-secondary:hover {
+    color: #ffffff;
+    background-color: #2563eb;
+}
+
+.custom-card .btn-outline-warning {
+    color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.custom-card .btn-outline-warning:hover {
+    color: #ffffff;
+    background-color: #f59e0b;
+}
+
+.custom-card .btn-outline-danger {
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+.custom-card .btn-outline-danger:hover {
+    color: #ffffff;
+    background-color: #dc2626;
+}

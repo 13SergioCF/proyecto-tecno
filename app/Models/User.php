@@ -53,8 +53,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function measurements()
+    {
+        return $this->hasMany(Measurement::class);
+    }
     public function medicalDetails()
     {
         return $this->hasMany(MedicalDetail::class);
+    }
+    public function muscles()
+    {
+        return $this->belongsToMany(Muscle::class, 'user_muscles', 'user_id', 'muscle_id')
+            ->withTimestamps();
     }
 }

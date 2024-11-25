@@ -12,6 +12,7 @@ use App\Http\Controllers\QuestionTypeController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\AlimentController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PeriodController;
 
 use App\Http\Controllers\DietController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\DayThunderController;
 use App\Http\Controllers\DietsAlimentController;
 use App\Http\Controllers\DetailsDaysThunderController;
+use App\Http\Controllers\MuscleController;
+use App\Http\Controllers\NutritionalPlanController;
 
 /*Route::get('/', function () {
     return view('auth/login');
@@ -43,12 +46,18 @@ Route::get('/exercises/export-pdf', [ExerciseController::class, 'exportPdf'])->n
 
 Route::resource('exercise-types', ExerciseTypeController::class);
 
+Route::get('routines', [RoutineController::class, 'index']);
 Route::resource('routines', RoutineController::class);
 
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
 Route::post('answers', [AnswerController::class, 'store']);
+Route::get('muscles', [MuscleController::class, 'index']);
+
+Route::post('recomendations/generate', [ChatController::class, 'generate']);
+
+
 
 
 Route::get('preguntas', [QuestionController::class, 'questions']);
@@ -58,8 +67,9 @@ Route::resource('food-types', FoodTypeController::class);
 Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->name('food-types.export.pdf');
 Route::get('food-types/export/excel', [FoodTypeController::class, 'exportExcel'])->name('food-types.export.excel');
 
- // gestion de alimento 
+// gestion de alimento 
 Route::resource('aliments', AlimentController::class);
+
 Route::put('/aliments/{id}', [AlimentController::class, 'update'])->name('aliments.update');
 
 
@@ -109,3 +119,5 @@ Route::resource('diets_aliments', DietsAlimentController::class);
 // detalle dia turno
 Route::resource('details_days_thunders', DetailsDaysThunderController::class);
 
+Route::get('plan-nutricional', [NutritionalPlanController::class, 'index']);
+Route::get('/plan-nutricional', [NutritionalPlanController::class, 'showPlan']);

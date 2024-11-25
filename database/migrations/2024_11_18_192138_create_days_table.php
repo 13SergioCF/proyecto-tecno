@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('days', function (Blueprint $table) {
-            $table->id('id_dia'); // Clave primaria 'id_dia'
-            $table->string('nombre'); // Campo 'nombre'
-            $table->timestamps(); // Los campos 'created_at' y 'updated_at'
+            $table->id(); // Crea una columna 'id' como clave primaria autoincremental
+            $table->string('name'); // Ejemplo de otro campo
+            $table->timestamps();
         });
     }
 

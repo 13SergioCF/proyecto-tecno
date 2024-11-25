@@ -298,6 +298,122 @@ return [
     |
     */
 
+    'menu' => [
+        // Navbar items:
+        [
+            'type' => 'navbar-search',
+            'text' => 'search',
+            'topnav_right' => true,
+        ],
+        [
+            'type' => 'fullscreen-widget',
+            'topnav_right' => true,
+        ],
+        [
+            'type' => 'darkmode-widget',
+            'topnav_right' => true,
+            'icon_enabled' => 'fas fa-moon',
+            'icon_disabled' => 'far fa-sun',
+            'color_enabled' => 'white',
+            'color_disabled' => 'yellow',
+        ],
+        [
+            'type' => 'navbar-notification',
+            'id' => 'my-notification',
+            'icon' => 'fas fa-bell',
+            'icon_color' => 'warning',
+            'label' => 0,
+            'label_color' => 'danger',
+            'url' => 'notifications/show',
+            'topnav_right' => true,
+            'dropdown_mode' => true,
+            'dropdown_flabel' => 'All notifications',
+            'update_cfg' => [
+                'url' => 'notifications/get',
+                'period' => 30,
+            ],
+        ],
+
+        // Sidebar items:
+        [
+            'type' => 'sidebar-menu-search',
+            'text' => 'search',
+        ],
+        [
+            'text' => 'blog',
+            'url' => 'admin/blog',
+            'can' => 'manage-blog',
+        ],
+        [
+            'text' => 'pages',
+            'url' => 'admin/pages',
+            'icon' => 'far fa-fw fa-file',
+            'label' => 4,
+            'label_color' => 'success',
+        ],
+        ['header' => 'Configuracion de la Cuenta'],
+        [
+            'text' => 'Gestion de Usuarios',
+            'icon' => 'fas fa-user-cog',
+            'classes' => 'rounded-pill',
+
+            'submenu' => [
+                [
+                    'text' => 'Usuario',
+                    'url' => 'users',
+                    'icon' => 'fas fa-fw fa-user',
+                    'classes' => 'rounded-pill',
+
+                ],
+                [
+                    'text' => 'Roles',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Permisos',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Cambiar Contraseña',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
+            'classes' => 'rounded-pill',
+        ],
+        [
+            'text' => 'Gestion de periodo',
+            'icon' => 'fas fa-calendar-alt',
+            'classes' => 'rounded-pill',
+            'submenu' => [
+                [
+                    'text' => 'Periodo',
+                    'url' => 'periods',
+                    'icon' => 'fas fa-calendar-alt',
+                    'classes' => 'rounded-pill',
+
+
+
+                ],
+                [
+                    'text' => 'Dias',
+                    'icon' => 'fas fa-calendar-day',
+                    'classes' => 'rounded-pill',
+                    'url' => 'days',
+                ],
+                [
+                    'text' => 'Turnos',
+                    'icon' => 'fas fa-clock',
+                    'classes' => 'rounded-pill',
+                    'url' => 'thunders',
+                ],
+                [
+                    'text' => 'Dia-Truno',
+                    'icon' => 'fas fa-calendar-alt',
+                    'classes' => 'rounded-pill',
+                    'url' => 'daythunders',
+                ],
+
 'menu' => [
     // Navbar items:
     [
@@ -381,10 +497,36 @@ return [
                 'text' => 'Dia-Truno',
                 'icon' => 'fas fa-calendar-alt',
                 'url' => 'daythunders',
+
             ],
         ],
         'can' => 'manage-period',  // Solo visible para los admins
     ],
+
+        [
+            'text' => 'Gestion de Dieta',
+            'icon' => 'fas fa-utensils',
+            'classes' => 'rounded-pill',
+
+            'submenu' => [
+                [
+                    'text' => 'Alimentos',
+                    'icon' => 'fas fa-carrot',
+                    'classes' => 'rounded-pill',
+                    'url' => 'aliments',
+                ],
+                [
+                    'text' => 'Tipo de Alimentos',
+                    'icon' => 'fas fa-seedling',
+                    'classes' => 'rounded-pill',
+                    'url' => 'food-types',
+                ],
+                [
+                    'text' => 'Nutriente',
+                    'icon' => 'fas fa-apple-alt',
+                    'classes' => 'rounded-pill',
+                    'url' => 'nutrients',
+                ],
 
     [
         'text' => 'Gestion de Dieta',
@@ -404,11 +546,59 @@ return [
                 'text' => 'Nutriente',
                 'icon' => 'fas fa-apple-alt',
                 'url' => 'nutrients',
+
             ],
         ],
         'can' => 'manage-diet',  // Permiso específico para dietas
     ],
-
+        [
+            'text' => 'Gestion de Ejercicio',
+            'icon' => 'fas fa-dumbbell',
+            'classes' => 'rounded-pill',
+            'submenu' => [
+                [
+                    'text' => 'Ejercicios',
+                    'icon' => 'fas fa-heartbeat',
+                    'classes' => 'rounded-pill',
+                    'url' => 'exercises',
+                ],
+                [
+                    'text' => 'Tipo de Ejercicios',
+                    'icon' => 'fas fa-running',
+                    'classes' => 'rounded-pill',
+                    'url' => 'exercise-types',
+                ],
+                [
+                    'text' => 'Rutinas',
+                    'icon' => 'fas fa-list-ul',
+                    'classes' => 'rounded-pill',
+                    'url' => 'routines',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Gestion de Preguntas',
+            'icon' => 'fas fa-question-circle',
+            'classes' => 'rounded-pill',
+            'submenu' => [
+                [
+                    'text' => 'Preguntas',
+                    'icon' => 'fas fa-question',
+                    'classes' => 'rounded-pill',
+                    'url' => 'questions',
+                ],
+                [
+                    'text' => 'Tipo de Preguntas',
+                    'icon' => 'fas fa-comment-dots',
+                    'classes' => 'rounded-pill',
+                    'url' => 'question-types',
+                ],
+                [
+                    'text' => 'Formulario de Preguntas',
+                    'icon' => 'fas fa-file-alt',
+                    'classes' => 'rounded-pill',
+                    'url' => 'preguntas',
+                ],
 
     [
         'text' => 'Gestion de Ejercicio',
@@ -450,6 +640,7 @@ return [
                 'text' => 'Formulario de Preguntas',
                 'icon' => 'fas fa-file-alt',
                 'url' => 'preguntas',
+
             ],
         ],
         'can' => 'manage-period',

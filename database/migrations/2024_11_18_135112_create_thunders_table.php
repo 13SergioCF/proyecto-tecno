@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('thunders', function (Blueprint $table) {
-            $table->id('id_turno'); // La clave primaria 'id_turno'
-            $table->string('nombre'); // El campo 'nombre'
-            $table->timestamps(); // Los campos 'created_at' y 'updated_at'
+            $table->id(); 
+            $table->string('name'); 
+            $table->timestamps();
         });
     }
 

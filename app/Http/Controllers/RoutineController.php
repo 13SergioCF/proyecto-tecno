@@ -11,7 +11,7 @@ class RoutineController extends Controller
     public function index()
     {
         $routines = Routine::all();
-        return view('routines.index', compact('routines'));
+        return view('routines.indexx', compact('routines'));
     }
     public function create()
     {
@@ -49,38 +49,41 @@ class RoutineController extends Controller
         return view('routines.edit', compact('routine'));
     }
 
-    public function update(Request $request, Aliment $aliment)
+    public function update(Request $request, Routine $routine)
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
-            'estado' => 'required|in:activo,inactivo',
-            'food_type_id' => 'required|exists:food_types,id',
+            'nivel' => 'required|in:principiante,intermedio,avanzado',
+            'duracion_estimada' => 'required|integer',
+            'objetivo' => 'required|string|max:255',
+            'frecuencia_semanal' => 'required|integer',
+            'estado' => 'required|string',
         ]);
-    
+
         try {
-            $aliment->update($validated);
-    
+            $routine->update($validated);
+
             if ($request->expectsJson()) {
                 return response()->json([
-                    'message' => 'Alimento actualizado exitosamente.',
-                    'data' => $aliment,
+                    'message' => 'Rutina actualizada exitosamente.',
+                    'data' => $routine,
                 ], 200);
             }
-    
-            return redirect()->route('aliments.index')->with('success', 'Alimento actualizado exitosamente.');
+
+            return redirect()->route('routines.index')->with('success', 'rutina actualizado exitosamente.');
         } catch (\Exception $e) {
             if ($request->expectsJson()) {
                 return response()->json([
-                    'message' => 'Ocurrió un error al actualizar el alimento.',
+                    'message' => 'Ocurrió un error al actualizar el rutina.',
                     'error' => $e->getMessage(),
                 ], 500);
             }
-    
-            return redirect()->back()->with('error', 'Error al actualizar el alimento.');
+
+            return redirect()->back()->with('error', 'Error al actualizar la rutina.');
         }
     }
-    
+
 
     public function destroy($id)
     {

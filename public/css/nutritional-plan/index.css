@@ -1,0 +1,172 @@
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+}
+
+.card-header {
+    background: #4caf50;
+    color: #fff;
+    padding: 1rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-header h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.card-body {
+    padding: 1.5rem;
+    background: #f9f9f9;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #4caf50;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -2px;
+}
+
+.nav-tabs .nav-link {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4caf50;
+    border: 2px solid transparent;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.nav-tabs .nav-link.active {
+    background: #ffffff;
+    border-color: #4caf50 #4caf50 #ffffff;
+    color: #4caf50;
+}
+
+.tab-content {
+    margin-top: 1rem;
+}
+
+.plan-day h4 {
+    color: #343a40;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.plan-day ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.plan-day ul li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.timeline {
+    border-left: 4px solid #4caf50;
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+.timeline-event {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.timeline-event .timeline-day-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 1rem;
+    font-size: 1rem;
+}
+
+.timeline-event .bg-success {
+    background-color: #4caf50;
+}
+
+.timeline-event .bg-secondary {
+    background-color: #6c757d;
+}
+
+.timeline-day {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.timeline-status {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.timeline-event button {
+    font-size: 0.8rem;
+    margin-left: auto;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #4caf50;
+    background: #ffffff;
+    color: #4caf50;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.timeline-event button:hover {
+    background: #4caf50;
+    color: #ffffff;
+}
+
+.scrollable-content {
+    height: calc(
+        100vh - 70px
+    ); /* Ajusta el valor según la altura de tu header o footer */
+    overflow-y: auto; /* Activa el desplazamiento solo en el eje vertical */
+    padding: 1rem;
+}
+
+.scrollable-content::-webkit-scrollbar {
+    width: 8px; /* Ancho de la barra */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background-color: #6c757d; /* Color del scrollbar */
+    border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+    background-color: #6c757d; /* Color más oscuro al pasar el cursor */
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color de fondo del track */
+}
+
+
+
+

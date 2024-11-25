@@ -1,0 +1,17 @@
+/* Centrar el multi-step form en el medio de la pantalla */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Toda la altura de la pantalla */
+    margin: 0;
+}
+
+
+/* Ajustar los paneles dentro del formulario */
+.multisteps-form__panel {
+    width: 100%; /* Ocupar todo el ancho del formulario */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

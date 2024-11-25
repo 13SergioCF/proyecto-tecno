@@ -89,3 +89,21 @@
     opacity: 1;
     height: auto;
 }
+#messageContainer {
+    max-height: 300px; /* Define una altura máxima del contenedor */
+    overflow-y: auto; /* Activa el desplazamiento vertical */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Opcional: estilo */
+}
+
+#messageContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+#messageContainer::-webkit-scrollbar-thumb {
+    background-color: #28a745;
+    border-radius: 4px;
+}
+
+#messageContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #1e7e34;
+}
