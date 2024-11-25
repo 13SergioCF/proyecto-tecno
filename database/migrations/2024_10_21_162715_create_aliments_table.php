@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('food_type_id') // Llave foránea a food_types
                   ->constrained('food_types')
                   ->onDelete('cascade');
+            $table->string('imagen_url')->nullable();  // Columna para almacenar la ruta de la imagen
+            $table->string('video_url')->nullable();   // Columna para almacenar la ruta del video
             $table->timestamps();
         });
     }

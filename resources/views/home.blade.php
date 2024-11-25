@@ -7,7 +7,18 @@
 @stop
 
 @section('content')
-    <p>Bienvenido a la pagina para los gordos</p>
+    <p>Bienvenido a la página para los gordos</p>
+
+    {{-- Mostrar el rol del usuario autenticado --}}
+    @if(auth()->check())
+        <p>Rol del usuario: 
+            @foreach(auth()->user()->getRoleNames() as $role)
+                {{ $role }}
+            @endforeach
+        </p>
+    @else
+        <p>No hay un usuario autenticado.</p>
+    @endif
 @stop
 
 @section('css')

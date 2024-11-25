@@ -46,28 +46,45 @@ class DayThunderController extends Controller
 
     public function update(Request $request, $id_dia, $id_turno)
     {
-        $dayThunder = DayThunder::where('id_dia', $id_dia)->where('id_turno', $id_turno)->firstOrFail();
-    
         $request->validate([
             'id_dia' => 'required|exists:days,id_dia',
             'id_turno' => 'required|exists:thunders,id_turno',
         ]);
     
-        $dayThunder->update($request->all());
+        // Verifica si la nueva combinación ya existe
+        $exists = DayThunder::where('id_dia', $request->id_dia)
+            ->where('id_turno', $request->id_turno)
+            ->exists();
+    
+        if ($exists) {
+            return redirect()->back()->withErrors('La combinación de Día y Turno ya existe.');
+        }
+    
+        // Elimina el registro existente
+        DayThunder::where('id_dia', $id_dia)->where('id_turno', $id_turno)->delete();
+    
+        // Crea un nuevo registro con los valores actualizados
+        DayThunder::create([
+            'id_dia' => $request->id_dia,
+            'id_turno' => $request->id_turno,
+        ]);
+    
         return redirect()->route('daythunders.index')->with('success', 'Relación actualizada con éxito.');
     }
     
 
+    
+    
+    
+
     public function destroy($id_dia, $id_turno)
     {
-        // Busca y elimina el registro usando las claves compuestas
-        $dayThunder = DayThunder::where('id_dia', $id_dia)->where('id_turno', $id_turno)->firstOrFail();
-    
-        // Elimina el registro
-        $dayThunder->delete();
+        // Elimina el registro directamente con una consulta
+        DayThunder::where('id_dia', $id_dia)->where('id_turno', $id_turno)->delete();
     
         return redirect()->route('daythunders.index')->with('success', 'Relación eliminada correctamente.');
     }
+    
     
     
     
