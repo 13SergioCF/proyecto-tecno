@@ -22,6 +22,11 @@ class Exercise extends Model
         return $this->belongsTo(ExerciseType::class, 'exercise_type_id');
     }
 
+    public function muscles()
+    {
+        return $this->belongsToMany(Muscle::class, 'exercise_muscle', 'exercise_id', 'muscle_id');
+    }
+
     // Definir la relación con el modelo Routine
     // public function routines()
     // {

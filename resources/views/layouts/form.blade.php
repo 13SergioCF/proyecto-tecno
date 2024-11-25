@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/questions/index.css">
     <link rel="stylesheet" href="/css/questions/bols.css">
     <link rel="stylesheet" href="/css/questions/prueba.css">
+    <link rel="stylesheet" href="/css/questions/muscles.css">
 </head>
 
 <body>
@@ -30,6 +31,8 @@
                                 title="Información Médica">Información Médica</button>
                             <button class="multisteps-form__progress-btn" type="button"
                                 title="Músculos a Entrenar">Músculos a Entrenar</button>
+                            <button class="multisteps-form__progress-btn" type="button"
+                                title="Recomendaciones">Recomendaciones</button>
                         </div>
 
                     </div>
@@ -120,7 +123,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="slideHorz">
+                            <div class="multisteps-form__panel shadow p-4 rounded bg-white"
+                                data-animation="slideHorz">
                                 <h3 class="multisteps-form__title">Información Médica</h3>
                                 <div class="multisteps-form__content">
                                     <!-- Pregunta sobre enfermedades -->
@@ -162,15 +166,38 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-8">
+                                <livewire:male-human-body />
+                            </div> --}}
                             <!-- Nuevo paso: Músculos a entrenar -->
-                            <div class="multisteps-form__panel shadow p-4 rounded bg-white"
-                                data-animation="slideHorz">
+                            <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="slideHorz"
+                                style="width: 100%; height: 800px;">
                                 <h3 class="multisteps-form__title text-center">Músculos a Entrenar</h3>
                                 <div class="multisteps-form__content d-flex flex-column justify-content-center align-items-center"
-                                    style="height: 55vh;">
-                                    <div class="col-8">
-                                        <livewire:male-human-body />
+                                    style="width: 100%; height: 600px;">
+                                    <!-- Aquí agregamos las tarjetas -->
+                                    <div class="row">
+                                        @if (isset($muscles) && $muscles->count() > 0)
+                                            @foreach ($muscles as $muscle)
+                                                <div class="col-md-3 mb-3"> <!-- Cambiado de col-md-4 a col-md-3 -->
+                                                    <div class="card muscle-card text-center">
+                                                        <div class="card-body" style="width: 150px; height: 150px;">
+                                                            <h5 class="card-title">{{ $muscle->nombre }}</h5>
+                                                            <input type="checkbox" name="muscles[]"
+                                                                value="{{ $muscle->id }}"
+                                                                id="muscle-{{ $muscle->id }}">
+                                                            <label
+                                                                for="muscle-{{ $muscle->id }}">Seleccionar</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <p>No hay músculos disponibles para seleccionar.</p>
+                                        @endif
                                     </div>
+
+                                    <!-- Botones de navegación -->
                                     <div class="button-row d-flex mt-4 w-100 justify-content-between">
                                         <button class="btn btn-primary js-btn-prev" type="button"
                                             title="Prev">Prev</button>
@@ -178,11 +205,25 @@
                                             title="Guardar">Guardar</button>
                                     </div>
                                 </div>
-                                <div id="messageContainer" class="message-container">
-                                    <p id="message"></p>
+                            </div>
+                            <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="slideHorz"
+                                style="width: 100%; height: 800px;">
+                                <h3 class="multisteps-form__title text-center">Recomendacion de tu ayudante nutricional</h3>
+                                <div class="multisteps-form__content d-flex flex-column justify-content-center align-items-center"
+                                    style="width: 100%; height: 600px;">
+                                    <!-- Aquí agregamos las tarjetas -->
+                                    <div id="messageContainer" class="message-container">
+                                        <p id="message"></p>
+                                    </div>
+                                    <!-- Botones de navegación -->
+                                    <div class="button-row d-flex mt-4 w-100 justify-content-between">
+
+                                    </div>
                                 </div>
                             </div>
+
                         </form>
+
                     </div>
                 </div>
             </div>

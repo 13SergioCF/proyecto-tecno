@@ -1,0 +1,33 @@
+.recommendations {
+    font-family: "Arial", sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-wrap; /* Para mantener los saltos de línea */
+}
+
+.recommendations p {
+    animation: typing 0.5s steps(30, end), blink 0.75s step-end infinite;
+    border-right: 2px solid transparent;
+}
+
+@keyframes blink {
+    from,
+    to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: black;
+    }
+}
+
+#messageContainer {
+    font-family: "Times New Roman", Times, serif; /* Cambiar la fuente a Times New Roman */
+    font-size: 14px; /* Reducir el tamaño del texto */
+    line-height: 1.5; /* Mejorar la legibilidad */
+    text-align: justify; /* Alinear texto para una mejor presentación */
+    max-height: 500px; /* Limitar la altura del contenedor */
+    overflow-y: auto; /* Habilitar el scroll vertical */
+    padding: 10px; /* Añadir un poco de espacio interno */
+    border: 1px solid #ddd; /* Opcional: Añadir un borde para definir visualmente el área */
+    background-color: #f9f9f9; /* Fondo claro para contraste */
+}

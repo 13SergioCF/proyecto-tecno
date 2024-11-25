@@ -36,4 +36,8 @@ class Routine extends Model
         'duracion_estimada' => 'integer',
         'frecuencia_semanal' => 'integer',
     ];
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class, 'routine_exercise')->withTimestamps();
+    }
 }
