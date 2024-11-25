@@ -309,69 +309,33 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-        [
-            'type' => 'darkmode-widget',
-            'topnav_right' => true,
-            'icon_enabled' => 'fas fa-moon',
-            'icon_disabled' => 'far fa-sun',
-            'color_enabled' => 'white',
-            'color_disabled' => 'yellow',
-        ],
-        [
-            'type' => 'navbar-notification',
-            'id' => 'my-notification',
-            'icon' => 'fas fa-bell',
-            'icon_color' => 'warning',
-            'label' => 0,
-            'label_color' => 'danger',
-            'url' => 'notifications/show',
-            'topnav_right' => true,
-            'dropdown_mode' => true,
-            'dropdown_flabel' => 'All notifications',
-            'update_cfg' => [
-                'url' => 'notifications/get',
-                'period' => 30,
-            ],
-        ],
 
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
         ['header' => 'Configuracion de la Cuenta'],
         [
             'text' => 'Gestion de Usuarios',
             'icon' => 'fas fa-user-cog',
             'classes' => 'rounded-pill',
-
             'submenu' => [
                 [
                     'text' => 'Usuario',
                     'url' => 'users',
                     'icon' => 'fas fa-fw fa-user',
                     'classes' => 'rounded-pill',
-
                 ],
                 [
                     'text' => 'Roles',
                     'url' => '#',
+                    'classes' => 'rounded-pill',
                 ],
                 [
                     'text' => 'Permisos',
                     'url' => '#',
+                    'classes' => 'rounded-pill',
                 ],
             ],
         ],
@@ -391,9 +355,6 @@ return [
                     'url' => 'periods',
                     'icon' => 'fas fa-calendar-alt',
                     'classes' => 'rounded-pill',
-
-
-
                 ],
                 [
                     'text' => 'Dias',
@@ -408,106 +369,17 @@ return [
                     'url' => 'thunders',
                 ],
                 [
-                    'text' => 'Dia-Truno',
+                    'text' => 'Dia-Turno',
                     'icon' => 'fas fa-calendar-alt',
                     'classes' => 'rounded-pill',
                     'url' => 'daythunders',
                 ],
-
-'menu' => [
-    // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'search',
-        'topnav_right' => true,
-    ],
-    [
-        'type' => 'fullscreen-widget',
-        'topnav_right' => true,
-    ],
-
-    // Sidebar items:
-    [
-        'type' => 'sidebar-menu-search',
-        'text' => 'search',
-    ],
-    [
-        'text' => 'blog',
-        'url' => 'admin/blog',
-        'can' => 'manage-blog',
-    ],
-    [
-        'text' => 'pages',
-        'url' => 'admin/pages',
-        'icon' => 'far fa-fw fa-file',
-        'label' => 4,
-        'label_color' => 'success',
-    ],
-    ['header' => 'Configuracion de la Cuenta'],
-    // Solo los admins pueden ver este menú
-    [
-        'text' => 'Gestion de Usuarios',
-        'icon' => 'fas fa-user-cog',
-        'submenu' => [
-            [
-                'text' => 'Usuario',
-                'url' => 'users',
-                'icon' => 'fas fa-fw fa-user',
-            ],
-            [
-                'text' => 'Roles',
-                'url' => '#',
-                'can' => 'manage-roles',  // Solo visible para los admins
-            ],
-            [
-                'text' => 'Permisos',
-                'url' => '#',
-                'can' => 'manage-permissions',  // Solo visible para los admins
             ],
         ],
-        'can' => 'manage-users',  // Solo visible para los admins
-    ],
-    [
-        'text' => 'Cambiar Contraseña',
-        'url' => 'admin/settings',
-        'icon' => 'fas fa-fw fa-lock',
-    ],
-
-    // Otros elementos de menú
-    [
-        'text' => 'Gestion de periodo',
-        'icon' => 'fas fa-calendar-alt',
-        'submenu' => [
-            [
-                'text' => 'Periodo',
-                'url' => 'periods',
-                'icon' => 'fas fa-calendar-alt',
-            ],
-            [
-                'text' => 'Dias',
-                'icon' => 'fas fa-calendar-day',
-                'url' => 'days',
-            ],
-            [
-                'text' => 'Turnos',
-                'icon' => 'fas fa-clock',
-                'url' => 'thunders',
-            ],
-            [
-                'text' => 'Dia-Truno',
-                'icon' => 'fas fa-calendar-alt',
-                'url' => 'daythunders',
-
-            ],
-        ],
-        'can' => 'manage-period',  // Solo visible para los admins
-    ],
-
         [
             'text' => 'Gestion de Dieta',
             'icon' => 'fas fa-utensils',
             'classes' => 'rounded-pill',
-
             'submenu' => [
                 [
                     'text' => 'Alimentos',
@@ -527,30 +399,8 @@ return [
                     'classes' => 'rounded-pill',
                     'url' => 'nutrients',
                 ],
-
-    [
-        'text' => 'Gestion de Dieta',
-        'icon' => 'fas fa-utensils',
-        'submenu' => [
-            [
-                'text' => 'Alimentos',
-                'icon' => 'fas fa-carrot',
-                'url' => 'aliments',
-            ],
-            [
-                'text' => 'Tipo de Alimentos',
-                'icon' => 'fas fa-seedling',
-                'url' => 'food-types',
-            ],
-            [
-                'text' => 'Nutriente',
-                'icon' => 'fas fa-apple-alt',
-                'url' => 'nutrients',
-
             ],
         ],
-        'can' => 'manage-diet',  // Permiso específico para dietas
-    ],
         [
             'text' => 'Gestion de Ejercicio',
             'icon' => 'fas fa-dumbbell',
@@ -599,67 +449,10 @@ return [
                     'classes' => 'rounded-pill',
                     'url' => 'preguntas',
                 ],
-
-    [
-        'text' => 'Gestion de Ejercicio',
-        'icon' => 'fas fa-dumbbell',
-        'submenu' => [
-            [
-                'text' => 'Ejercicios',
-                'icon' => 'fas fa-heartbeat',
-                'url' => 'exercises',
-            ],
-            [
-                'text' => 'Tipo de Ejercicios',
-                'icon' => 'fas fa-running',
-                'url' => 'exercise-types',
-            ],
-            [
-                'text' => 'Rutinas',
-                'icon' => 'fas fa-list-ul',
-                'url' => 'routines',
             ],
         ],
-        'can' => 'manage-exercise',  // Permiso específico para ejercicios
-    ],
-    [
-        'text' => 'Gestion de Preguntas',
-        'icon' => 'fas fa-question-circle',
-        'submenu' => [
-            [
-                'text' => 'Preguntas',
-                'icon' => 'fas fa-question',
-                'url' => 'questions',
-            ],
-            [
-                'text' => 'Tipo de Preguntas',
-                'icon' => 'fas fa-comment-dots',
-                'url' => 'question-types',
-            ],
-            [
-                'text' => 'Formulario de Preguntas',
-                'icon' => 'fas fa-file-alt',
-                'url' => 'preguntas',
-
-            ],
-        ],
-        'can' => 'manage-period',
     ],
 
-    // Mostrar solo a "Paciente" el menú básico
-    [
-        'text' => 'Gestion de Usuarios',
-        'icon' => 'fas fa-user-cog',
-        'submenu' => [
-            [
-                'text' => 'Usuario',
-                'url' => 'users',
-                'icon' => 'fas fa-fw fa-user',
-            ],
-        ],
-        'can' => 'view-users',  // Solo los pacientes pueden ver esta opción
-    ],
-],
 
 
 
