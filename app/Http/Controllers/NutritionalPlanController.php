@@ -32,6 +32,36 @@ class NutritionalPlanController extends Controller
             'Domingo' => ['Día de descanso activo', 'Estiramientos suaves', 'Meditación']
         ];
 
-        return view('nutritionalPlan.index', compact('nutritionPlan', 'exercisePlan'));
+        // Agrega los datos de estadísticas semanales
+        $weeklyStats = [
+            'calories' => 1850, // Calorías promedio
+            'exerciseHours' => 5.5, // Horas de ejercicio en la semana
+            'completedDays' => 5 // Días completados en la semana
+        ];
+
+        // Consejo del día
+        $dailyTips = [
+            'Beber agua regularmente durante el día puede ayudarte a mantenerte hidratado y controlar tu apetito.',
+            'Incluye vegetales en todas tus comidas para un balance nutricional óptimo.',
+            'Duerme al menos 7 horas diarias para mantener tu energía durante el día.',
+            'Evita el consumo excesivo de azúcar y opta por frutas frescas como postre.',
+            'Realiza ejercicios de estiramiento para mejorar tu flexibilidad y circulación.',
+            'Tómate un tiempo para relajarte y evitar el estrés diario.',
+            'Consume proteínas magras para apoyar la recuperación muscular.'
+        ];
+
+        // Receta saludable
+        $healthyRecipe = [
+            'name' => 'Ensalada de Quinoa y Vegetales',
+            'link' => '/recetas/ensalada-quinoa'
+        ];
+
+        return view('nutritionalPlan.index', compact(
+            'nutritionPlan',
+            'exercisePlan',
+            'weeklyStats',
+            'dailyTips',
+            'healthyRecipe'
+        ));
     }
 }

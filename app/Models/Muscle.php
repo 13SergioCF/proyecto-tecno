@@ -16,12 +16,12 @@ class Muscle extends Model
         'estado',
     ];
 
-    public function exercises()
-    {
-        return $this->belongsToMany(Exercise::class, 'exercise_muscle')
-            ->withPivot('intensidad')
-            ->withTimestamps();
-    }
+    // public function exercises()
+    // {
+    //     return $this->belongsToMany(Exercise::class, 'exercise_muscle')
+    //         ->withPivot('intensidad')
+    //         ->withTimestamps();
+    // }
 
     public function scopeActivo($query)
     {
@@ -30,6 +30,17 @@ class Muscle extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_muscle', 'muscle_id', 'user_id')
+            ->withTimestamps();
+    }
+    public function exerciseMuscles()
+    {
+        return $this->hasMany(ExerciseMuscle::class, 'muscle_id');
+    }
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class, 'exercise_muscle', 'muscle_id', 'exercise_id')
+            ->withPivot('intensidad')
             ->withTimestamps();
     }
 }

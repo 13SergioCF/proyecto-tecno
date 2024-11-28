@@ -11,9 +11,15 @@ class Aliment extends Model
 
     protected $fillable = ['nombre', 'descripcion', 'estado', 'food_type_id', 'imagen_url', 'video_url'];
 
-    // Relación: Un alimento pertenece a un tipo de alimento
     public function foodType()
     {
-        return $this->belongsTo(FoodType::class, 'food_type_id');
+        return $this->belongsTo(FoodType::class);
+    }
+
+
+    public function nutrients()
+    {
+        return $this->belongsToMany(Nutrient::class, 'nutritionals_details')
+            ->withPivot('cantidad_calorias');
     }
 }

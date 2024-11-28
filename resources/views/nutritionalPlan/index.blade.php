@@ -12,13 +12,13 @@
         <div class="container my-5" id="nutritional-plan-container">
             <h1 class="text-center mb-5">Plan Nutricional y de Ejercicios</h1>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
+                <!-- Columna Principal -->
+                <div class="col-lg-8 col-md-12">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <h3 class="card-title">Plan Semanal</h3>
                         </div>
                         <div class="card-body">
-                            <!-- Tabs for Nutrición y Ejercicios -->
                             <ul class="nav nav-tabs" id="planTabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="nutrition-tab" data-toggle="tab" href="#nutrition"
@@ -32,32 +32,26 @@
                                     </a>
                                 </li>
                             </ul>
-
                             <div class="tab-content mt-4">
-                                <!-- Nutrición Tab -->
+                                <!-- Nutrición -->
                                 <div class="tab-pane fade show active" id="nutrition" role="tabpanel">
-                                    <div class="plan-day">
-                                        <h4 id="currentDayNutrition">Domingo</h4>
-                                        <ul id="nutritionList">
-                                            <li>Desayuno: Frutas variadas</li>
-                                            <li>Almuerzo: Paella de mariscos</li>
-                                            <li>Cena: Ensalada mixta con nueces</li>
-                                        </ul>
-                                    </div>
+                                    <h4 id="currentDayNutrition">Lunes</h4>
+                                    <ul id="nutritionList">
+                                        <li>Desayuno: Avena con frutas</li>
+                                        <li>Almuerzo: Ensalada de pollo</li>
+                                        <li>Cena: Salmón al horno</li>
+                                    </ul>
                                 </div>
-                                <!-- Ejercicios Tab -->
+                                <!-- Ejercicios -->
                                 <div class="tab-pane fade" id="exercise" role="tabpanel">
-                                    <div class="plan-day">
-                                        <h4 id="currentDayExercise">Domingo</h4>
-                                        <ul id="exerciseList">
-                                            <li>Día de descanso activo</li>
-                                            <li>Estiramientos suaves</li>
-                                            <li>Meditación</li>
-                                        </ul>
-                                    </div>
+                                    <h4 id="currentDayExercise">Lunes</h4>
+                                    <ul id="exerciseList">
+                                        <li>30 min cardio</li>
+                                        <li>3 series de sentadillas</li>
+                                        <li>3 series de flexiones</li>
+                                    </ul>
                                 </div>
                             </div>
-
                             <div class="d-flex justify-content-between mt-4">
                                 <button class="btn btn-outline-primary" id="prevDay">
                                     <i class="fa fa-chevron-left mr-2"></i>Anterior
@@ -68,14 +62,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Línea de Tiempo -->
-                <div class="col-md-4">
+                    <!-- Línea de Tiempo -->
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Línea de Tiempo</h3>
-                            <p class="card-description">Tu progreso semanal</p>
                         </div>
                         <div class="card-body">
                             <div class="timeline">
@@ -97,14 +88,57 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Columna Secundaria -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="card-title">Estadísticas Semanales</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Calorías Promedio: <strong>1850 kcal</strong></p>
+                            <p>Ejercicio Total: <strong>5.5 horas</strong></p>
+                            <p>Días Completados: <strong>5/7</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="card-title">Consejo del Día</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Beber agua regularmente durante el día puede ayudarte a mantenerte hidratado y controlar tu
+                                apetito.</p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title">Gráfica de Progreso</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header bg-warning text-white">
+                            <h3 class="card-title">Receta Saludable</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Ensalada de Quinoa y Vegetales</p>
+                            <a href="#" class="btn btn-primary">Ver Receta</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/nutritional_plan/index.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
@@ -112,10 +146,12 @@
 
             const nutritionData = {!! json_encode($nutritionPlan) !!};
             const exerciseData = {!! json_encode($exercisePlan) !!};
+            const dailyTips = {!! json_encode($dailyTips) !!};
 
             const updatePlan = () => {
                 document.getElementById('currentDayNutrition').innerText = days[currentDayIndex];
                 document.getElementById('currentDayExercise').innerText = days[currentDayIndex];
+                document.querySelector('.card-body p').innerText = dailyTips[currentDayIndex];
 
                 const nutritionList = document.getElementById('nutritionList');
                 nutritionList.innerHTML = '';
@@ -138,6 +174,34 @@
             document.getElementById('nextDay').addEventListener('click', () => {
                 currentDayIndex = (currentDayIndex + 1) % days.length;
                 updatePlan();
+            });
+
+            // Gráfica de Progreso
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Calorías', 'Ejercicio', 'Días Completados'],
+                    datasets: [{
+                        label: 'Progreso Semanal',
+                        data: [
+                            {{ $weeklyStats['calories'] }},
+                            {{ $weeklyStats['exerciseHours'] }},
+                            {{ $weeklyStats['completedDays'] }}
+                        ],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
 
             updatePlan();

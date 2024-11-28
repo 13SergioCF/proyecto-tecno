@@ -17,4 +17,9 @@ class Nutrient extends Model
     {
         return $query->where('estado', 'activo');
     }
+    public function aliments()
+    {
+        return $this->belongsToMany(Aliment::class, 'nutritionals_details')
+            ->withPivot('cantidad_calorias');
+    }
 }
