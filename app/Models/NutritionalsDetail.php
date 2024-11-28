@@ -19,13 +19,11 @@ class NutritionalsDetail extends Model
         'cantidad_calorias',
     ];
 
-    // Definir la relación con la tabla 'aliments'
     public function aliment()
     {
         return $this->belongsTo(Aliment::class, 'id_alimento');
     }
 
-    // Definir la relación con la tabla 'nutrients'
     public function nutrient()
     {
         return $this->belongsTo(Nutrient::class, 'id_nutriente');

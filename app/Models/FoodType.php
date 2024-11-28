@@ -18,4 +18,8 @@ class FoodType extends Model
     {
         return $query->where('estado', 'activo');
     }
+    public function aliments()
+    {
+        return $this->hasMany(Aliment::class);
+    }
 }

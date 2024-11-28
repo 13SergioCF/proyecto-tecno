@@ -54,6 +54,7 @@ Route::resource('questions', QuestionController::class);
 Route::resource('question-types', QuestionTypeController::class);
 Route::post('answers', [AnswerController::class, 'store']);
 Route::get('muscles', [MuscleController::class, 'index']);
+// Route::match(['get', 'post'], 'recomendations/generate', [ChatController::class, 'generate']);
 
 Route::post('recomendations/generate', [ChatController::class, 'generate']);
 
@@ -73,7 +74,7 @@ Route::resource('aliments', AlimentController::class);
 Route::put('/aliments/{id}', [AlimentController::class, 'update'])->name('aliments.update');
 
 
- // Ruta para exportar a PDF
+// Ruta para exportar a PDF
 
 // gestion de alimento 
 

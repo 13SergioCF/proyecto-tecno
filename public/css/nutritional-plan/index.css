@@ -167,6 +167,55 @@ body {
     background-color: #f1f1f1; /* Color de fondo del track */
 }
 
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.card-header {
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
+#nutritional-plan-container h1 {
+    font-size: 2.5rem;
+    color: #4caf50;
+}
 
+#progressChart {
+    width: 100%;
+    height: auto;
+}
+
+.timeline .timeline-day-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.timeline-day {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.timeline-status {
+    font-size: 0.9rem;
+    color: #6c757d;
+}

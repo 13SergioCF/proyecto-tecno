@@ -1,7 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Alimento')
-
+@section('title', 'Gestión de Alimentos')
+@section('css')
+    <link rel="stylesheet" href="/css/aliments/index.css">
+@endsection
 @section('content_header')
     <div class="content-header">
         <div class="container-fluid">
@@ -27,10 +29,9 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('content')
-
     <div class="content">
         <div class="card">
             <div class="card-header">
@@ -46,102 +47,66 @@
                         </a>
                     </li>
                 </ul>
-                <div class="d-flex justify-content-between mt-3">
-                    <div>
-                        <label for="filter">Filtrar por Estado:</label>
-                        <select id="filter" class="form-control">
-                            <option value="all" {{ $estado === 'all' ? 'selected' : '' }}>Todos</option>
-                            <option value="activo" {{ $estado === 'activo' ? 'selected' : '' }}>Activos</option>
-                            <option value="inactivo" {{ $estado === 'inactivo' ? 'selected' : '' }}>Inactivos</option>
-                        </select>
-                    </div>
-                    <div>
-                        <div class="btn-group mb-3" role="group">
-                            <a href="{{ route('aliments.exportPdf') }}" class="btn btn-danger btn-lg">
-                                <i class="fas fa-file-pdf"></i> PDF
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="card-body">
-                <table id="data-table" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>N°</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Tipo de Alimento</th>
-                            <th>Estado</th>
-                            <th>Imagen</th>
-                            <th>Video</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($aliments as $aliment)
-                            <tr class="status-{{ strtolower($aliment->estado) }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $aliment->nombre }}</td>
-                                <td>{{ $aliment->descripcion }}</td>
-                                <td>{{ $aliment->foodType ? $aliment->foodType->nombre : 'N/A' }}</td>
+                <div class="row">
+                    @foreach ($aliments as $alimento)
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow border-0 custom-card">
+                                <div class="card-body">
+                                    <!-- Encabezado: Categoría y Estado -->
+                                    <div class="header">
+                                        <span class="badge badge-primary">{{ ucfirst($alimento->categoria) }}</span>
+                                        <span
+                                            class="badge badge-{{ $alimento->estado == 'inactivo' ? 'danger' : 'success' }}">
+                                            {{ ucfirst($alimento->estado) }}
+                                        </span>
+                                    </div>
 
-                                <td>
-                                    @if ($aliment->estado == 'inactivo')
-                                        <span class="badge bg-danger">{{ $aliment->estado }}</span>
-                                    @else
-                                        <span class="badge bg-success">{{ $aliment->estado }}</span>
-                                    @endif
-                                </td>
+                                    <!-- Nombre del alimento -->
+                                    <h2 class="title">{{ $alimento->nombre }}</h2>
 
-                                <!-- Mostrar Imagen -->
-                                <td>
-                                    @if ($aliment->imagen_url)
-                                        <img src="{{ $aliment->imagen_url }}" alt="Imagen de {{ $aliment->nombre }}" style="max-width: 100px;">
-                                    @else
-                                        No disponible
-                                    @endif
-                                </td>
+                                    <!-- Detalles -->
+                                    <div class="details">
+                                        <div class="detail-item">
+                                            <i class="fas fa-weight"></i>
+                                            <span>{{ $alimento->calorias }} kcal</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-seedling"></i>
+                                            <span>{{ $alimento->macronutrientes }}</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-drumstick-bite"></i>
+                                            <span>{{ $alimento->proteinas }} g proteína</span>
+                                        </div>
+                                    </div>
 
-                                <!-- Mostrar Video -->
-                                <td>
-                                    @if ($aliment->video_url)
-                                        <video width="150" controls>
-                                            <source src="{{ $aliment->video_url }}" type="video/mp4">
-                                            Tu navegador no soporta el formato de video.
-                                        </video>
-                                    @else
-                                        No disponible
-                                    @endif
-                                </td>
-
-                                <td>
-                                    @if ($aliment->estado == 'activo')
-                                        <a href="{{ route('aliments.edit', $aliment->id) }}" class="btn btn-warning btn-sm" title="Editar">
-                                            <i class="fas fa-edit"></i>
+                                    <!-- Botones -->
+                                    <div class="actions">
+                                        <a href="{{ route('aliments.show', $alimento->id) }}"
+                                            class="btn btn-outline-secondary">
+                                            <i class="fas fa-eye"></i> Ver
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-sm delete-aliment" data-id="{{ $aliment->id }}" title="Eliminar">
-                                            <i class="fas fa-trash-alt"></i>
+                                        <a href="{{ route('aliments.edit', $alimento->id) }}"
+                                            class="btn btn-outline-warning">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                        <button type="button" class="btn btn-outline-danger delete-aliment"
+                                            data-id="{{ $alimento->id }}">
+                                            <i class="fas fa-trash-alt"></i> Eliminar
                                         </button>
-                                    @else
-                                        <span class="text-muted">Sin acciones</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('js')
-
-{{-- <script>
-    const base_url = "{{ url('/') }}/";
-    const _crf = '{{ csrf_token() }}';
-</script> --}}
-<script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-<script src="{{ asset('js/aliment/index_aliment.js') }}"></script>
-@stop
+    <script src="{{ asset('js/aliments/index_aliment.js') }}"></script>
+@endsection

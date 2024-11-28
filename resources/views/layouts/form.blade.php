@@ -208,7 +208,8 @@
                             </div>
                             <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="slideHorz"
                                 style="width: 100%; height: 800px;">
-                                <h3 class="multisteps-form__title text-center">Recomendacion de tu ayudante nutricional</h3>
+                                <h3 class="multisteps-form__title text-center">Recomendacion de tu ayudante nutricional
+                                </h3>
                                 <div class="multisteps-form__content d-flex flex-column justify-content-center align-items-center"
                                     style="width: 100%; height: 600px;">
                                     <!-- Aquí agregamos las tarjetas -->
@@ -238,11 +239,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/questions/modal_question.js') }}"></script>
     {{-- <script src="{{ asset('js/answers/prueba.js') }}"></script> --}}
-    <script src="{{ asset('js/questions/bols.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/utils/SwalHandler.js') }}"></script>
     <script src="{{ asset('js/answers/send_answers.js') }}"></script>
     <script src="{{ asset('js/answers/status_medical.js') }}"></script>
+    <script src="{{ asset('js/questions/bols.js') }}"></script>
 </body>
 
 </html>
