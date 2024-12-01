@@ -22,6 +22,7 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\DayThunderController;
 use App\Http\Controllers\DietsAlimentController;
 use App\Http\Controllers\DetailsDaysThunderController;
+use App\Http\Controllers\LoadingController;
 use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\NutritionalPlanController;
 
@@ -46,14 +47,14 @@ Route::get('/exercises/export-pdf', [ExerciseController::class, 'exportPdf'])->n
 
 Route::resource('exercise-types', ExerciseTypeController::class);
 
-Route::get('routines', [RoutineController::class, 'index']);
+Route::post('routines', [RoutineController::class, 'index']);
 Route::resource('routines', RoutineController::class);
 
 Route::resource('questions', QuestionController::class);
 
 Route::resource('question-types', QuestionTypeController::class);
 Route::post('answers', [AnswerController::class, 'store']);
-Route::get('muscles', [MuscleController::class, 'index']);
+Route::post('muscles', [MuscleController::class, 'index']);
 // Route::match(['get', 'post'], 'recomendations/generate', [ChatController::class, 'generate']);
 
 Route::post('recomendations/generate', [ChatController::class, 'generate']);
@@ -62,7 +63,7 @@ Route::post('recomendations/generate', [ChatController::class, 'generate']);
 
 
 Route::get('preguntas', [QuestionController::class, 'questions']);
-Route::get('inicio', [QuestionController::class, 'startQuestion']);
+Route::post('inicio', [QuestionController::class, 'startQuestion']);
 // tipo alimento
 Route::resource('food-types', FoodTypeController::class);
 Route::get('food-types/export/pdf', [FoodTypeController::class, 'exportPDF'])->name('food-types.export.pdf');
@@ -122,3 +123,4 @@ Route::resource('details_days_thunders', DetailsDaysThunderController::class);
 
 Route::get('plan-nutricional', [NutritionalPlanController::class, 'index']);
 Route::get('/plan-nutricional', [NutritionalPlanController::class, 'showPlan']);
+Route::post('/loading', [LoadingController::class, 'index']);

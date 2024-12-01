@@ -115,9 +115,10 @@
             </div>
         </div>
     </div>
+
 @stop
 
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
     <script src="{{ asset('js/foodTypes/foodTypes.js') }}"></script>
-@stop
+@endsection

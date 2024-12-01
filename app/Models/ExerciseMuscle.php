@@ -29,4 +29,8 @@ class ExerciseMuscle extends Model
     {
         return $this->belongsTo(Muscle::class);
     }
+    public function exerciseType()
+    {
+        return $this->belongsTo(ExerciseType::class, 'exercise_type_id');
+    }
 }

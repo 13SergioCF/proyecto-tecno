@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Day extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     // Definir la tabla si el nombre no sigue la convención (en este caso, 'days')
     protected $table = 'days';

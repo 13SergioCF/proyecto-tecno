@@ -1,0 +1,16 @@
+.progress-bar {
+    background: linear-gradient(to right, #28a745, #17a2b8);
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.card-header {
+    background: linear-gradient(to right, #d4edda, #f8f9fa);
+}
+
+.card-body .text-success i,
+.card-body .text-primary i {
+    font-size: 1.5rem;
+}

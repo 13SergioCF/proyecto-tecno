@@ -22,7 +22,8 @@ class Routine extends Model
         'duracion_estimada',
         'objetivo',
         'frecuencia_semanal',
-        'estado'
+        'estado',
+        'exercise_id',
     ];
 
     /**

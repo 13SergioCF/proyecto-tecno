@@ -84,6 +84,55 @@ class RoutineController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $routine = Routine::findOrFail($id);
+        $ejercicios = $routine->ejercicios;  // Suponemos que esta es la relación con los ejercicios
+        $muscleFocusData = $this->getMuscleFocusData($ejercicios);
+        $difficultyDistribution = $this->getDifficultyDistribution($ejercicios);
+        return view('routines.show', compact('routine', 'muscleFocusData', 'difficultyDistribution'));
+    }
+
+
+    private function getMuscleFocusData($ejercicios)
+    {
+        $muscleFocusData = [];
+        if ($ejercicios) {
+            foreach ($ejercicios as $ejercicio) {
+                $musculos = $ejercicio->muscles; // Esto debería ser una colección de músculos
+                if ($musculos && $musculos->isNotEmpty()) {
+                    foreach ($musculos as $musculo) {
+                        $musculoName = $musculo->nombre; // Asegúrate de que 'nombre' esté presente en el modelo 'Muscle'
+                        if (isset($muscleFocusData[$musculoName])) {
+                            $muscleFocusData[$musculoName]++;
+                        } else {
+                            $muscleFocusData[$musculoName] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return $muscleFocusData;
+    }
+
+
+    private function getDifficultyDistribution($ejercicios)
+    {
+        $difficultyDistribution = [
+            'principiante' => 0,
+            'intermedio' => 0,
+            'avanzado' => 0,
+        ];
+        if ($ejercicios) {
+            foreach ($ejercicios as $ejercicio) {
+                $dificultad = $ejercicio->dificultad;
+                if (isset($difficultyDistribution[$dificultad])) {
+                    $difficultyDistribution[$dificultad]++;
+                }
+            }
+        }
+        return $difficultyDistribution;
+    }
 
     public function destroy($id)
     {

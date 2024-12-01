@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Measurement;
 use App\Models\MedicalDetail;
+use App\Models\Muscle;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\User;
@@ -14,18 +15,34 @@ class AnswerController extends Controller
 {
     public function store(Request $request)
     {
+        // Convertir el campo muscles a cadena si es enviado como un arreglo
+        if ($request->has('muscles') && is_array($request->muscles)) {
+            $request->merge(['muscles' => implode(',', $request->muscles)]);
+        }
+
+        // Validación de los datos
         $validatedData = $request->validate([
             'answers' => 'required|array',
-            'answers.*' => 'required|string',
+            'answers.*' => ['required', function ($attribute, $value, $fail) {
+                if (!is_string($value) && !is_array($value)) {
+                    $fail("El campo {$attribute} debe ser una cadena de texto o un array.");
+                }
+            }],
             'peso' => 'nullable|numeric|min:0',
             'talla' => 'nullable|numeric|min:0',
             'enfermedadBase' => 'required|string|in:si,no',
             'tipoEnfermedad' => 'nullable|string',
             'alergiaAlimento' => 'required|string|in:si,no',
             'tipoAlergia' => 'nullable|string',
-            'muscles' => 'nullable|array',
-            'muscles.*' => 'exists:muscles,id',
+            'muscles' => 'nullable|string',
         ]);
+
+        // Procesar el campo muscles si no está vacío
+        if (!empty($validatedData['muscles'])) {
+            $validatedData['muscles'] = array_filter(explode(',', $validatedData['muscles']), function ($muscle) {
+                return is_numeric($muscle);
+            });
+        }
 
         $user_id = auth()->id();
 
@@ -43,13 +60,14 @@ class AnswerController extends Controller
             $validatedData['tipoAlergia']
         );
 
-        if ($request->has('muscles')) {
+        if (!empty($validatedData['muscles'])) {
             $this->saveSelectedMuscles($user_id, $validatedData['muscles']);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Respuestas guardadas exitosamente.',
+            'muscles' => $validatedData['muscles'] ?? [],
         ]);
     }
 
@@ -118,8 +136,11 @@ class AnswerController extends Controller
         MedicalDetail::updateOrCreate(['user_id' => $user_id], $data);
     }
 
-    private function saveSelectedMuscles(int $user_id, array $muscles): void
+    private function saveSelectedMuscles(int $user_id, array $musclesIds): void
     {
-        User::findOrFail($user_id)->muscles()->sync($muscles);
+        $validMuscleIds = Muscle::whereIn('id', $musclesIds)->pluck('id')->toArray();
+
+        $user = User::findOrFail($user_id);
+        $user->muscles()->sync($validMuscleIds);
     }
 }

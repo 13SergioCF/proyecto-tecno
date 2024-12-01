@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('content')
 
@@ -98,7 +98,8 @@
                                 </td>
                                 <td>
                                     @if ($exercise->imagen_url)
-                                        <img src="{{ $exercise->imagen_url }}" alt="Imagen de {{ $exercise->nombre }}" width="100" height="100" style="object-fit: cover;">
+                                        <img src="{{ $exercise->imagen_url }}" alt="Imagen de {{ $exercise->nombre }}"
+                                            width="100" height="100" style="object-fit: cover;">
                                     @else
                                         No disponible
                                     @endif
@@ -114,10 +115,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('exercises.edit', $exercise->id) }}" class="btn btn-warning btn-sm" title="Editar">
+                                    <a href="{{ route('exercises.edit', $exercise->id) }}" class="btn btn-warning btn-sm"
+                                        title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-sm delete-exercise" data-id="{{ $exercise->id }}" title="Eliminar">
+                                    <button type="button" class="btn btn-danger btn-sm delete-exercise"
+                                        data-id="{{ $exercise->id }}" title="Eliminar">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -125,13 +128,13 @@
                         @endforeach
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('js')
     <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
     <script src="{{ asset('js/exercises/index_exercise.js') }}"></script>
-@stop
+@endsection

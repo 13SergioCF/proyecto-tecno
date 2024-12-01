@@ -23,23 +23,12 @@ class NutrientController extends Controller
         return view('nutrients.create');
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'nombre' => 'required|string|max:255',
-    //         'descripcion' => 'nullable|string',
-    //     ]);
-
-    //     Nutrient::create($request->all());
-    //     return redirect()->route('nutrients.index')->with('success', 'Nutriente creado con éxito.');
-    // }
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
         ]);
-
         try {
             Nutrient::create($request->all());
             return response()->json([

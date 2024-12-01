@@ -9,7 +9,6 @@ class ChatController extends Controller
 {
     public function generate()
     {
-        $user_id = auth()->id();
         $component = new \App\Livewire\RecomendationComponent();
         $component->generateRecommendations();
 
