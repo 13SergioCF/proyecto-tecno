@@ -29,9 +29,17 @@ class NutrientController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
         ]);
-
-        Nutrient::create($request->all());
-        return redirect()->route('nutrients.index')->with('success', 'Nutriente creado con éxito.');
+        try {
+            Nutrient::create($request->all());
+            return response()->json([
+                'message' => 'Nutriente agregado exitosamente.'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al agregar el nutriente.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function edit(Nutrient $nutrient)
@@ -63,13 +71,12 @@ class NutrientController extends Controller
         $pdf = PDF::loadView('nutrients.pdf', compact('nutrients')); // Asegúrate de que la vista sea la correcta
         return $pdf->download('nutrientes.pdf'); // O `stream()` si prefieres abrir en vez de descargar
     }
-    
-    
-   /*
+
+
+    /*
 public function exportExcel()
 {
     return Excel::download(new NutrientsExport, 'nutrientes.xlsx'); // Asegúrate de crear este archivo de exportación
 }
 */
-
 }

@@ -1,0 +1,91 @@
+/* Diseño de la tarjeta con enfoque UX */
+.card-muscle {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s,
+        box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    width: 100%; /* Asegura que cada tarjeta ocupe solo el espacio disponible */
+    max-width: 240px; /* Establece la anchura de la tarjeta a 120px */
+}
+
+/* Efecto hover para la tarjeta */
+.card-muscle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Estado de selección visual */
+.card-muscle.selected {
+    background-color: #d1f7d4;
+    border: 3px solid #28a745;
+    box-shadow: 0px 8px 16px rgba(40, 167, 69, 0.2);
+}
+
+/* Imagen del músculo */
+.muscle-image {
+    width: 100%;
+    height: 120px;
+    border-radius: 10px;
+    background-color: #f9fafb;
+    overflow: hidden;
+    position: relative;
+}
+
+.muscle-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.muscle-image:hover img {
+    transform: scale(1.1);
+}
+
+/* Título y descripción */
+.muscle-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.muscle-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+/* Estilo del badge de seleccionados */
+.badge {
+    background-color: #f0f0f0;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.badge.selected {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Animación para el contador de seleccionados */
+.badge .selected-count {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.multisteps-form__scrollable-content {
+    width: 100%;
+    height: 650px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

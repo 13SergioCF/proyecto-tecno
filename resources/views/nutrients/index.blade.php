@@ -115,10 +115,10 @@
             </div>
         </div>
     </div>
+
 @stop
 
 @section('js')
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
-<script src="{{ asset('js/foodTypes/foodTypes.js') }}"></script>
-@stop
+    <script src="{{ asset('js/dataTable/dataTableAll.js') }}"></script>
+    <script src="{{ asset('js/foodTypes/foodTypes.js') }}"></script>
+@endsection

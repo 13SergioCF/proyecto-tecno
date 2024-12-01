@@ -35,7 +35,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
         ]);
-    
+
         try {
             // Crear el nuevo usuario
             $user = User::create([
@@ -47,10 +47,10 @@ class UserController extends Controller
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
             ]);
-    
+
             // Asignar automáticamente el rol de "Paciente" al usuario
             $user->assignRole('Paciente');
-    
+
             return response()->json([
                 'message' => 'Usuario creado exitosamente',
                 'data' => $user
@@ -62,8 +62,8 @@ class UserController extends Controller
             ], 500); // Código 500 para errores del servidor
         }
     }
-    
-    
+
+
 
     public function edit($id)
     {

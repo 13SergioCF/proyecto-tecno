@@ -46,12 +46,12 @@
             </div>
             <div class="card-body">
                 <div class="row my-5 justify-content-center">
-                    <form name="nutrient-form" id="nutrient-form" action="{{ route('nutrients.store') }}" method="POST" class="col-md-8">
+                    <form name="nutrient-form" id="nutrient-form" class="col-md-8">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="nutrient-name" class="control-label">Nombre del Nutriente:</label>
-                            <input class="form-control" placeholder="Ej: Proteínas, Carbohidratos" required
-                                name="nombre" type="text" id="nutrient-name">
+                            <input class="form-control" placeholder="Ej: Proteínas, Carbohidratos" required name="nombre"
+                                type="text" id="nutrient-name">
                         </div>
                         <div class="form-group mb-3">
                             <label for="nutrient-description" class="control-label">Descripción:</label>
@@ -73,8 +73,8 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('js')
-    <script src="{{ asset('js/createNutrient.js') }}"></script>
-@stop
+    <script src="{{ asset('js/nutrients/create_nutrient.js') }}"></script>
+@endsection

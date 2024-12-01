@@ -12,13 +12,13 @@ class Exercise extends Model
 
     // Campos asignables en masa
     protected $fillable = [
-        'nombre', 
-        'descripcion', 
-        'dificultad', 
-        'duracion_estimada', 
-        'exercise_type_id', 
-        'estado', 
-        'imagen_url', 
+        'nombre',
+        'descripcion',
+        'dificultad',
+        'duracion_estimada',
+        'exercise_type_id',
+        'estado',
+        'imagen_url',
         'video_url'
     ];
 
@@ -29,14 +29,20 @@ class Exercise extends Model
     }
 
 
-    public function muscles()
+    // public function muscles()
+    // {
+    //     return $this->belongsToMany(Muscle::class, 'exercise_muscle', 'exercise_id', 'muscle_id');
+    // }
+
+    public function exerciseMuscles()
     {
-        return $this->belongsToMany(Muscle::class, 'exercise_muscle', 'exercise_id', 'muscle_id');
+        return $this->hasMany(ExerciseMuscle::class, 'exercise_id');
     }
 
-    // Definir la relación con el modelo Routine
-    // public function routines()
-    // {
-    //     return $this->belongsToMany(Routine::class, 'routine_exercise');
-    // }
+    public function muscles()
+    {
+        return $this->belongsToMany(Muscle::class, 'exercise_muscle', 'exercise_id', 'muscle_id')
+            ->withPivot('intensidad')
+            ->withTimestamps();
+    }
 }

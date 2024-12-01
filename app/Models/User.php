@@ -61,6 +61,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(MedicalDetail::class);
     }
+    // public function muscles()
+    // {
+    //     return $this->belongsToMany(Muscle::class, 'user_muscles', 'user_id', 'muscle_id')
+    //         ->withTimestamps();
+    // }
+    public function nutritionalPlans()
+    {
+        return $this->hasMany(NutritionalPlan::class, 'user_id');
+    }
+
+    public function userActivePlans()
+    {
+        return $this->hasMany(UserActivePlan::class, 'user_id');
+    }
     public function muscles()
     {
         return $this->belongsToMany(Muscle::class, 'user_muscles', 'user_id', 'muscle_id')
