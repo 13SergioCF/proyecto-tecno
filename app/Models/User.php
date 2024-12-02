@@ -75,9 +75,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserActivePlan::class, 'user_id');
     }
+    // public function muscles()
+    // {
+    //     return $this->belongsToMany(Muscle::class, 'user_muscles', 'user_id', 'muscle_id')
+    //         ->withTimestamps();
+    // }
+
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class, 'user_id');
+    }
+
     public function muscles()
     {
-        return $this->belongsToMany(Muscle::class, 'user_muscles', 'user_id', 'muscle_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Muscle::class, 'user_muscles');
     }
 }

@@ -232,23 +232,24 @@
                                 </div>
                             </div>
 
-                            <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="slideHorz"
-                                style="width: 100%; height: 800px;">
-                                <h3 class="multisteps-form__title text-center">Recomendacion de tu ayudante nutricional
+                            <div class="multisteps-form__panel shadow p-4 rounded bg-white"
+                                data-animation="slideHorz">
+                                <h3 class="multisteps-form__title text-center">Recomendación de tu ayudante nutricional
                                 </h3>
                                 <div class="multisteps-form__content d-flex flex-column justify-content-center align-items-center"
                                     style="width: 100%; height: 600px;">
-                                    <!-- Aquí agregamos las tarjetas -->
                                     <div id="messageContainer" class="message-container">
                                         <p id="message" style="display: block;"></p>
                                     </div>
+                                    <br>
+                                    <button id="planGenerate" class="btn btn-success ml-auto" type="submit"
+                                        title="Guardar">Generar Plan</button>
                                     <div id="loading" class="col-8" style="display: none;">
                                         <livewire:loading />
                                     </div>
-                                    <div class="button-row d-flex mt-4 w-100 justify-content-between">
-                                    </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -266,6 +267,7 @@
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/utils/SwalHandler.js') }}"></script>
     <script src="{{ asset('js/answers/send_answers.js') }}"></script>
+    <script src="{{ asset('js/answers/plan_exercise_generate.js') }}"></script>
     <script src="{{ asset('js/answers/button_muscle.js') }}"></script>
     <script src="{{ asset('js/answers/status_medical.js') }}"></script>
     <script src="{{ asset('js/questions/bols.js') }}"></script>

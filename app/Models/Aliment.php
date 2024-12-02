@@ -12,17 +12,18 @@ class Aliment extends Model
 
     protected $fillable = ['nombre', 'descripcion', 'estado', 'food_type_id', 'imagen_url', 'video_url'];
 
+    public function diets()
+    {
+        return $this->belongsToMany(Diet::class, 'diets_aliments', 'id_alimento', 'id_dieta');
+    }
+
     public function foodType()
     {
         return $this->belongsTo(FoodType::class, 'food_type_id');
     }
-    public function nutritionalsDetails()
-    {
-        return $this->hasMany(NutritionalsDetail::class, 'id_alimento');
-    }
 
-    public function diets()
+    public function nutrients()
     {
-        return $this->belongsToMany(Diet::class, 'diets_aliments', 'id_alimento', 'id_dieta');
+        return $this->belongsToMany(Nutrient::class, 'nutritionals_details', 'id_alimento', 'id_nutriente');
     }
 }

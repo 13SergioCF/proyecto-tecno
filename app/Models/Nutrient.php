@@ -19,7 +19,6 @@ class Nutrient extends Model
     }
     public function aliments()
     {
-        return $this->belongsToMany(Aliment::class, 'nutritionals_details')
-            ->withPivot('cantidad_calorias');
+        return $this->belongsToMany(Aliment::class, 'nutritionals_details', 'id_nutriente', 'id_alimento');
     }
 }

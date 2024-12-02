@@ -20,6 +20,6 @@ class FoodType extends Model
     }
     public function aliments()
     {
-        return $this->hasMany(Aliment::class);
+        return $this->hasMany(Aliment::class, 'food_type_id');
     }
 }

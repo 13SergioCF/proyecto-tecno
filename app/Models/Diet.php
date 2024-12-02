@@ -33,6 +33,7 @@ class Diet extends Model
         return $this->belongsToMany(Aliment::class, 'diets_aliments', 'id_dieta', 'id_alimento');
     }
 
+
     public function dailyPlanDetails()
     {
         return $this->hasMany(DailyPlanDetail::class, 'diet_id');

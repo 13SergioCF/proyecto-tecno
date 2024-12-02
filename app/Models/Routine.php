@@ -39,6 +39,6 @@ class Routine extends Model
     ];
     public function exercises()
     {
-        return $this->belongsToMany(Exercise::class, 'routine_exercise')->withTimestamps();
+        return $this->belongsToMany(Exercise::class, 'routine_exercise');
     }
 }

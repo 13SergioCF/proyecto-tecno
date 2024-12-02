@@ -23,9 +23,9 @@ class Muscle extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_muscles', 'muscle_id', 'user_id')
-            ->withTimestamps();
+        return $this->belongsToMany(User::class, 'user_muscles');
     }
+
     public function exerciseMuscles()
     {
         return $this->hasMany(ExerciseMuscle::class, 'muscle_id');

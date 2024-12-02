@@ -18,8 +18,8 @@ class ExerciseType extends Model
     ];
 
     protected $dates = ['deleted_at'];
-    public function ejercicios()
+    public function exercises()
     {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(Exercise::class, 'exercise_type_id');
     }
 }

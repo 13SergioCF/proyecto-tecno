@@ -10,8 +10,7 @@ use App\Models\{
     Recommendation,
     User,
 };
-use App\Services\DietService;
-use App\Services\ExerciseService;
+
 use Carbon\Carbon;
 use Livewire\Component;
 use OpenAI;
@@ -58,11 +57,19 @@ class RecomendationComponent extends Component
             $age = $this->calculateAge($user->fecha_nacimiento);
             $gender = $user->genero;
             $prompt = $this->generatePrompt($measurements, $medicalDetails, $answer, $age, $gender);
-            $this->recommendations = $this->fetchAIRecommendations($prompt);
+            $aiResponse = $this->fetchAIRecommendations($prompt);
+
+            // Procesar contenido JSON
+            $contentJson = $this->processContentToJson($aiResponse);
+
+            // Guardar en la base de datos
             Recommendation::create([
                 'user_id' => $userId,
-                'content' => $this->recommendations,
+                'content' => $aiResponse,
+                'content_json' => $contentJson,
             ]);
+
+            $this->recommendations = $aiResponse;
 
             return response()->json([
                 'status' => 'success',
@@ -75,6 +82,26 @@ class RecomendationComponent extends Component
             ], 500);
         }
     }
+    private function processContentToJson($content)
+    {
+        // Aquí defines la lógica para convertir el contenido en JSON estructurado.
+        // Ejemplo de estructura JSON basada en el contenido.
+        $lines = explode("\n", $content);
+        $json = [];
+
+        foreach ($lines as $line) {
+            if (strpos($line, ':') !== false) {
+                [$type, $value] = explode(':', $line, 2);
+                $json[] = [
+                    'type' => trim($type),
+                    'value' => trim($value),
+                ];
+            }
+        }
+
+        return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
     private function calculateAge($dateOfBirth)
     {
         if (!$dateOfBirth) {
@@ -83,23 +110,6 @@ class RecomendationComponent extends Component
 
         return Carbon::parse($dateOfBirth)->age;
     }
-
-    // private function extractRecommendationData($recommendations)
-    // {
-    //     $recommendationData = json_decode($recommendations, true);
-    //     var_dump($recommendationData);
-    //     exit;
-    //     if (is_null($recommendationData)) {
-    //         throw new \Exception("Error al decodificar las recomendaciones. Verifica la estructura del JSON.");
-    //     }
-
-    //     if (!isset($recommendationData['diet']) || !isset($recommendationData['routine'])) {
-    //         throw new \Exception("Faltan claves necesarias en las recomendaciones: 'diet' o 'routine'.");
-    //     }
-
-    //     return $recommendationData;
-    // }
-
 
     private function fetchAIRecommendations($prompt)
     {
@@ -140,8 +150,6 @@ class RecomendationComponent extends Component
         $enfermedad_base = $medicalDetails->enfermedad_base ?? 'ninguna';
         $alergias = $medicalDetails->alergia_alimento ?? 'ninguna';
         $musculos_entrenar = auth()->user()->muscles->pluck('nombre')->join(', ') ?? 'no especificado';
-
-        // Si la respuesta del usuario está en formato JSON, se convierte a un arreglo sin modificar el flujo del prompt
         $userAnswers = is_array($answer) ? $answer : (is_object($answer) && isset($answer->respuesta_json) ? json_decode($answer->respuesta_json, true) : []);
         $userAnswers = $userAnswers ?? [];
 
@@ -154,7 +162,7 @@ class RecomendationComponent extends Component
     - **Edad:** {$age} años
     - **Sexo:** {$gender}
     - **Peso:** {$peso} kg
-    - **Talla:** {$talla} 
+    - **Talla:** {$talla}       
     - **IMC:** {$imc}
     - **Enfermedad Base:** {$enfermedad_base}
     - **Alergias Alimentarias:** {$alergias}

@@ -22,17 +22,16 @@ class Exercise extends Model
         'video_url'
     ];
 
-    // Relación: Un ejercicio pertenece a un tipo de ejercicio
+    public function routines()
+    {
+        return $this->belongsToMany(Routine::class, 'routine_exercise');
+    }
+    
     public function exerciseType()
     {
         return $this->belongsTo(ExerciseType::class, 'exercise_type_id');
     }
 
-
-    // public function muscles()
-    // {
-    //     return $this->belongsToMany(Muscle::class, 'exercise_muscle', 'exercise_id', 'muscle_id');
-    // }
 
     public function exerciseMuscles()
     {
