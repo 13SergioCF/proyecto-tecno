@@ -45,6 +45,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('users', UserController::class);
 
 Route::resource('exercises', ExerciseController::class);
+Route::get('/getExerciseHours/{day}', [ExerciseController::class, 'getExerciseHours']);
+
 Route::get('/exercises/export-pdf', [ExerciseController::class, 'exportPdf'])->name('exercises.exportPdf');
 
 Route::resource('exercise-types', ExerciseTypeController::class);
@@ -126,6 +128,7 @@ Route::resource('details_days_thunders', DetailsDaysThunderController::class);
 
 Route::get('plan-nutricional', [NutritionalPlanController::class, 'index']);
 Route::get('/plan-nutricional', [NutritionalPlanController::class, 'showPlan']);
+Route::get('/plan-nutricional-ejercicios', [ExercisePlanController::class, 'showNutritionalAndExercisePlan']);
 
 Route::post('/loading', [LoadingController::class, 'index']);
 

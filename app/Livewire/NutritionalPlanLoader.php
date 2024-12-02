@@ -152,6 +152,63 @@ class NutritionalPlanLoader extends Component
 
         $this->isLoading = false;
     }
+    public function getWeeklyNutritionPlan()
+    {
+        $weeklyPlan = [];
+        $diets = Diet::where('duration_in_days', $this->days)->get();
+
+        $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        foreach ($days as $day) {
+            $meals = $diets->map(function ($diet) {
+                return "{$diet->tipo}: {$diet->descripcion}";
+            })->toArray();
+
+            $weeklyPlan[$day] = !empty($meals) ? $meals : ["No hay datos de nutrición para {$day}."];
+        }
+
+        return $weeklyPlan;
+    }
+
+    public function getDailyTips()
+    {
+        $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        $tips = [];
+
+        foreach ($days as $day) {
+            $tips[$day] = "Consejo saludable para {$day}: Mantén una dieta equilibrada y realiza actividad física.";
+        }
+
+        return $tips;
+    }
+
+    public function getWeeklyStats($nutritionPlan, $exercisePlan)
+    {
+        $totalCalories = 0;
+        $totalExerciseHours = 0;
+
+        foreach ($nutritionPlan as $meals) {
+            foreach ($meals as $meal) {
+                // Simulación de calorías por comida (realiza consulta si es necesario)
+                $totalCalories += 500; // Asume 500 kcal por comida como promedio
+            }
+        }
+
+        foreach ($exercisePlan as $exercises) {
+            foreach ($exercises as $exercise) {
+                if (preg_match('/(\d+) min/', $exercise, $matches)) {
+                    $minutes = (int)$matches[1];
+                    $totalExerciseHours += $minutes / 60; // Convertir minutos a horas
+                }
+            }
+        }
+
+        return [
+            'calories' => round($totalCalories / 7, 2), // Calorías promedio por día
+            'exerciseHours' => round($totalExerciseHours, 2), // Horas totales de ejercicio
+            'completedDays' => count(array_filter($nutritionPlan)) + count(array_filter($exercisePlan)),
+        ];
+    }
+
     private function extractCalories($calorieString)
     {
         // Extraer solo el número de las calorías (por ejemplo: "206 kcal" -> 206)

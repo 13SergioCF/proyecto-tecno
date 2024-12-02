@@ -44,17 +44,13 @@ $(function () {
                             icons[iconIndex].classList.add("text-success");
                         }
 
-                        // Detener la animación y mostrar mensaje de éxito
+                        // Detener la animación y redirigir a la ruta
                         if (progress === 100) {
                             clearInterval(interval);
                             loadingTitle.textContent = "¡Plan Generado!";
-                            loadingSubtitle.textContent = "Tu plan de ejercicios está listo.";
-                            messageContainer.fadeIn(500);
-                            message.text("El plan de ejercicios ha sido generado exitosamente.");
-
+                            loadingSubtitle.textContent = "Redirigiendo a tu plan nutricional...";
                             setTimeout(() => {
-                                loading.fadeOut(500);
-                                planGenerate.fadeIn(500); // Mostrar el botón de nuevo si es necesario
+                                window.location.href = `${base_url}plan-nutricional`;
                             }, 1000);
                         }
                     }, progressInterval);

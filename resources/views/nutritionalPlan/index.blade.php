@@ -37,18 +37,26 @@
                                 <div class="tab-pane fade show active" id="nutrition" role="tabpanel">
                                     <h4 id="currentDayNutrition">Lunes</h4>
                                     <ul id="nutritionList">
-                                        <li>Desayuno: Avena con frutas</li>
-                                        <li>Almuerzo: Ensalada de pollo</li>
-                                        <li>Cena: Salmón al horno</li>
+                                        @if (isset($nutritionPlan['Lunes']))
+                                            @foreach ($nutritionPlan['Lunes'] as $item)
+                                                <li>{{ $item }}</li>
+                                            @endforeach
+                                        @else
+                                            <li>No hay datos de nutrición disponibles para hoy.</li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <!-- Ejercicios -->
                                 <div class="tab-pane fade" id="exercise" role="tabpanel">
                                     <h4 id="currentDayExercise">Lunes</h4>
                                     <ul id="exerciseList">
-                                        <li>30 min cardio</li>
-                                        <li>3 series de sentadillas</li>
-                                        <li>3 series de flexiones</li>
+                                        @if (isset($exercisePlan['Lunes']))
+                                            @foreach ($exercisePlan['Lunes'] as $exercise)
+                                                <li>{{ $exercise }}</li>
+                                            @endforeach
+                                        @else
+                                            <li>No hay datos de ejercicios disponibles para hoy.</li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -79,9 +87,11 @@
                                             <h5 class="timeline-day">{{ $day }}</h5>
                                             <p class="timeline-status text-muted">Pendiente</p>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-secondary ml-auto">
+                                        <button class="btn btn-sm btn-outline-secondary ml-auto mark-completed"
+                                            data-day="{{ $day }}">
                                             Marcar como completado
                                         </button>
+
                                     </div>
                                 @endforeach
                             </div>
@@ -96,9 +106,9 @@
                             <h3 class="card-title">Estadísticas Semanales</h3>
                         </div>
                         <div class="card-body">
-                            <p>Calorías Promedio: <strong>1850 kcal</strong></p>
-                            <p>Ejercicio Total: <strong>5.5 horas</strong></p>
-                            <p>Días Completados: <strong>5/7</strong></p>
+                            <p>Calorías Promedio: <strong>{{ $weeklyStats['calories'] ?? '0' }} kcal</strong></p>
+                            <p>Ejercicio Total: <strong>{{ $weeklyStats['exerciseHours'] ?? '0' }} horas</strong></p>
+                            <p>Días Completados: <strong>{{ $weeklyStats['completedDays'] ?? '0' }}/7</strong></p>
                         </div>
                     </div>
 
@@ -107,8 +117,7 @@
                             <h3 class="card-title">Consejo del Día</h3>
                         </div>
                         <div class="card-body">
-                            <p>Beber agua regularmente durante el día puede ayudarte a mantenerte hidratado y controlar tu
-                                apetito.</p>
+                            <p id="dailyTip">{{ $dailyTips['Lunes'] ?? 'No hay consejos disponibles.' }}</p>
                         </div>
                     </div>
 
@@ -133,7 +142,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
@@ -144,14 +152,14 @@
             const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             let currentDayIndex = 0;
 
-            const nutritionData = {!! json_encode($nutritionPlan) !!};
-            const exerciseData = {!! json_encode($exercisePlan) !!};
-            const dailyTips = {!! json_encode($dailyTips) !!};
+            const nutritionData = @json($nutritionPlan);
+            const exerciseData = @json($exercisePlan);
+            const dailyTips = @json($dailyTips);
 
             const updatePlan = () => {
                 document.getElementById('currentDayNutrition').innerText = days[currentDayIndex];
                 document.getElementById('currentDayExercise').innerText = days[currentDayIndex];
-                document.querySelector('.card-body p').innerText = dailyTips[currentDayIndex];
+                document.getElementById('dailyTip').innerText = dailyTips[days[currentDayIndex]];
 
                 const nutritionList = document.getElementById('nutritionList');
                 nutritionList.innerHTML = '';
@@ -181,7 +189,7 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Calorías', 'Ejercicio', 'Días Completados'],
+                    labels: ['Calorías', 'Ejercicio (horas)', 'Días Completados'],
                     datasets: [{
                         label: 'Progreso Semanal',
                         data: [
@@ -189,8 +197,16 @@
                             {{ $weeklyStats['exerciseHours'] }},
                             {{ $weeklyStats['completedDays'] }}
                         ],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -205,6 +221,47 @@
             });
 
             updatePlan();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+            // Obtener el día actual
+            const today = new Date();
+            const currentDay = days[today.getDay() - 1]; // Ajustar para que el índice inicie en Lunes
+
+            // Deshabilitar botones que no correspondan al día actual
+            document.querySelectorAll('.mark-completed').forEach(button => {
+                if (button.dataset.day !== currentDay) {
+                    button.disabled = true;
+                }
+            });
+
+            // Manejar clics en "Marcar como completado"
+            document.querySelectorAll('.mark-completed').forEach(button => {
+                button.addEventListener('click', function() {
+                    const day = this.dataset.day;
+
+                    if (day === currentDay) {
+                        // Cambiar el estado visual
+                        const eventElement = this.closest('.timeline-event');
+                        const statusElement = eventElement.querySelector('.timeline-status');
+                        const circleElement = eventElement.querySelector('.timeline-day-circle');
+
+                        statusElement.textContent = 'Completado';
+                        statusElement.classList.remove('text-muted');
+                        statusElement.classList.add('text-success');
+                        circleElement.classList.remove('bg-secondary');
+                        circleElement.classList.add('bg-success');
+
+                        this.textContent = 'Completado';
+                        this.disabled = true; // Deshabilitar el botón
+                    } else {
+                        alert('Solo puedes marcar como completado el día actual.');
+                    }
+                });
+            });
         });
     </script>
 @endsection

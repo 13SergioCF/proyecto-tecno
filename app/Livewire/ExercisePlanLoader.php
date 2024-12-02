@@ -208,6 +208,26 @@ class ExercisePlanLoader extends Component
     {
         return Carbon::parse($birthdate)->age;
     }
+    public function getWeeklyExercisePlan()
+    {
+        $weeklyPlan = [];
+        $routines = Routine::with('exercises')->get();
+
+        $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        foreach ($days as $day) {
+            $dailyExercises = $routines->map(function ($routine) {
+                return $routine->exercises->map(function ($exercise) {
+                    return "{$exercise->duracion_estimada} min: {$exercise->nombre}";
+                })->toArray();
+            })->flatten()->toArray();
+
+            $weeklyPlan[$day] = !empty($dailyExercises) ? $dailyExercises : ["No hay datos de ejercicios para {$day}."];
+        }
+
+        return $weeklyPlan;
+    }
+
+
 
     public function render()
     {

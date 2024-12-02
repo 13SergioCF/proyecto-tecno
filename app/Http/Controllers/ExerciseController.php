@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Exercise;
 use App\Models\ExerciseType;
+use App\Models\Routine;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -92,7 +94,7 @@ class ExerciseController extends Controller
     {
         try {
             $exercise = Exercise::findOrFail($id);
-            $exerciseTypes = ExerciseType::all(); 
+            $exerciseTypes = ExerciseType::all();
             return view('exercises.edit', compact('exercise', 'exerciseTypes'));
         } catch (\Exception $e) {
             return redirect()->route('exercises.index')->with('error', 'El ejercicio no fue encontrado.');
@@ -204,5 +206,10 @@ class ExerciseController extends Controller
         $exercise->save();
 
         return response()->json(['message' => 'Archivos cargados exitosamente.']);
+    }
+    public function getExerciseHours($day)
+    {
+        $hours = Routine::where('day', $day)->sum('duracion_estimada');
+        return response()->json(['hours' => $hours]);
     }
 }
