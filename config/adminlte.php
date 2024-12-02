@@ -302,7 +302,7 @@ return [
         // Navbar items:
         [
             'type' => 'navbar-search',
-            'text' => 'search',
+            // 'text' => 'search',
             'topnav_right' => true,
         ],
         [
@@ -450,6 +450,12 @@ return [
                     'url' => 'preguntas',
                 ],
             ],
+        ],
+        [
+            'text' => 'Enviar Correo',
+            'icon' => 'fas fa-paper-plane',
+            'classes' => 'rounded-pill',
+            'url' => 'contacto',
         ],
     ],
 

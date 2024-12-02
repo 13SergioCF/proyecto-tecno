@@ -27,6 +27,7 @@ use App\Http\Controllers\LoadingController;
 use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\NutritionalPlanController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\ContactoController;
 
 /*Route::get('/', function () {
     return view('auth/login');
@@ -37,6 +38,9 @@ Route::get('/', function () {
 });
 Auth::routes();
 
+
+
+// Route::middleware('auth')->group(function () {
 
 
 
@@ -134,3 +138,10 @@ Route::post('/loading', [LoadingController::class, 'index']);
 
 Route::get('/api/recommendation/{id}/json', [RecommendationController::class, 'getRecommendationJson']);
 Route::get('/recommendation/{id}/view', [RecommendationController::class, 'showRecommendation']);
+
+
+
+
+Route::resource('/contacto',ContactoController::class)->names('contacto');
+
+// });
