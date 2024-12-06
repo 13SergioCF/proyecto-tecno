@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -23,7 +22,7 @@ class RolSeeder extends Seeder
         $permissionManageDiet = Permission::create(['name' => 'manage-diet']);
         $permissionManageExercise = Permission::create(['name' => 'manage-exercise']);
         $permissionManagePeriod = Permission::create(['name' => 'manage-period']);
-
+        
         // Asignar permisos a los roles
         $adminRole->givePermissionTo([
             $permissionManageUsers,
@@ -37,7 +36,7 @@ class RolSeeder extends Seeder
 
         // El rol "Paciente" solo tiene permisos limitados
         $pacienteRole->givePermissionTo([
-            $permissionManageUsers,
+            $permissionManageUsers, 
             $permissionViewHome
         ]);
 
@@ -48,5 +47,13 @@ class RolSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
         $adminUser->assignRole('Admin');
+
+        // Crear un usuario con rol Paciente
+        $pacienteUser = User::create([
+            'name' => 'Paciente',
+            'email' => 'paciente@paciente.com',
+            'password' => bcrypt('12345678')
+        ]);
+        $pacienteUser->assignRole('Paciente');
     }
 }

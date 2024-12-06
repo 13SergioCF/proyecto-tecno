@@ -45,7 +45,7 @@
                     <div class="col-12 col-lg-8 m-auto">
                         <form class="multisteps-form__form" id="answer-form" method="POST">
                             @csrf
-                            @foreach (array_chunk($questions->all(), 3) as $index => $chunk)
+                            @foreach (array_chunk($questions->all(), 4) as $index => $chunk)
                                 <div class="multisteps-form__panel shadow p-4 rounded bg-white {{ $index === 0 ? 'js-active' : '' }}"
                                     data-animation="slideHorz">
                                     <h3 class="multisteps-form__title">Preguntas nutricionales </h3>

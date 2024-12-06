@@ -8,19 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Day extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    // Definir la tabla si el nombre no sigue la convención (en este caso, 'days')
     protected $table = 'days';
 
-    // Definir los campos que son asignables en masa
     protected $fillable = [
         'nombre',
     ];
 
-    // Definir la clave primaria si no es 'id'
-    protected $primaryKey = 'id_dia';
-
-    // Si la clave primaria no es un auto-incremento, puedes agregar:
-    // public $incrementing = false;
+    public function thunders()
+    {
+        return $this->hasMany(DayThunder::class, 'id_dia');
+    }
 }

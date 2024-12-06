@@ -11,23 +11,18 @@ class DayThunder extends Model
 
     protected $table = 'days_thunders';
 
-    // Indica que la tabla no tiene un campo 'id' incremental
-    public $incrementing = false;
+    protected $fillable = [
+        'id_dia',
+        'id_turno',
+    ];
 
-    // Indica que no hay clave primaria única
-    protected $primaryKey = null;
-
-    // Define los campos asignables
-    protected $fillable = ['id_dia', 'id_turno'];
-
-    // Relaciones
     public function day()
     {
-        return $this->belongsTo(Day::class, 'id_dia', 'id_dia');
+        return $this->belongsTo(Day::class, 'id_dia');
     }
 
-    public function thunder()
+    public function details()
     {
-        return $this->belongsTo(Thunder::class, 'id_turno', 'id_turno');
+        return $this->hasMany(DetailsDaysThunder::class, 'id_day_thunder');
     }
 }
